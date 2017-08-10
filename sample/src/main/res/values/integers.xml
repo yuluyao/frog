@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <integer-array name="iconResArray">
+    <!--<item>R.drawable.mh_1</item>-->
+    <!--<item>R.drawable.mh_2</item>-->
+    <!--<item>R.drawable.mh_3</item>-->
+    <!--<item>R.drawable.mh_4</item>-->
+    <!--<item>R.drawable.mh_5</item>-->
+    <!--<item>R.drawable.mh_6</item>-->
+    <!--<item>R.drawable.mh_7</item>-->
+    <!--<item>R.drawable.mh_8</item>-->
+    <!--<item>R.drawable.mh_9</item>-->
+    <!--<item>R.drawable.mh_10</item>-->
+    <!--<item>R.drawable.mh_11</item>-->
+    <!--<item>R.drawable.mh_12</item>-->
+    <!--<item>R.drawable.mh_13</item>-->
+    <!--<item>R.drawable.mh_14</item>-->
+    <!--<item>R.drawable.mh_15</item>-->
+    <!--<item>R.drawable.mh_16</item>-->
+    <!--<item>R.drawable.mh_17</item>-->
+    <!--<item>R.drawable.mh_18</item>-->
+    <!--<item>R.drawable.mh_19</item>-->
+    <!--<item>R.drawable.mh_20</item>-->
+    <!--<item>R.drawable.mh_21</item>-->
+    <!--<item>R.drawable.mh_22</item>-->
+    <!--<item>R.drawable.mh_23</item>-->
+    <!--<item>R.drawable.mh_24</item>-->
+    <!--<item>R.drawable.mh_25</item>-->
+    <!--<item>R.drawable.mh_26</item>-->
+    <!--<item>R.drawable.mh_27</item>-->
+    <!--<item>R.drawable.mh_28</item>-->
+    <!--<item>R.drawable.mh_29</item>-->
+    <!--<item>R.drawable.mh_30</item>-->
+    <!--<item>R.drawable.mh_31</item>-->
+    <!--<item>R.drawable.mh_32</item>-->
+    <!--<item>R.drawable.mh_33</item>-->
+    <!--<item>R.drawable.mh_34</item>-->
+    <!--<item>R.drawable.mh_35</item>-->
+    <!--<item>R.drawable.mh_36</item>-->
+    <!--<item>R.drawable.mh_37</item>-->
+    <!--<item>R.drawable.mh_38</item>-->
+    <!--<item>R.drawable.mh_39</item>-->
+    <!--<item>R.drawable.mh_40</item>-->
+    <!--<item>R.drawable.mh_41</item>-->
+    <!--<item>R.drawable.mh_42</item>-->
+    <!--<item>R.drawable.mh_43</item>-->
+    <!--<item>R.drawable.mh_44</item>-->
+    <!--<item>R.drawable.mh_45</item>-->
+    <!--<item>R.drawable.mh_46</item>-->
+    <!--<item>R.drawable.mh_47</item>-->
+    <!--<item>R.drawable.mh_48</item>-->
+    <!--<item>R.drawable.mh_49</item>-->
+    <!--<item>R.drawable.mh_50</item>-->
+    <!--<item>R.drawable.mh_51</item>-->
+    <!--<item>R.drawable.mh_52</item>-->
+    <!--<item>R.drawable.mh_53</item>-->
+    <!--<item>R.drawable.mh_54</item>-->
+    <!--<item>R.drawable.mh_55</item>-->
+    <!--<item>R.drawable.mh_56</item>-->
+    <!--<item>R.drawable.mh_57</item>-->
+    <!--<item>R.drawable.mh_58</item>-->
+    <!--<item>R.drawable.mh_59</item>-->
+    <!--<item>R.drawable.mh_60</item>-->
+    <!--<item>R.drawable.mh_61</item>-->
+    <!--<item>R.drawable.mh_62</item>-->
+    <!--<item>R.drawable.mh_63</item>-->
+    <!--<item>R.drawable.mh_64</item>-->
+  </integer-array>
+
+</resources>

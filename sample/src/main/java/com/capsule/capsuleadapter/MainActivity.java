@@ -19,18 +19,16 @@ public class MainActivity extends AppCompatActivity {
 
     recyclerView.setLayoutManager(manager);
 
-    MainAdapter adapter = new MainAdapter(mockData(), R.layout.item_test);
+    MainAdapter adapter = new MainAdapter(R.layout.item_test);
+    DataRepo repo = new DataRepo(this);
+
+    adapter.setData(repo.refreshList());
     recyclerView.setAdapter(adapter);
 
     adapter.notifyDataSetChanged();
   }
 
-  private List<String> mockData() {
-    List<String> list = new ArrayList<>();
-    list.add("asgashassgas");
-    list.add("etasgas");
-    list.add("aetat");
-    list.add("ateay");
-    return list;
-  }
+
+
+
 }

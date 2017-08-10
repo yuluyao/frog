@@ -53,19 +53,35 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   private LinearLayout mFooterLayout;
 
   /* ******************************* */
-  public BaseAdapter(List<T> data, int mLayoutResId) {
-    mData.clear();
-    mData.addAll(data);
-    this.mLayoutResId = mLayoutResId;
-  }
+  //public BaseAdapter(List<T> data, int mLayoutResId) {
+  //  mData.clear();
+  //  mData.addAll(data);
+  //  this.mLayoutResId = mLayoutResId;
+  //}
 
-  public BaseAdapter(List<T> data) {
-    mData.clear();
-    mData.addAll(data);
-  }
+  //public BaseAdapter(List<T> data) {
+  //  mData.clear();
+  //  mData.addAll(data);
+  //}
 
   public BaseAdapter(int mLayoutResId) {
     this.mLayoutResId = mLayoutResId;
+  }
+
+
+  public void setData(List<T> list){
+    if (list == null) {
+      list = new ArrayList<>();
+    }
+    mData.clear();
+    mData.addAll(list);
+  }
+
+  public void addData(List<T> list){
+    if (list == null) {
+      list = new ArrayList<>();
+    }
+    mData.addAll(list);
   }
 
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
