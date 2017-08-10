@@ -94,7 +94,7 @@ public class DataRepo {
   }
 
   public List<SkillBean> loadMore(int resId) {
-    if (resId == 0) {
+    if (resId <= 0) {
       return refreshList();
     }
     for (int i = 0; i < data.size(); i++) {

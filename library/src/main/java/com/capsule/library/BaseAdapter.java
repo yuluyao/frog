@@ -28,19 +28,23 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  */
 public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerView.Adapter<H> {
 
+  public interface OnLoadMoreListener {
+    void onLoadMore();
+  }
+
   //view type
-  public static final int VIEW_TYPE_DEFAULT = 0;
-  public static final int VIEW_TYPE_HEADER  = 1;
-  public static final int VIEW_TYPE_FOOTER  = 2;
-  public static final int VIEW_TYPE_LOAD    = 3;
-  public static final int VIEW_TYPE_EMPTY   = 4;
+  public static final int VIEW_TYPE_DATA   = 0;
+  public static final int VIEW_TYPE_HEADER = 1;
+  public static final int VIEW_TYPE_FOOTER = 2;
+  public static final int VIEW_TYPE_LOAD   = 3;
+  public static final int VIEW_TYPE_EMPTY  = 4;
 
   protected Context        mContext;
   protected RecyclerView   mRecyclerView;
   protected LayoutInflater mLayoutInflater;
 
   protected List<T> mData = new ArrayList<>();
-  protected int     mLayoutResId;
+  protected int mLayoutResId;
 
   /* 空 */
   private FrameLayout mEmptyLayout;
@@ -51,6 +55,11 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   /* 头尾 */
   private LinearLayout mHeaderLayout;
   private LinearLayout mFooterLayout;
+
+  /* load more */
+  private LoadMoreView mLoadMoreView;
+  private boolean canLoadMore = false;
+  private OnLoadMoreListener onLoadMoreListener;
 
   /* ******************************* */
   //public BaseAdapter(List<T> data, int mLayoutResId) {
@@ -68,20 +77,13 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     this.mLayoutResId = mLayoutResId;
   }
 
-
-  public void setData(List<T> list){
-    if (list == null) {
-      list = new ArrayList<>();
-    }
-    mData.clear();
-    mData.addAll(list);
+  public OnLoadMoreListener getOnLoadMoreListener() {
+    return onLoadMoreListener;
   }
 
-  public void addData(List<T> list){
-    if (list == null) {
-      list = new ArrayList<>();
-    }
-    mData.addAll(list);
+  public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+    this.onLoadMoreListener = onLoadMoreListener;
+    canLoadMore = true;
   }
 
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -100,7 +102,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     H baseViewHolder = null;
 
     switch (viewType) {
-      case VIEW_TYPE_DEFAULT:
+      case VIEW_TYPE_DATA:
         baseViewHolder = onCreateDefViewHolder(parent, viewType);
         break;
       case VIEW_TYPE_HEADER:
@@ -190,43 +192,116 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   @Override public void onBindViewHolder(H holder, int position) {
+    autoLoadMore();
 
     int viewType = holder.getItemViewType();
     int offset = 0;
-    if (mHeaderLayout != null) {
+    if (hasHeader()) {
       offset++;
     }
     switch (viewType) {
-      case VIEW_TYPE_DEFAULT:
-        convert(holder, getItem(position - offset));
+      case VIEW_TYPE_DATA:
+        convert(holder, getData(position - offset));
         break;
       case VIEW_TYPE_HEADER:
         break;
       case VIEW_TYPE_FOOTER:
         break;
       case VIEW_TYPE_LOAD:
+        mLoadMoreView.convert(holder);
         break;
       case VIEW_TYPE_EMPTY:
         break;
 
       default:
-        convert(holder, getItem(position - offset));
+        convert(holder, getData(position - offset));
         break;
     }
   }
 
   protected abstract void convert(H holder, T item);
 
-  @Override public int getItemCount() {
-    int count = mData.size();
-    if (mHeaderLayout != null) {
-      count++;
+  private void autoLoadMore() {
+    if (mLoadMoreView == null && onLoadMoreListener == null) {
+      return;
+    }
+    //已满1屏
+    if (!isVisBottom()) {
+      return;
+    }
+    //正在加载
+    if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.STATUS_LOADING) {
+      return;
     }
 
+    onLoadMoreListener.onLoadMore();
+    mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_LOADING);
+  }
+
+  public boolean isVisBottom() {
+    LinearLayoutManager layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+    //屏幕中最后一个可见子项的position
+    int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+    //当前屏幕所看到的子项个数
+    int visibleItemCount = layoutManager.getChildCount();
+    //当前RecyclerView的所有子项个数
+    int totalItemCount = layoutManager.getItemCount();
+    //RecyclerView的滑动状态
+    int state = mRecyclerView.getScrollState();
+    if (visibleItemCount > 0
+        && lastVisibleItemPosition == totalItemCount - 1
+        && state == RecyclerView.SCROLL_STATE_IDLE) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /* ************************* adapter ************************* */
+  @Override public int getItemCount() {
+    int count = mData.size();
+    if (hasHeader()) {
+      count++;
+    }
+    if (hasFooter()) {
+      count++;
+    }
+    if (hasLoadMoreView()) {
+      count++;
+    }
     return count;
   }
 
-  @Nullable public T getItem(int position) {
+  @Override public int getItemViewType(int position) {
+    int headerCount = hasHeader() ? 1 : 0;
+    if (position < headerCount) {
+      return VIEW_TYPE_HEADER;
+    } else {
+      position = hasHeader() ? position - headerCount : position;
+      if (position < mData.size()) {
+        return getDataItemViewType(position); //VIEW_TYPE_DATA
+      } else {
+        position = hasFooter() ? position - mData.size() : position;
+        int footerCount = hasFooter() ? 1 : 0;
+        if (position < footerCount) {
+          return VIEW_TYPE_FOOTER;
+        } else {
+          return VIEW_TYPE_LOAD;
+        }
+      }
+    }
+  }
+
+  protected int getDataItemViewType(int position) {
+    //if (mMultiTypeDelegate != null) {
+    //  return mMultiTypeDelegate.getDataItemViewType(mData, position);
+    //}
+    return VIEW_TYPE_DATA;
+  }
+
+  /* **************************** data **************************** */
+  @Nullable public T getData(int position) {
+
     if (position < mData.size()) {
       return mData.get(position);
     } else {
@@ -234,9 +309,52 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     }
   }
 
+  public T getLastData() {
+    if (mData.size() == 0) {
+      return null;
+    }
+    return mData.get(mData.size() - 1);
+  }
+
+  public void setData(List<T> list) {
+    if (list == null) {
+      list = new ArrayList<>();
+    }
+    mData.clear();
+    mData.addAll(list);
+  }
+
+  public void addData(List<T> list) {
+    if (list == null) {
+      list = new ArrayList<>();
+    }
+    mData.addAll(list);
+  }
+
+
+
+
+  /* ************************** loadmore ************************** */
+
+  public boolean hasLoadMoreView() {
+    return mLoadMoreView != null;
+  }
+
+  public boolean canLoadMore() {
+    return canLoadMore;
+  }
+
+  public void setCanLoadMore(boolean canLoadMore) {
+    this.canLoadMore = canLoadMore;
+  }
+
 
 
   /* *********************** header *********************** */
+
+  public boolean hasHeader() {
+    return mHeaderLayout != null;
+  }
 
   public void setHeader(View header) {
     setHeader(header, 0);
@@ -257,7 +375,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
    * @param index index
    */
   public void setHeader(View header, int index) {
-    if (mHeaderLayout == null || mHeaderLayout.getChildCount() <= index) {
+    if (!hasHeader() || mHeaderLayout.getChildCount() <= index) {
       addHeaderView(header, index);
     } else {
       replaceHeaderView(header, index);
@@ -266,7 +384,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   private void addHeaderView(View header, int index) {
     //如果没有 header layout ，先创建
-    if (mHeaderLayout == null) {
+    if (!hasHeader()) {
       initHeaderLayout();
     }
     //添加 header
@@ -303,6 +421,14 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   /* ********************** footer ********************** */
 
+  public boolean hasFooter() {
+    return mFooterLayout != null;
+  }
+
+  public void setFooter(View footer) {
+    setFooter(footer, 0);
+  }
+
   /**
    * add a footer,if a view exists at the index,replace it
    *
@@ -325,7 +451,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     //添加  footer
     mFooterLayout.addView(footer, index);
     int position = mData.size();
-    if (mHeaderLayout != null) {
+    if (hasHeader()) {
       position++;
     }
     notifyItemInserted(position);
@@ -335,7 +461,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     mFooterLayout.removeViewAt(index);
     mFooterLayout.addView(footer, index);
     int position = mData.size();
-    if (mHeaderLayout != null) {
+    if (hasHeader()) {
       position++;
     }
     notifyItemChanged(position);
