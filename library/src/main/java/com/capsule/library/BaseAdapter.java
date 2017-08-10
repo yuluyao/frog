@@ -77,13 +77,27 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     this.mLayoutResId = mLayoutResId;
   }
 
-  public OnLoadMoreListener getOnLoadMoreListener() {
-    return onLoadMoreListener;
-  }
+  public void setOnLoadMoreListener(OnLoadMoreListener listener) {
+    onLoadMoreListener = listener;
+    enableLoadMore();
+    mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+      @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        super.onScrollStateChanged(recyclerView, newState);
+        RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+        int visibleChildCount = layoutManager.getChildCount();
+        if (visibleChildCount > 0 && newState == RecyclerView.SCROLL_STATE_IDLE && !mLoadMoreView.isLoading()) {
+          View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
+          int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
+          if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {
+            mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_LOADING);
+              onLoadMoreListener.onLoadMore();
+          } else {
+            mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_END);
+          }
+        }
 
-  public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-    this.onLoadMoreListener = onLoadMoreListener;
-    canLoadMore = true;
+      }
+    });
   }
 
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -112,7 +126,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
         baseViewHolder = createBaseViewHolder(mFooterLayout);
         break;
       case VIEW_TYPE_LOAD:
-        //baseViewHolder = getLoadingView(parent);
+        baseViewHolder = getLoadMoreViewHolder(parent);
         break;
       case VIEW_TYPE_EMPTY:
         baseViewHolder = createBaseViewHolder(mEmptyLayout);
@@ -123,6 +137,24 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     }
     //baseViewHolder.setAdapter(this);
     return baseViewHolder;
+  }
+
+  private H getLoadMoreViewHolder(ViewGroup parent) {
+    View view = mLayoutInflater.inflate(mLoadMoreView.getLayoutId(), parent, false);
+    //View view = getItemView(mLoadMoreView.getLayoutId(), parent);
+    H holder = createBaseViewHolder(view);
+    holder.itemView.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        //if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.STATUS_FAIL) {
+        //  notifyLoadMoreToLoading();
+        //}
+        //if (mEnableLoadMoreEndClick
+        //    && mLoadMoreView.getLoadMoreStatus() == LoadMoreView.STATUS_END) {
+        //  notifyLoadMoreToLoading();
+        //}
+      }
+    });
+    return holder;
   }
 
   protected H onCreateDefViewHolder(ViewGroup parent, int viewType) {
@@ -192,7 +224,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   @Override public void onBindViewHolder(H holder, int position) {
-    autoLoadMore();
+    //autoLoadMore();
 
     int viewType = holder.getItemViewType();
     int offset = 0;
@@ -221,24 +253,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   protected abstract void convert(H holder, T item);
 
-  private void autoLoadMore() {
-    if (mLoadMoreView == null && onLoadMoreListener == null) {
-      return;
-    }
-    //已满1屏
-    if (!isVisBottom()) {
-      return;
-    }
-    //正在加载
-    if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.STATUS_LOADING) {
-      return;
-    }
-
-    onLoadMoreListener.onLoadMore();
-    mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_LOADING);
-  }
-
-  public boolean isVisBottom() {
+  public boolean isBottom() {
     LinearLayoutManager layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
     //屏幕中最后一个可见子项的position
     int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
@@ -316,6 +331,14 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     return mData.get(mData.size() - 1);
   }
 
+  public int getLastDataPosition() {
+    int position = mData.size() - 1;
+    if (hasHeader()) {
+      position++;
+    }
+    return position;
+  }
+
   public void setData(List<T> list) {
     if (list == null) {
       list = new ArrayList<>();
@@ -336,16 +359,45 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   /* ************************** loadmore ************************** */
 
+  public void setLoadMoreView(LoadMoreView view) {
+    mLoadMoreView = view;
+  }
+
   public boolean hasLoadMoreView() {
     return mLoadMoreView != null;
   }
 
-  public boolean canLoadMore() {
-    return canLoadMore;
+  public void enableLoadMore() {
+    canLoadMore = true;
   }
 
-  public void setCanLoadMore(boolean canLoadMore) {
-    this.canLoadMore = canLoadMore;
+  public void disableLoadMore() {
+    canLoadMore = false;
+  }
+
+  private void autoLoadMore() {
+    if (!canLoadMore) {
+      return;
+    }
+
+    if (!hasLoadMoreView() && onLoadMoreListener == null) {
+      return;
+    }
+    //已满1屏
+    if (!isBottom()) {
+      return;
+    }
+    //正在加载
+    if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.STATUS_LOADING) {
+      return;
+    }
+
+    onLoadMoreListener.onLoadMore();
+    mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_LOADING);
+  }
+
+  public void loadMoreCompleted() {
+    mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_DEFAULT);
   }
 
 
@@ -436,7 +488,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
    * @param index index
    */
   public void setFooter(View footer, int index) {
-    if (mFooterLayout == null || mFooterLayout.getChildCount() <= index) {
+    if (!hasFooter() || mFooterLayout.getChildCount() <= index) {
       addFooterView(footer, index);
     } else {
       replaceFooterView(footer, index);
@@ -445,7 +497,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   private void addFooterView(View footer, int index) {
     //如果没有 footer layout ，先创建
-    if (mFooterLayout == null) {
+    if (!hasFooter()) {
       initFooterLayout();
     }
     //添加  footer

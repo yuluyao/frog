@@ -10,18 +10,18 @@ import android.os.Parcelable;
  */
 public class SkillBean implements Parcelable {
 
-  private int iconRes;
+  private int    id;
+  private int    iconRes;
   private String name;
   private String description;
-  public static final Creator<SkillBean> CREATOR = new Creator<SkillBean>() {
-    @Override public SkillBean createFromParcel(Parcel source) {
-      return new SkillBean(source);
-    }
 
-    @Override public SkillBean[] newArray(int size) {
-      return new SkillBean[size];
-    }
-  };
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   @Override public String toString() {
     return "SkillBean{" + "name='" + name + '\'' + '}';
@@ -65,14 +65,26 @@ public class SkillBean implements Parcelable {
   }
 
   @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(this.id);
     dest.writeInt(this.iconRes);
     dest.writeString(this.name);
     dest.writeString(this.description);
   }
 
   protected SkillBean(Parcel in) {
+    this.id = in.readInt();
     this.iconRes = in.readInt();
     this.name = in.readString();
     this.description = in.readString();
   }
+
+  public static final Creator<SkillBean> CREATOR = new Creator<SkillBean>() {
+    @Override public SkillBean createFromParcel(Parcel source) {
+      return new SkillBean(source);
+    }
+
+    @Override public SkillBean[] newArray(int size) {
+      return new SkillBean[size];
+    }
+  };
 }

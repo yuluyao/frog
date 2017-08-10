@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.capsule.library.BaseAdapter;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
     addHeader();
     addFooter();
-
   }
 
   private void initRecyclerView() {
@@ -37,12 +37,17 @@ public class MainActivity extends AppCompatActivity {
 
   private void initAdapter() {
     adapter = new MainAdapter(R.layout.item_test);
+    recyclerView.setAdapter(adapter);
+
+    adapter.setLoadMoreView(new CustomLoadMoreView());
     adapter.setOnLoadMoreListener(new BaseAdapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
-        repo.loadMore(adapter.getLastData().getIconRes());
+        List<SkillBean> data = repo.loadMore(adapter.getLastData().getIconRes());
+        adapter.addData(data);
+        adapter.notifyItemInserted(adapter.getLastDataPosition());
+        adapter.loadMoreCompleted();
       }
     });
-    recyclerView.setAdapter(adapter);
   }
 
   private void initData() {
@@ -51,20 +56,24 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void addHeader() {
+    int height = (int) (getResources().getDisplayMetrics().density * 48);
     TextView tv = new TextView(this);
     RecyclerView.LayoutParams lp =
-        new RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT);
+        new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            height);
+    tv.setBackgroundResource(R.color.colorAccent);
     tv.setLayoutParams(lp);
     tv.setText("我是头");
     adapter.setHeader(tv);
   }
 
   private void addFooter() {
+    int height = (int) (getResources().getDisplayMetrics().density * 48);
     TextView tv = new TextView(this);
     RecyclerView.LayoutParams lp =
-        new RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT);
+        new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            height);
+    tv.setBackgroundResource(R.color.colorAccent);
     tv.setLayoutParams(lp);
     tv.setText("我是尾");
     adapter.setFooter(tv);

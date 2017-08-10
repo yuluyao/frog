@@ -82,14 +82,16 @@ public class DataRepo {
 
   public DataRepo(Context context) {
     String[] names = context.getResources().getStringArray(R.array.skill_name);
+    int[] ids = context.getResources().getIntArray(R.array.icon_id);
     for (int i = 0; i < data.size(); i++) {
       data.get(i).setName(names[i]);
+      data.get(i).setId(ids[i]);
     }
   }
 
   public List<SkillBean> refreshList() {
     List<SkillBean> list = new ArrayList<>();
-    list.addAll(data.subList(0, 9));
+    list.addAll(data.subList(0, 10));
     return list;
   }
 
@@ -99,7 +101,7 @@ public class DataRepo {
     }
     for (int i = 0; i < data.size(); i++) {
       if (data.get(i).getIconRes() == resId) {
-        return data.subList(i, i + 9);
+        return data.subList(i + 1, i + 11);
       }
     }
     return null;

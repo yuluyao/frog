@@ -80,9 +80,10 @@ public abstract class LoadMoreView {
     return mLoadMoreEndGone;
   }
 
-  @Deprecated public boolean isLoadEndGone() {
-    return mLoadMoreEndGone;
+  public boolean isLoading(){
+    return mLoadMoreStatus == STATUS_LOADING;
   }
+
 
   public abstract @LayoutRes int getLayoutId();
 

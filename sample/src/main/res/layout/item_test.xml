@@ -8,8 +8,8 @@
     >
 
   <ImageView
-      android:layout_width="wrap_content"
       android:id="@+id/icon"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:src="@drawable/mh_3"
       />
@@ -22,6 +22,18 @@
       android:paddingStart="8dp"
       android:text="力劈华山"
       android:textColor="#CC0033"
+      android:textSize="18sp"
+      />
+
+  <TextView
+      android:id="@+id/icon_id"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:padding="16dp"
+      android:text="1"
+      android:textColor="#090"
       android:textSize="18sp"
       />
 
