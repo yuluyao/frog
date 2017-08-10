@@ -62,40 +62,29 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   private OnLoadMoreListener onLoadMoreListener;
 
   /* ******************************* */
-  //public BaseAdapter(List<T> data, int mLayoutResId) {
-  //  mData.clear();
-  //  mData.addAll(data);
-  //  this.mLayoutResId = mLayoutResId;
-  //}
-
-  //public BaseAdapter(List<T> data) {
-  //  mData.clear();
-  //  mData.addAll(data);
-  //}
-
   public BaseAdapter(int mLayoutResId) {
     this.mLayoutResId = mLayoutResId;
   }
 
   public void setOnLoadMoreListener(OnLoadMoreListener listener) {
     onLoadMoreListener = listener;
-    enableLoadMore();
     mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
         RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
         int visibleChildCount = layoutManager.getChildCount();
-        if (visibleChildCount > 0 && newState == RecyclerView.SCROLL_STATE_IDLE && !mLoadMoreView.isLoading()) {
+        if (visibleChildCount > 0
+            && newState == RecyclerView.SCROLL_STATE_IDLE
+            && !mLoadMoreView.isLoading()) {
           View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
           int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
           if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {
             mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_LOADING);
-              onLoadMoreListener.onLoadMore();
+            onLoadMoreListener.onLoadMore();
           } else {
             mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_END);
           }
         }
-
       }
     });
   }

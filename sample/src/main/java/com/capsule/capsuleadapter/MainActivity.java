@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.capsule.library.BaseAdapter;
+import io.reactivex.Observable;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     adapter.notifyDataSetChanged();
 
     addHeader();
-    addFooter();
+    //addFooter();
   }
 
   private void initRecyclerView() {
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     adapter.setOnLoadMoreListener(new BaseAdapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
         List<SkillBean> data = repo.loadMore(adapter.getLastData().getIconRes());
+        //Observable<List<SkillBean>> observable = Observable.ambArray(data);
         adapter.addData(data);
         adapter.notifyItemInserted(adapter.getLastDataPosition());
         adapter.loadMoreCompleted();
