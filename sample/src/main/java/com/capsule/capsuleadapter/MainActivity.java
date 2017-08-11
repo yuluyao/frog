@@ -9,7 +9,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.capsule.library.BaseAdapter;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,11 +52,36 @@ public class MainActivity extends AppCompatActivity {
     adapter.setLoadMoreView(new CustomLoadMoreView());
     adapter.setOnLoadMoreListener(new BaseAdapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
-        List<SkillBean> data = repo.loadMore(adapter.getLastData().getIconRes());
-        //Observable<List<SkillBean>> observable = Observable.ambArray(data);
-        adapter.addData(data);
-        adapter.notifyItemInserted(adapter.getLastDataPosition());
-        adapter.loadMoreCompleted();
+
+        Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {
+          @Override public void subscribe(@NonNull ObservableEmitter<List<SkillBean>> e)
+              throws Exception {
+            List<SkillBean> data = repo.loadMore(adapter.getLastData().getIconRes());
+            e.onNext(data);
+          }
+        })
+            .subscribeOn(Schedulers.io())
+            .delay(2000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Observer<List<SkillBean>>() {
+              @Override public void onSubscribe(@NonNull Disposable d) {
+
+              }
+
+              @Override public void onNext(@NonNull List<SkillBean> list) {
+                adapter.addData(list);
+                adapter.notifyItemInserted(adapter.getLastDataPosition());
+                adapter.loadMoreCompleted();
+              }
+
+              @Override public void onError(@NonNull Throwable e) {
+
+              }
+
+              @Override public void onComplete() {
+
+              }
+            });
       }
     });
   }
@@ -61,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
     int height = (int) (getResources().getDisplayMetrics().density * 48);
     TextView tv = new TextView(this);
     RecyclerView.LayoutParams lp =
-        new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            height);
+        new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
     tv.setBackgroundResource(R.color.colorAccent);
     tv.setLayoutParams(lp);
     tv.setText("我是头");
@@ -73,8 +106,7 @@ public class MainActivity extends AppCompatActivity {
     int height = (int) (getResources().getDisplayMetrics().density * 48);
     TextView tv = new TextView(this);
     RecyclerView.LayoutParams lp =
-        new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            height);
+        new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
     tv.setBackgroundResource(R.color.colorAccent);
     tv.setLayoutParams(lp);
     tv.setText("我是尾");

@@ -79,10 +79,10 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
           View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
           int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
           if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {
-            mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_LOADING);
+            mLoadMoreView.setStatus(LoadMoreView.LOADING);
             onLoadMoreListener.onLoadMore();
           } else {
-            mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_END);
+            mLoadMoreView.setStatus(LoadMoreView.END);
           }
         }
       }
@@ -134,11 +134,11 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     H holder = createBaseViewHolder(view);
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        //if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.STATUS_FAIL) {
+        //if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.FAILED) {
         //  notifyLoadMoreToLoading();
         //}
         //if (mEnableLoadMoreEndClick
-        //    && mLoadMoreView.getLoadMoreStatus() == LoadMoreView.STATUS_END) {
+        //    && mLoadMoreView.getLoadMoreStatus() == LoadMoreView.END) {
         //  notifyLoadMoreToLoading();
         //}
       }
@@ -364,29 +364,29 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     canLoadMore = false;
   }
 
-  private void autoLoadMore() {
-    if (!canLoadMore) {
-      return;
-    }
-
-    if (!hasLoadMoreView() && onLoadMoreListener == null) {
-      return;
-    }
-    //已满1屏
-    if (!isBottom()) {
-      return;
-    }
-    //正在加载
-    if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.STATUS_LOADING) {
-      return;
-    }
-
-    onLoadMoreListener.onLoadMore();
-    mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_LOADING);
-  }
+  //private void autoLoadMore() {
+  //  if (!canLoadMore) {
+  //    return;
+  //  }
+  //
+  //  if (!hasLoadMoreView() && onLoadMoreListener == null) {
+  //    return;
+  //  }
+  //  //已满1屏
+  //  if (!isBottom()) {
+  //    return;
+  //  }
+  //  //正在加载
+  //  if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.LOADING) {
+  //    return;
+  //  }
+  //
+  //  onLoadMoreListener.onLoadMore();
+  //  mLoadMoreView.setLoadMoreStatus(LoadMoreView.LOADING);
+  //}
 
   public void loadMoreCompleted() {
-    mLoadMoreView.setLoadMoreStatus(LoadMoreView.STATUS_DEFAULT);
+    mLoadMoreView.setStatus(LoadMoreView.IDLE);
   }
 
 

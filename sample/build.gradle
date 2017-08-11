@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: "$dependenciesDir/RxJava2.gradle"
+apply from: "$dependenciesDir/RxAndroid2.gradle"
 
 android {
   compileSdkVersion 25

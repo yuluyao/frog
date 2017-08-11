@@ -2,6 +2,7 @@ package com.capsule.library;
 
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.view.View;
 
 /**
  * Created by BlingBling on 2016/11/11.
@@ -9,81 +10,73 @@ import android.support.annotation.LayoutRes;
 
 public abstract class LoadMoreView {
 
-  public static final int     STATUS_DEFAULT   = 1;
-  public static final int     STATUS_LOADING   = 2;
-  public static final int     STATUS_FAIL      = 3;
-  public static final int     STATUS_END       = 4;
+  public static final int IDLE    = 1;
+  public static final int LOADING = 2;
+  public static final int FAILED  = 3;
+  public static final int END     = 4;
 
-  private             int     mLoadMoreStatus  = STATUS_DEFAULT;
-  private             boolean mLoadMoreEndGone = false;
+  private View view_loading;
+  private View view_failed;
+  private View view_end;
 
-
+  private int mStatus = IDLE;
 
   public void convert(BaseViewHolder holder) {
-    switch (mLoadMoreStatus) {
-      case STATUS_LOADING:
-        visibleLoading(holder, true);
-        visibleLoadFail(holder, false);
-        visibleLoadEnd(holder, false);
+    view_loading = holder.itemView.findViewById(getLoadingViewId());
+    view_failed = holder.itemView.findViewById(getLoadFailViewId());
+    view_end = holder.itemView.findViewById(getLoadEndViewId());
+    handleStatus();
+  }
+
+  public boolean isLoading() {
+    return mStatus == LOADING;
+  }
+
+  public void setStatus(int status) {
+    mStatus = status;
+    handleStatus();
+  }
+
+  private void handleStatus() {
+    switch (mStatus) {
+      case LOADING:
+        showLoading();
         break;
-      case STATUS_FAIL:
-        visibleLoading(holder, false);
-        visibleLoadFail(holder, true);
-        visibleLoadEnd(holder, false);
+      case FAILED:
+        showFail();
         break;
-      case STATUS_END:
-        visibleLoading(holder, false);
-        visibleLoadFail(holder, false);
-        visibleLoadEnd(holder, true);
+      case END:
+        showEnd();
         break;
-      case STATUS_DEFAULT:
-        visibleLoading(holder, false);
-        visibleLoadFail(holder, false);
-        visibleLoadEnd(holder, false);
+      case IDLE:
+        showIdle();
         break;
     }
   }
 
-
-
-  private void visibleLoading(BaseViewHolder holder, boolean visible) {
-    holder.setVisibility(getLoadingViewId(), visible);
+  private void showLoading() {
+    view_loading.setVisibility(View.VISIBLE);
+    view_failed.setVisibility(View.INVISIBLE);
+    view_end.setVisibility(View.INVISIBLE);
   }
 
-  private void visibleLoadFail(BaseViewHolder holder, boolean visible) {
-    holder.setVisibility(getLoadFailViewId(), visible);
+  private void showFail() {
+    view_loading.setVisibility(View.INVISIBLE);
+    view_failed.setVisibility(View.VISIBLE);
+    view_end.setVisibility(View.INVISIBLE);
   }
 
-  private void visibleLoadEnd(BaseViewHolder holder, boolean visible) {
-    final int loadEndViewId = getLoadEndViewId();
-    if (loadEndViewId != 0) {
-      holder.setVisibility(loadEndViewId, visible);
-    }
+  private void showEnd() {
+    view_loading.setVisibility(View.INVISIBLE);
+    view_failed.setVisibility(View.INVISIBLE);
+    view_end.setVisibility(View.VISIBLE);
   }
 
-  public void setLoadMoreStatus(int loadMoreStatus) {
-    this.mLoadMoreStatus = loadMoreStatus;
+  private void showIdle() {
+    view_loading.setVisibility(View.INVISIBLE);
+    view_failed.setVisibility(View.INVISIBLE);
+    view_end.setVisibility(View.INVISIBLE);
   }
-
-  public int getLoadMoreStatus() {
-    return mLoadMoreStatus;
-  }
-
-  public final void setLoadMoreEndGone(boolean loadMoreEndGone) {
-    this.mLoadMoreEndGone = loadMoreEndGone;
-  }
-
-  public final boolean isLoadEndMoreGone() {
-    if (getLoadEndViewId() == 0) {
-      return true;
-    }
-    return mLoadMoreEndGone;
-  }
-
-  public boolean isLoading(){
-    return mLoadMoreStatus == STATUS_LOADING;
-  }
-
 
   public abstract @LayoutRes int getLayoutId();
 

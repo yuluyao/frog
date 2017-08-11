@@ -100,8 +100,21 @@ public class DataRepo {
       return refreshList();
     }
     for (int i = 0; i < data.size(); i++) {
+      int start = i + 1;
+
+      int end;
+      if (start +10 <= data.size() - 1) {
+        end = i + 11;
+      } else {
+        end = data.size();
+      }
+
+      if (end <= start) {
+        return null;
+      }
+
       if (data.get(i).getIconRes() == resId) {
-        return data.subList(i + 1, i + 11);
+        return data.subList(start, end);
       }
     }
     return null;
