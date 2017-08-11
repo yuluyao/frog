@@ -48,9 +48,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   /* 空 */
   private FrameLayout mEmptyLayout;
-  //private boolean mIsUseEmpty = true;
-  //private boolean mHeadAndEmptyEnable;
-  //private boolean mFootAndEmptyEnable;
+  private boolean     isDataEmpty;
 
   /* 头尾 */
   private LinearLayout mHeaderLayout;
@@ -263,7 +261,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   /* ************************* adapter ************************* */
   @Override public int getItemCount() {
     int count = mData.size();
-    if (hasEmptyView() && dataEmpty) {
+    if (hasEmptyView() && isDataEmpty) {
       return 1;
     }
     if (hasHeader()) {
@@ -280,7 +278,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   @Override public int getItemViewType(int position) {
-    int emptyCount = hasEmptyView() && dataEmpty ? 1 : 0;
+    int emptyCount = hasEmptyView() && isDataEmpty ? 1 : 0;
     if (position < emptyCount) {
       return VIEW_TYPE_EMPTY;
     }
@@ -344,10 +342,10 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     mData.clear();
     mData.addAll(list);
     if (mData.size() == 0) {
-      dataEmpty = true;
+      isDataEmpty = true;
       mRecyclerView.setEnabled(false);
     } else {
-      dataEmpty = false;
+      isDataEmpty = false;
     }
   }
 
@@ -357,9 +355,9 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     }
     mData.addAll(list);
     //if (mData.size() == 0) {
-    //  dataEmpty = true;
+    //  isDataEmpty = true;
     //} else {
-    //  dataEmpty = false;
+    //  isDataEmpty = false;
     //}
   }
 
@@ -383,7 +381,6 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     mEmptyLayout.addView(view);
   }
 
-  private boolean dataEmpty;
 
   public void notifyRefreshCompleted(List<T> data) {
     setData(data);
