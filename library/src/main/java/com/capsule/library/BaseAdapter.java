@@ -70,19 +70,16 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     onLoadMoreListener = listener;
     mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-        super.onScrollStateChanged(recyclerView, newState);
         RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
         int visibleChildCount = layoutManager.getChildCount();
-        if (visibleChildCount > 0
-            && newState == RecyclerView.SCROLL_STATE_IDLE
-            && !mLoadMoreView.isLoading()) {
+        if (visibleChildCount > 0//有item
+            && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
+            && !mLoadMoreView.isLoading()) {//没有正在加载
           View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
           int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
-          if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {
+          if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
             mLoadMoreView.setStatus(LoadMoreView.LOADING);
             onLoadMoreListener.onLoadMore();
-          } else {
-            mLoadMoreView.setStatus(LoadMoreView.END);
           }
         }
       }
@@ -385,8 +382,23 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   //  mLoadMoreView.setLoadMoreStatus(LoadMoreView.LOADING);
   //}
 
-  public void loadMoreCompleted() {
+  //public void loadMoreCompleted() {
+  //  mLoadMoreView.setStatus(LoadMoreView.IDLE);
+  //}
+
+  public void notifyLoadMoreCompleted(List<T> data) {
+    if (null == data) {
+      mLoadMoreView.setStatus(LoadMoreView.FAILED);
+      return;
+    }
+    if (data.size() == 0) {
+      mLoadMoreView.setStatus(LoadMoreView.END);
+      return;
+    }
     mLoadMoreView.setStatus(LoadMoreView.IDLE);
+    int insertPosition = getLastDataPosition() + 1;
+    mData.addAll(data);
+    notifyItemInserted(insertPosition);
   }
 
 

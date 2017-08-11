@@ -69,9 +69,10 @@ public class MainActivity extends AppCompatActivity {
               }
 
               @Override public void onNext(@NonNull List<SkillBean> list) {
-                adapter.addData(list);
-                adapter.notifyItemInserted(adapter.getLastDataPosition());
-                adapter.loadMoreCompleted();
+                adapter.notifyLoadMoreCompleted(list);
+                //adapter.addData(list);
+                //adapter.notifyItemInserted(adapter.getLastDataPosition());
+                //adapter.loadMoreCompleted();
               }
 
               @Override public void onError(@NonNull Throwable e) {

@@ -10,10 +10,10 @@ import android.view.View;
 
 public abstract class LoadMoreView {
 
-  public static final int IDLE    = 1;
   public static final int LOADING = 2;
   public static final int FAILED  = 3;
   public static final int END     = 4;
+  public static final int IDLE    = 1;
 
   private View view_loading;
   private View view_failed;
