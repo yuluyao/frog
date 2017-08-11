@@ -48,16 +48,16 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   /* 空 */
   private FrameLayout mEmptyLayout;
-  private boolean mIsUseEmpty = true;
-  private boolean mHeadAndEmptyEnable;
-  private boolean mFootAndEmptyEnable;
+  //private boolean mIsUseEmpty = true;
+  //private boolean mHeadAndEmptyEnable;
+  //private boolean mFootAndEmptyEnable;
 
   /* 头尾 */
   private LinearLayout mHeaderLayout;
   private LinearLayout mFooterLayout;
 
   /* load more */
-  private LoadMoreView mLoadMoreView;
+  private LoadMoreView       mLoadMoreView;
   private OnLoadMoreListener onLoadMoreListener;
 
   /* ******************************* */
@@ -75,12 +75,13 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
         RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
         int visibleChildCount = layoutManager.getChildCount();
-        if (visibleChildCount > 0//有item
+        if (mData.size() > 0//有item
             && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
             && !mLoadMoreView.isLoading()) {//没有正在加载
           View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
           int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
           if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
+
             mLoadMoreView.setStatus(LoadMoreView.LOADING);
             onLoadMoreListener.onLoadMore();
           }
@@ -213,8 +214,6 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   @Override public void onBindViewHolder(H holder, int position) {
-    //autoLoadMore();
-
     int viewType = holder.getItemViewType();
     int offset = 0;
     if (hasHeader()) {
@@ -264,6 +263,9 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   /* ************************* adapter ************************* */
   @Override public int getItemCount() {
     int count = mData.size();
+    if (hasEmptyView() && dataEmpty) {
+      return 1;
+    }
     if (hasHeader()) {
       count++;
     }
@@ -273,26 +275,33 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     if (hasLoadMoreView()) {
       count++;
     }
+
     return count;
   }
 
   @Override public int getItemViewType(int position) {
+    int emptyCount = hasEmptyView() && dataEmpty ? 1 : 0;
+    if (position < emptyCount) {
+      return VIEW_TYPE_EMPTY;
+    }
+
+    position = hasEmptyView() ? position - emptyCount : position;
     int headerCount = hasHeader() ? 1 : 0;
     if (position < headerCount) {
       return VIEW_TYPE_HEADER;
+    }
+
+    position = hasHeader() ? position - headerCount : position;
+    if (position < mData.size()) {
+      return getDataItemViewType(position); //VIEW_TYPE_DATA
+    }
+
+    position = hasFooter() ? position - mData.size() : position;
+    int footerCount = hasFooter() ? 1 : 0;
+    if (position < footerCount) {
+      return VIEW_TYPE_FOOTER;
     } else {
-      position = hasHeader() ? position - headerCount : position;
-      if (position < mData.size()) {
-        return getDataItemViewType(position); //VIEW_TYPE_DATA
-      } else {
-        position = hasFooter() ? position - mData.size() : position;
-        int footerCount = hasFooter() ? 1 : 0;
-        if (position < footerCount) {
-          return VIEW_TYPE_FOOTER;
-        } else {
-          return VIEW_TYPE_LOAD;
-        }
-      }
+      return VIEW_TYPE_LOAD;
     }
   }
 
@@ -334,6 +343,12 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     }
     mData.clear();
     mData.addAll(list);
+    if (mData.size() == 0) {
+      dataEmpty = true;
+      mRecyclerView.setEnabled(false);
+    } else {
+      dataEmpty = false;
+    }
   }
 
   public void addData(List<T> list) {
@@ -341,6 +356,38 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
       list = new ArrayList<>();
     }
     mData.addAll(list);
+    //if (mData.size() == 0) {
+    //  dataEmpty = true;
+    //} else {
+    //  dataEmpty = false;
+    //}
+  }
+
+
+  /* ********************* refresh ********************* */
+
+  private boolean hasEmptyView() {
+    return mEmptyLayout != null;
+  }
+
+  public void setEmptyView(int layoutId) {
+    if (!hasEmptyView()) {
+      mEmptyLayout = new FrameLayout(mContext);
+      RecyclerView.LayoutParams lp =
+          new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+              RecyclerView.LayoutParams.MATCH_PARENT);
+      mEmptyLayout.setLayoutParams(lp);
+    }
+    mEmptyLayout.removeAllViews();
+    View view = LayoutInflater.from(mContext).inflate(layoutId, mRecyclerView, false);
+    mEmptyLayout.addView(view);
+  }
+
+  private boolean dataEmpty;
+
+  public void notifyRefreshCompleted(List<T> data) {
+    setData(data);
+    notifyDataSetChanged();
   }
 
 
@@ -367,9 +414,10 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     }
     mLoadMoreView.setStatus(LoadMoreView.IDLE);
     int insertPosition = getLastDataPosition() + 1;
-    mData.addAll(data);
+    addData(data);
     notifyItemInserted(insertPosition);
   }
+
 
 
 

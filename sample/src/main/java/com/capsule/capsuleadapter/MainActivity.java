@@ -1,9 +1,12 @@
 package com.capsule.capsuleadapter;
 
+import android.support.v4.view.LayoutInflaterCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,18 +20,21 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
-  private MainAdapter  adapter;
-  private RecyclerView recyclerView;
-  private DataRepo     repo;
+  private MainAdapter        adapter;
+  private SwipeRefreshLayout refreshLayout;
+  private RecyclerView       recyclerView;
+  private DataRepo           repo;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    initRefresh();
     initRecyclerView();
     initAdapter();
     initData();
@@ -36,6 +42,42 @@ public class MainActivity extends AppCompatActivity {
 
     addHeader();
     //addFooter();
+  }
+
+  private void initRefresh() {
+    refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+    refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override public void onRefresh() {
+        Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {
+          @Override public void subscribe(@NonNull ObservableEmitter<List<SkillBean>> e)
+              throws Exception {
+            List<SkillBean> data = repo.refreshList();
+            e.onNext(data);
+          }
+        })
+            .subscribeOn(Schedulers.io())
+            .delay(2000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Observer<List<SkillBean>>() {
+              @Override public void onSubscribe(@NonNull Disposable d) {
+
+              }
+
+              @Override public void onNext(@NonNull List<SkillBean> list) {
+                refreshLayout.setRefreshing(false);
+                adapter.notifyRefreshCompleted(list);
+              }
+
+              @Override public void onError(@NonNull Throwable e) {
+
+              }
+
+              @Override public void onComplete() {
+
+              }
+            });
+      }
+    });
   }
 
   private void initRecyclerView() {
@@ -49,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     adapter = new MainAdapter(R.layout.item_test);
     recyclerView.setAdapter(adapter);
 
+    adapter.setEmptyView(R.layout.layout_empty);
     adapter.setLoadMoreView(new CustomLoadMoreView());
     adapter.setOnLoadMoreListener(new BaseAdapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
@@ -89,7 +132,8 @@ public class MainActivity extends AppCompatActivity {
 
   private void initData() {
     repo = new DataRepo(this);
-    adapter.setData(repo.refreshList());
+    //adapter.setData(repo.refreshList());
+    adapter.setData(new ArrayList<SkillBean>());
   }
 
   private void addHeader() {
