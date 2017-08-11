@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {
           @Override public void subscribe(@NonNull ObservableEmitter<List<SkillBean>> e)
               throws Exception {
-            List<SkillBean> data = repo.loadMore(adapter.getLastData().getIconRes());
+            List<SkillBean> data = repo.loadMore(adapter.getLastData().getId());
             e.onNext(data);
           }
         })

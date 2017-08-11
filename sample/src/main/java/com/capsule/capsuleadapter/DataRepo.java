@@ -95,26 +95,24 @@ public class DataRepo {
     return list;
   }
 
-  public List<SkillBean> loadMore(int resId) {
-    if (resId <= 0) {
+  public List<SkillBean> loadMore(int id) {
+    if (id <= 0) {
       return refreshList();
     }
     for (int i = 0; i < data.size(); i++) {
-      int start = i + 1;
+      if (data.get(i).getId() == id) {
+        int lastPosition = data.size()-1;//63
+        int startPosition = i + 1;//61
 
-      int end;
-      if (start +10 <= data.size() - 1) {
-        end = i + 11;
-      } else {
-        end = data.size();
-      }
+        int leftCount = lastPosition - startPosition;
 
-      if (end <= start) {
-        return null;
-      }
-
-      if (data.get(i).getIconRes() == resId) {
-        return data.subList(start, end);
+        if (leftCount <= 0) {
+          return new ArrayList<>();
+        } else if (leftCount <= 10) {
+          return data.subList(startPosition, lastPosition + 1);
+        } else {
+          return data.subList(startPosition, startPosition + 10);
+        }
       }
     }
     return null;

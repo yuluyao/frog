@@ -32,6 +32,10 @@ public abstract class LoadMoreView {
     return mStatus == LOADING;
   }
 
+  public boolean isEnd(){
+    return mStatus == END;
+  }
+
   public void setStatus(int status) {
     mStatus = status;
     handleStatus();

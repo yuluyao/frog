@@ -58,7 +58,6 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   /* load more */
   private LoadMoreView mLoadMoreView;
-  private boolean canLoadMore = false;
   private OnLoadMoreListener onLoadMoreListener;
 
   /* ******************************* */
@@ -70,6 +69,10 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     onLoadMoreListener = listener;
     mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        if (mLoadMoreView.isEnd()) {
+          return;
+        }
+
         RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
         int visibleChildCount = layoutManager.getChildCount();
         if (visibleChildCount > 0//有item
@@ -352,39 +355,6 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   public boolean hasLoadMoreView() {
     return mLoadMoreView != null;
   }
-
-  public void enableLoadMore() {
-    canLoadMore = true;
-  }
-
-  public void disableLoadMore() {
-    canLoadMore = false;
-  }
-
-  //private void autoLoadMore() {
-  //  if (!canLoadMore) {
-  //    return;
-  //  }
-  //
-  //  if (!hasLoadMoreView() && onLoadMoreListener == null) {
-  //    return;
-  //  }
-  //  //已满1屏
-  //  if (!isBottom()) {
-  //    return;
-  //  }
-  //  //正在加载
-  //  if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.LOADING) {
-  //    return;
-  //  }
-  //
-  //  onLoadMoreListener.onLoadMore();
-  //  mLoadMoreView.setLoadMoreStatus(LoadMoreView.LOADING);
-  //}
-
-  //public void loadMoreCompleted() {
-  //  mLoadMoreView.setStatus(LoadMoreView.IDLE);
-  //}
 
   public void notifyLoadMoreCompleted(List<T> data) {
     if (null == data) {
