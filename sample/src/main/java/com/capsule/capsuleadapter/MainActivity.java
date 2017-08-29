@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     adapter.notifyDataSetChanged();
 
     addHeader();
-    //addFooter();
+    addFooter();
   }
 
   private void initRefresh() {
@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
   private void initAdapter() {
     adapter = new MainAdapter(R.layout.item_test);
-    recyclerView.setAdapter(adapter);
 
     adapter.setEmptyView(R.layout.layout_empty);
     adapter.setLoadMoreView(new CustomLoadMoreView());
@@ -110,9 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
               @Override public void onNext(@NonNull List<SkillBean> list) {
                 adapter.notifyLoadMoreCompleted(list);
-                //adapter.addData(list);
-                //adapter.notifyItemInserted(adapter.getLastDataPosition());
-                //adapter.loadMoreCompleted();
               }
 
               @Override public void onError(@NonNull Throwable e) {
@@ -125,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
             });
       }
     });
+    recyclerView.setAdapter(adapter);
+
   }
 
   private void initData() {

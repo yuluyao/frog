@@ -16,7 +16,9 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -58,41 +60,93 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   private LoadMoreView       mLoadMoreView;
   private OnLoadMoreListener onLoadMoreListener;
 
+  /* pending */
+  private static      Map<Integer, Object> pendingMap                    = new HashMap<>();
+  public static final int                  PENDING_ON_LOAD_MORE_LISTENER = 0;
+  public static final int                  PENDING_HEADER                = 1;
+  public static final int                  PENDING_HEADER_INDEX          = 1;
+  public static final int                  PENDING_FOOTER                = 2;
+  public static final int                  PENDING_FOOTER_INDEX          = 2;
+  public static final int                  PENDING_EMPTY                 = 3;
+
   /* ******************************* */
   public BaseAdapter(int mLayoutResId) {
     this.mLayoutResId = mLayoutResId;
   }
 
-  public void setOnLoadMoreListener(OnLoadMoreListener listener) {
-    onLoadMoreListener = listener;
-    mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-      @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-        if (mLoadMoreView.isEnd()) {
-          return;
-        }
 
-        RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
-        int visibleChildCount = layoutManager.getChildCount();
-        if (mData.size() > 0//有item
-            && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
-            && !mLoadMoreView.isLoading()) {//没有正在加载
-          View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
-          int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
-          if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
-
-            mLoadMoreView.setStatus(LoadMoreView.LOADING);
-            onLoadMoreListener.onLoadMore();
-          }
-        }
-      }
-    });
-  }
 
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
     super.onAttachedToRecyclerView(recyclerView);
     mRecyclerView = recyclerView;
     mContext = mRecyclerView.getContext();
     mLayoutInflater = LayoutInflater.from(mContext);
+    executePending();
+  }
+
+  private void putPending(int key, Object o) {
+    pendingMap.put(key, o);
+  }
+
+  private void executePending() {
+    if (pendingMap.containsKey(PENDING_ON_LOAD_MORE_LISTENER)) {
+      onLoadMoreListener = (OnLoadMoreListener) pendingMap.get(PENDING_ON_LOAD_MORE_LISTENER);
+      mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+          if (mLoadMoreView.isEnd()) {
+            return;
+          }
+
+          RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+          int visibleChildCount = layoutManager.getChildCount();
+          if (mData.size() > 0//有item
+              && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
+              && !mLoadMoreView.isLoading()) {//没有正在加载
+            View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
+            int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
+            if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
+
+              mLoadMoreView.setStatus(LoadMoreView.LOADING);
+              onLoadMoreListener.onLoadMore();
+            }
+          }
+        }
+      });
+    }
+    if (pendingMap.containsKey(PENDING_EMPTY)) {
+      int layoutId = (int) pendingMap.get(PENDING_EMPTY);
+      if (!hasEmptyView()) {
+        mEmptyLayout = new FrameLayout(mContext);
+        RecyclerView.LayoutParams lp =
+            new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.MATCH_PARENT);
+        mEmptyLayout.setLayoutParams(lp);
+      }
+      mEmptyLayout.removeAllViews();
+      View view = LayoutInflater.from(mContext).inflate(layoutId, mRecyclerView, false);
+      mEmptyLayout.addView(view);
+    }
+
+    if (pendingMap.containsKey(PENDING_HEADER)) {
+      View header = (View) pendingMap.get(PENDING_HEADER);
+      int index = (int) pendingMap.get(PENDING_HEADER_INDEX);
+      if (!hasHeader() || mHeaderLayout.getChildCount() <= index) {
+        addHeaderView(header, index);
+      } else {
+        replaceHeaderView(header, index);
+      }
+    }
+
+    if (pendingMap.containsKey(PENDING_FOOTER)) {
+      View footer = (View) pendingMap.get(PENDING_FOOTER);
+      int index = (int) pendingMap.get(PENDING_FOOTER_INDEX);
+      if (!hasFooter() || mFooterLayout.getChildCount() <= index) {
+        addFooterView(footer, index);
+      } else {
+        replaceFooterView(footer, index);
+      }
+    }
+    pendingMap.clear();
   }
 
   @Override public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
@@ -369,6 +423,11 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   public void setEmptyView(int layoutId) {
+
+    if (mRecyclerView == null) {
+      putPending(PENDING_EMPTY, layoutId);
+      return;
+    }
     if (!hasEmptyView()) {
       mEmptyLayout = new FrameLayout(mContext);
       RecyclerView.LayoutParams lp =
@@ -380,7 +439,6 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     View view = LayoutInflater.from(mContext).inflate(layoutId, mRecyclerView, false);
     mEmptyLayout.addView(view);
   }
-
 
   public void notifyRefreshCompleted(List<T> data) {
     setData(data);
@@ -398,6 +456,36 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   public boolean hasLoadMoreView() {
     return mLoadMoreView != null;
+  }
+
+
+  public void setOnLoadMoreListener(OnLoadMoreListener listener) {
+    if (mRecyclerView == null) {
+      putPending(PENDING_ON_LOAD_MORE_LISTENER, listener);
+      return;
+    }
+    onLoadMoreListener = listener;
+    mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+      @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        if (mLoadMoreView.isEnd()) {
+          return;
+        }
+
+        RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+        int visibleChildCount = layoutManager.getChildCount();
+        if (mData.size() > 0//有item
+            && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
+            && !mLoadMoreView.isLoading()) {//没有正在加载
+          View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
+          int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
+          if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
+
+            mLoadMoreView.setStatus(LoadMoreView.LOADING);
+            onLoadMoreListener.onLoadMore();
+          }
+        }
+      }
+    });
   }
 
   public void notifyLoadMoreCompleted(List<T> data) {
@@ -443,6 +531,12 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
    * @param index index
    */
   public void setHeader(View header, int index) {
+    if (mRecyclerView == null) {
+      putPending(PENDING_HEADER, header);
+      putPending(PENDING_HEADER_INDEX, index);
+      return;
+    }
+
     if (!hasHeader() || mHeaderLayout.getChildCount() <= index) {
       addHeaderView(header, index);
     } else {
@@ -504,6 +598,12 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
    * @param index index
    */
   public void setFooter(View footer, int index) {
+    if (mRecyclerView == null) {
+      putPending(PENDING_FOOTER, footer);
+      putPending(PENDING_FOOTER_INDEX, index);
+      return;
+    }
+
     if (!hasFooter() || mFooterLayout.getChildCount() <= index) {
       addFooterView(footer, index);
     } else {
