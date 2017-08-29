@@ -70,11 +70,12 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   public static final int                  PENDING_EMPTY                 = 3;
 
   /* ******************************* */
+  public BaseAdapter() {
+  }
+
   public BaseAdapter(int mLayoutResId) {
     this.mLayoutResId = mLayoutResId;
   }
-
-
 
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
     super.onAttachedToRecyclerView(recyclerView);
@@ -158,9 +159,9 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     H baseViewHolder = null;
 
     switch (viewType) {
-      case VIEW_TYPE_DATA:
-        baseViewHolder = onCreateDefViewHolder(parent, viewType);
-        break;
+      //case VIEW_TYPE_DATA:
+      //  baseViewHolder = onCreateDefViewHolder(parent, viewType);
+      //  break;
       case VIEW_TYPE_HEADER:
         baseViewHolder = createBaseViewHolder(mHeaderLayout);
         break;
@@ -176,6 +177,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
       default:
         baseViewHolder = onCreateDefViewHolder(parent, viewType);
         //bindViewClickListener(baseViewHolder);
+        break;
     }
     //baseViewHolder.setAdapter(this);
     return baseViewHolder;
@@ -267,14 +269,14 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   @Override public void onBindViewHolder(H holder, int position) {
     int viewType = holder.getItemViewType();
-    int offset = 0;
-    if (hasHeader()) {
-      offset++;
-    }
+    //int offset = 0;
+    //if (hasHeader()) {
+    //  offset++;
+    //}
     switch (viewType) {
-      case VIEW_TYPE_DATA:
-        convert(holder, getData(position - offset));
-        break;
+      //case VIEW_TYPE_DATA:
+      //  convert(holder, getData(position - offset));
+      //  break;
       case VIEW_TYPE_HEADER:
         break;
       case VIEW_TYPE_FOOTER:
@@ -286,7 +288,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
         break;
 
       default:
-        convert(holder, getData(position - offset));
+        convert(holder, getData(position));
         break;
     }
   }
@@ -366,6 +368,13 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   /* **************************** data **************************** */
   @Nullable public T getData(int position) {
+    if (hasHeader()) {
+      position--;
+    }
+
+    if (position == -1) {
+      return null;
+    }
 
     if (position < mData.size()) {
       return mData.get(position);
@@ -457,7 +466,6 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   public boolean hasLoadMoreView() {
     return mLoadMoreView != null;
   }
-
 
   public void setOnLoadMoreListener(OnLoadMoreListener listener) {
     if (mRecyclerView == null) {

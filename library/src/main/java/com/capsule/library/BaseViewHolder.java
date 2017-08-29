@@ -12,20 +12,17 @@ import android.widget.TextView;
  */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
 
-
   public BaseViewHolder(View itemView) {
     super(itemView);
   }
 
-  public BaseViewHolder setText(int id,String text){
+  public BaseViewHolder setText(int id, String text) {
     ((TextView) itemView.findViewById(id)).setText(text);
     return this;
   }
 
-  public BaseViewHolder setVisibility(int id ,boolean visible ){
+  public BaseViewHolder setVisibility(int id, boolean visible) {
     itemView.findViewById(id).setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     return this;
   }
-
-
 }

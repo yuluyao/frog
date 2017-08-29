@@ -5,10 +5,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.capsule.library.BaseAdapter;
+import com.capsule.library.TouchToClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     adapter.notifyDataSetChanged();
 
     addHeader();
-    addFooter();
+    //addFooter();
   }
 
   private void initRefresh() {
@@ -82,6 +84,17 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.LayoutManager manager =
         new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
     recyclerView.setLayoutManager(manager);
+    recyclerView.addOnItemTouchListener(new TouchToClick(recyclerView) {
+      @Override public void onItemClick(RecyclerView.ViewHolder vh, Object item) {
+        SkillBean data = (SkillBean) item;
+        Log.i("vegeta",  "click : "+ data.getName());
+      }
+
+      @Override public void onItemLongClick(RecyclerView.ViewHolder vh, Object item) {
+        SkillBean data = (SkillBean) item;
+        Log.i("vegeta",  "long click : "+ data.getName());
+      }
+    });
   }
 
   private void initAdapter() {
