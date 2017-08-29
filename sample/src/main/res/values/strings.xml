@@ -13,8 +13,8 @@
     <item>剑荡四方</item>
     <item>移花接木</item>
     <item>上古灵符</item>
-    <item>...</item>
-    <item>...</item>
+    <item>无畏布施</item>
+    <item>灵山禅语</item>
     <item>迟钝</item>
     <item>嗜血追击</item>
     <item>高级吸血</item>
@@ -37,9 +37,9 @@
     <item>高级冥思</item>
     <item>高级慧根</item>
     <item>高级法术抵抗</item>
-    <item>...</item>
-    <item>...</item>
-    <item>...</item>
+    <item>高级雷吸</item>
+    <item>高级土吸</item>
+    <item>高级水吸</item>
     <item>高级火吸</item>
     <item>高级夜战</item>
     <item>高级感知</item>
@@ -58,13 +58,13 @@
     <item>高级永恒</item>
     <item>高级再生</item>
     <item>高级否定信仰</item>
-    <item>八荒烈火</item>
-    <item>...</item>
+    <item>八凶阵法</item>
+    <item>龙魂</item>
     <item>夜舞倾城</item>
     <item>惊心一剑</item>
-    <item>...</item>
-    <item>...</item>
-    <item>...</item>
-    <item>...</item>
+    <item>苍鸾怒击</item>
+    <item>天降灵葫</item>
+    <item>大快朵颐</item>
+    <item>月光</item>
   </string-array>
 </resources>
