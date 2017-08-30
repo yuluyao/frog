@@ -22,5 +22,6 @@ public class MainAdapter extends BaseAdapter<SkillBean,BaseViewHolder> {
     ((ImageView) holder.itemView.findViewById(R.id.icon)).setImageResource(item.getIconRes());
     ((TextView) holder.itemView.findViewById(R.id.icon_id)).setText(String.valueOf(item.getId()));
 
+    holder.setClickableId(R.id.icon,R.id.check);
   }
 }

@@ -11,15 +11,15 @@ import android.view.View;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/29 17:24
  */
-public abstract class TouchToClick implements RecyclerView.OnItemTouchListener {
+public abstract class ItemClickListener implements RecyclerView.OnItemTouchListener {
 
   private GestureDetectorCompat mGestureDetector;
   private RecyclerView          mRecyclerView;
 
-  public TouchToClick(RecyclerView recyclerView) {
+  public ItemClickListener(RecyclerView recyclerView) {
     mRecyclerView = recyclerView;
     mGestureDetector =
-        new GestureDetectorCompat(mRecyclerView.getContext(), new BaseGestureListener());
+        new GestureDetectorCompat(mRecyclerView.getContext(), new ClickListener());
   }
 
   @Override public void onTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -37,9 +37,7 @@ public abstract class TouchToClick implements RecyclerView.OnItemTouchListener {
 
   public abstract void onItemClick(RecyclerView.ViewHolder vh, Object item);
 
-  public abstract void onItemLongClick(RecyclerView.ViewHolder vh, Object item);
-
-  private class BaseGestureListener extends GestureDetector.SimpleOnGestureListener {
+  private class ClickListener extends GestureDetector.SimpleOnGestureListener {
 
     @Override public boolean onSingleTapUp(MotionEvent e) {
       View child = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
@@ -51,17 +49,6 @@ public abstract class TouchToClick implements RecyclerView.OnItemTouchListener {
         onItemClick(holder, item);
       }
       return true;
-    }
-
-    @Override public void onLongPress(MotionEvent e) {
-      View child = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
-      int position = mRecyclerView.getChildLayoutPosition(child);
-      BaseAdapter adapter = (BaseAdapter) mRecyclerView.getAdapter();
-      Object item = adapter.getData(position);
-      if (child != null && item != null) {
-        RecyclerView.ViewHolder holder = mRecyclerView.getChildViewHolder(child);
-        onItemLongClick(holder, item);
-      }
     }
   }
 }
