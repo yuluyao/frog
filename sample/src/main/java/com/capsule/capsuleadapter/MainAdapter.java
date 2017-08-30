@@ -11,7 +11,7 @@ import java.util.List;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 21:44
  */
-public class MainAdapter extends BaseAdapter<SkillBean,BaseViewHolder> {
+public class MainAdapter extends BaseAdapter<SkillBean, BaseViewHolder> {
 
   public MainAdapter(int mLayoutResId) {
     super(mLayoutResId);
@@ -22,6 +22,6 @@ public class MainAdapter extends BaseAdapter<SkillBean,BaseViewHolder> {
     ((ImageView) holder.itemView.findViewById(R.id.icon)).setImageResource(item.getIconRes());
     ((TextView) holder.itemView.findViewById(R.id.icon_id)).setText(String.valueOf(item.getId()));
 
-    holder.setClickableId(R.id.icon,R.id.check);
+    holder.setClickableId(R.id.icon);
   }
 }

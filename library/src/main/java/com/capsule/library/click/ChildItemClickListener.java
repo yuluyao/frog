@@ -1,4 +1,4 @@
-package com.capsule.library;
+package com.capsule.library.click;
 
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
@@ -7,21 +7,21 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import com.capsule.library.BaseViewHolder;
 
 /**
  * 描 述：
  * 作 者：Vegeta Yu
  * 时 间：2017/8/29 17:24
  */
-public abstract class ItemWithChildLongClickListener implements RecyclerView.OnItemTouchListener {
+public abstract class ChildItemClickListener extends ItemClickListener {
 
   private GestureDetectorCompat mGestureDetector;
-  private RecyclerView          mRecyclerView;
 
-  public ItemWithChildLongClickListener(RecyclerView recyclerView) {
-    mRecyclerView = recyclerView;
+  public ChildItemClickListener(RecyclerView recyclerView) {
+    super(recyclerView);
     mGestureDetector =
-        new GestureDetectorCompat(mRecyclerView.getContext(), new ChildLongClickListener());
+        new GestureDetectorCompat(recyclerView.getContext(), new ChildClickListener());
   }
 
   @Override public void onTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -37,22 +37,25 @@ public abstract class ItemWithChildLongClickListener implements RecyclerView.OnI
 
   }
 
-  public abstract void onChildItemLongClick(RecyclerView.ViewHolder vh, Object item,
-      View childView);
+  public abstract void onChildItemClick(RecyclerView.ViewHolder vh, int position, View childView);
 
-  private class ChildLongClickListener extends GestureDetector.SimpleOnGestureListener {
+  private class ChildClickListener extends GestureDetector.SimpleOnGestureListener {
 
-    @Override public void onLongPress(MotionEvent e) {
+    @Override public boolean onSingleTapUp(MotionEvent e) {
       ViewGroup itemView = (ViewGroup) mRecyclerView.findChildViewUnder(e.getX(), e.getY());
       if (itemView == null) {
-        return;
+        return false;
       }
       BaseViewHolder holder = (BaseViewHolder) mRecyclerView.getChildViewHolder(itemView);
       int position = mRecyclerView.getChildLayoutPosition(itemView);
 
       View child = findChildViewUnder(holder, itemView, e.getX(), e.getY());
       if (child != null) {
-        onChildItemLongClick(holder, position, child);
+        onChildItemClick(holder, position, child);
+        return true;
+      } else {
+        onItemClick(holder, position);
+        return false;
       }
     }
 

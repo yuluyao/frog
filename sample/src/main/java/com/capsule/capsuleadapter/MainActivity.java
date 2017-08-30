@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.capsule.library.BaseAdapter;
-import com.capsule.library.ItemWithChildClickListener;
+import com.capsule.library.click.ChildItemClickListener;
+import com.capsule.library.click.ItemClickListener;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -85,23 +86,22 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView.LayoutManager manager =
         new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
     recyclerView.setLayoutManager(manager);
-    //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
-    //  @Override public void onItemClick(RecyclerView.ViewHolder vh, Object item) {
-    //    SkillBean data = (SkillBean) item;
-    //    Log.i("vegeta",  "click : "+ data.getName());
-    //  }
-    //
-    //  @Override public void onItemLongClick(RecyclerView.ViewHolder vh, Object item) {
-    //    SkillBean data = (SkillBean) item;
-    //    Log.i("vegeta",  "long click : "+ data.getName());
-    //  }
-    //});
-    recyclerView.addOnItemTouchListener(new ItemWithChildClickListener(recyclerView) {
-      @Override
-      public void onChildItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
-        Log.i("vegeta", "child clicked : "+childView.toString());
+    recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
+      @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
+        Log.i("vegeta", "item clicked!");
       }
     });
+
+    //recyclerView.addOnItemTouchListener(new ChildItemClickListener(recyclerView) {
+    //  @Override public void onItemClick(RecyclerView.ViewHolder vh, Object item) {
+    //    Log.i("vegeta", "item clicked!");
+    //  }
+    //
+    //  @Override
+    //  public void onChildItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
+    //    Log.i("vegeta", "child clicked : "+childView.toString());
+    //  }
+    //});
   }
 
   private void initAdapter() {
