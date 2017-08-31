@@ -1,4 +1,4 @@
-package com.capsule.capsuleadapter;
+package com.capsule.sample;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

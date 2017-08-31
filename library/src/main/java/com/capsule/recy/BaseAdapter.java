@@ -1,4 +1,4 @@
-package com.capsule.library;
+package com.capsule.recy;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import com.capsule.recy.load.LoadMoreView;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
@@ -36,17 +37,16 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   //view type
-  public static final int VIEW_TYPE_EMPTY  = 1;
-  public static final int VIEW_TYPE_HEADER = 2;
-  public static final int VIEW_TYPE_FOOTER = 3;
-  public static final int VIEW_TYPE_LOAD   = 4;
+  public static final int VIEW_TYPE_EMPTY  = -1;
+  public static final int VIEW_TYPE_HEADER = -2;
+  public static final int VIEW_TYPE_FOOTER = -3;
+  public static final int VIEW_TYPE_LOAD   = -4;
 
   protected Context        mContext;
   protected RecyclerView   mRecyclerView;
   protected LayoutInflater mLayoutInflater;
 
   protected List<T> mData = new ArrayList<>();
-  //protected int mLayoutResId;
 
   /* 空 */
   private FrameLayout mEmptyLayout;
@@ -62,12 +62,12 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   /* pending */
   private static      Map<Integer, Object> pendingMap                    = new HashMap<>();
-  public static final int                  PENDING_ON_LOAD_MORE_LISTENER = 0;
-  public static final int                  PENDING_HEADER                = 1;
-  public static final int                  PENDING_HEADER_INDEX          = 1;
-  public static final int                  PENDING_FOOTER                = 2;
-  public static final int                  PENDING_FOOTER_INDEX          = 2;
-  public static final int                  PENDING_EMPTY                 = 3;
+  public static final int                  PENDING_ON_LOAD_MORE_LISTENER = 1;
+  public static final int                  PENDING_HEADER                = 2;
+  public static final int                  PENDING_HEADER_INDEX          = 3;
+  public static final int                  PENDING_FOOTER                = 4;
+  public static final int                  PENDING_FOOTER_INDEX          = 5;
+  public static final int                  PENDING_EMPTY                 = 6;
 
   /* ******************************* */
 
@@ -183,6 +183,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   @SuppressWarnings("unchecked") protected H buildStaticHolder(View view) {
     Class temp = getClass();
     Class z = null;
+
     while (z == null && null != temp) {
       z = getInstancedGenericKClass(temp);
       temp = temp.getSuperclass();
@@ -351,11 +352,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   protected int getDataItemViewType(int position) {
-    T item = getData(position);
-    if (item instanceof MultiEntity) {
-      return ((MultiEntity) item).getItemType();
-    }
-    return -1;
+    return super.getItemViewType(position);
   }
 
   /* **************************** data **************************** */

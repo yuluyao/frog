@@ -1,4 +1,4 @@
-package com.capsule.capsuleadapter;
+package com.capsule.sample.normal;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -6,13 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.capsule.library.BaseAdapter;
-import com.capsule.library.click.ChildItemClickListener;
-import com.capsule.library.click.ItemClickListener;
+import com.capsule.recy.BaseAdapter;
+import com.capsule.recy.click.ItemClickListener;
+import com.capsule.sample.DataRepo;
+import com.capsule.sample.R;
+import com.capsule.sample.SkillBean;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -25,23 +26,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity {
+public class NormalActivity extends AppCompatActivity {
 
-  private MainAdapter        adapter;
+  private NormalAdapter      adapter;
   private SwipeRefreshLayout refreshLayout;
   private RecyclerView       recyclerView;
   private DataRepo           repo;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_base);
     initRefresh();
     initRecyclerView();
     initAdapter();
     initData();
     adapter.notifyDataSetChanged();
 
-    addHeader();
+    //addHeader();
     //addFooter();
   }
 
@@ -105,10 +106,10 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void initAdapter() {
-    adapter = new MainAdapter();
+    adapter = new NormalAdapter();
 
     adapter.setEmptyView(R.layout.layout_empty);
-    adapter.setLoadMoreView(new CustomLoadMoreView());
+    adapter.setLoadMoreView(new SimpleLoadMoreView());
     adapter.setOnLoadMoreListener(new BaseAdapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
 

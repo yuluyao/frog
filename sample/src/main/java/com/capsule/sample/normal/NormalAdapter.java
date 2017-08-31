@@ -1,20 +1,21 @@
-package com.capsule.capsuleadapter;
+package com.capsule.sample.normal;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.capsule.library.BaseAdapter;
-import com.capsule.library.BaseViewHolder;
-import java.util.List;
+import com.capsule.recy.BaseAdapter;
+import com.capsule.recy.BaseViewHolder;
+import com.capsule.sample.R;
+import com.capsule.sample.SkillBean;
 
 /**
  * 描 述：
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 21:44
  */
-public class MainAdapter extends BaseAdapter<SkillBean, BaseViewHolder> {
+public class NormalAdapter extends BaseAdapter<SkillBean, BaseViewHolder> {
 
-  public MainAdapter() {
-    bindTypeAndLayout(-1,R.layout.item_test);
+  public NormalAdapter() {
+    bindTypeAndLayout(-1, R.layout.item_normal_list);
   }
 
   @Override protected void convert(BaseViewHolder holder, SkillBean item) {

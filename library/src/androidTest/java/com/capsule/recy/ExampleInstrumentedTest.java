@@ -1,4 +1,4 @@
-package com.capsule.library;
+package com.capsule.recy;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

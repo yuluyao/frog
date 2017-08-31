@@ -1,4 +1,4 @@
-package com.capsule.library.click;
+package com.capsule.recy.click;
 
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
@@ -7,7 +7,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import com.capsule.library.BaseViewHolder;
+import com.capsule.recy.BaseViewHolder;
 
 /**
  * 描 述：

@@ -1,12 +1,13 @@
-package com.capsule.capsuleadapter;
+package com.capsule.sample.normal;
 
-import com.capsule.library.LoadMoreView;
+import com.capsule.recy.load.LoadMoreView;
+import com.capsule.sample.R;
 
 /**
  * Created by BlingBling on 2016/10/15.
  */
 
-public final class CustomLoadMoreView extends LoadMoreView {
+public final class SimpleLoadMoreView extends LoadMoreView {
 
     @Override public int getLayoutId() {
         return R.layout.layout_load_more;

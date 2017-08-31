@@ -1,4 +1,4 @@
-package com.capsule.library;
+package com.capsule.sample;
 
 import org.junit.Test;
 

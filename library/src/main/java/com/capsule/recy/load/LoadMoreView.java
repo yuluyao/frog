@@ -1,8 +1,9 @@
-package com.capsule.library;
+package com.capsule.recy.load;
 
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.view.View;
+import com.capsule.recy.BaseViewHolder;
 
 /**
  * Created by BlingBling on 2016/11/11.

@@ -1,4 +1,4 @@
-package com.capsule.capsuleadapter;
+package com.capsule.recy;
 
 import org.junit.Test;
 
