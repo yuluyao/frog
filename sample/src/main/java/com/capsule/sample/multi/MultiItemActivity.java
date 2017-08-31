@@ -41,7 +41,6 @@ public class MultiItemActivity extends AppCompatActivity {
     list.add(new SkillEntity(R.drawable.mh_4, "just name"));
     list.add(new SkillEntity(R.drawable.mh_5, "just name"));
     list.add(new SkillEntity(R.drawable.mh_6, "just name"));
-
     return list;
   }
 }

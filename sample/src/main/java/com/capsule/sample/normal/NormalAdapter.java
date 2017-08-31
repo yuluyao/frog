@@ -15,7 +15,7 @@ import com.capsule.sample.SkillBean;
 public class NormalAdapter extends BaseAdapter<SkillBean, BaseViewHolder> {
 
   public NormalAdapter() {
-    bindTypeAndLayout(-1, R.layout.item_normal_list);
+    setItemLayout(R.layout.item_normal_list);
   }
 
   @Override protected void convert(BaseViewHolder holder, SkillBean item) {
@@ -25,6 +25,4 @@ public class NormalAdapter extends BaseAdapter<SkillBean, BaseViewHolder> {
 
     holder.setClickableId(R.id.icon);
   }
-
-
 }

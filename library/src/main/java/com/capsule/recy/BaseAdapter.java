@@ -36,17 +36,21 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     void onLoadMore();
   }
 
-  //view type
-  public static final int VIEW_TYPE_EMPTY  = -1;
-  public static final int VIEW_TYPE_HEADER = -2;
-  public static final int VIEW_TYPE_FOOTER = -3;
-  public static final int VIEW_TYPE_LOAD   = -4;
+
 
   protected Context        mContext;
   protected RecyclerView   mRecyclerView;
   protected LayoutInflater mLayoutInflater;
 
   protected List<T> mData = new ArrayList<>();
+
+  //view type
+  public static final int VIEW_TYPE_EMPTY  = -1;
+  public static final int VIEW_TYPE_HEADER = -2;
+  public static final int VIEW_TYPE_FOOTER = -3;
+  public static final int VIEW_TYPE_LOAD   = -4;
+
+  private SparseIntArray typeArray;// viewType and layoutId
 
   /* 空 */
   private FrameLayout mEmptyLayout;
@@ -61,13 +65,14 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   private OnLoadMoreListener onLoadMoreListener;
 
   /* pending */
-  private static      Map<Integer, Object> pendingMap                    = new HashMap<>();
-  public static final int                  PENDING_ON_LOAD_MORE_LISTENER = 1;
-  public static final int                  PENDING_HEADER                = 2;
-  public static final int                  PENDING_HEADER_INDEX          = 3;
-  public static final int                  PENDING_FOOTER                = 4;
-  public static final int                  PENDING_FOOTER_INDEX          = 5;
-  public static final int                  PENDING_EMPTY                 = 6;
+  private static Map<Integer, Object> pendingMap = new HashMap<>();
+
+  public static final int PENDING_ON_LOAD_MORE_LISTENER = 1;
+  public static final int PENDING_HEADER                = 2;
+  public static final int PENDING_HEADER_INDEX          = 3;
+  public static final int PENDING_FOOTER                = 4;
+  public static final int PENDING_FOOTER_INDEX          = 5;
+  public static final int PENDING_EMPTY                 = 6;
 
   /* ******************************* */
 
@@ -276,9 +281,11 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     }
   }
 
-  private SparseIntArray typeArray;// viewType and layoutId
+  protected void setItemLayout(int layoutId) {
+    setItemLayout(0, layoutId);
+  }
 
-  protected void bindTypeAndLayout(int type, int layoutId) {
+  protected void setItemLayout(int type, int layoutId) {
     if (typeArray == null) {
       typeArray = new SparseIntArray();
     }
@@ -287,24 +294,24 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
 
   protected abstract void convert(H holder, T item);
 
-  public boolean isBottom() {
-    LinearLayoutManager layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-    //屏幕中最后一个可见子项的position
-    int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-    //当前屏幕所看到的子项个数
-    int visibleItemCount = layoutManager.getChildCount();
-    //当前RecyclerView的所有子项个数
-    int totalItemCount = layoutManager.getItemCount();
-    //RecyclerView的滑动状态
-    int state = mRecyclerView.getScrollState();
-    if (visibleItemCount > 0
-        && lastVisibleItemPosition == totalItemCount - 1
-        && state == RecyclerView.SCROLL_STATE_IDLE) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  //public boolean isBottom() {
+  //  LinearLayoutManager layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+  //  //屏幕中最后一个可见子项的position
+  //  int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+  //  //当前屏幕所看到的子项个数
+  //  int visibleItemCount = layoutManager.getChildCount();
+  //  //当前RecyclerView的所有子项个数
+  //  int totalItemCount = layoutManager.getItemCount();
+  //  //RecyclerView的滑动状态
+  //  int state = mRecyclerView.getScrollState();
+  //  if (visibleItemCount > 0
+  //      && lastVisibleItemPosition == totalItemCount - 1
+  //      && state == RecyclerView.SCROLL_STATE_IDLE) {
+  //    return true;
+  //  } else {
+  //    return false;
+  //  }
+  //}
 
   /* ************************* adapter ************************* */
   @Override public int getItemCount() {

@@ -14,8 +14,8 @@ import com.capsule.sample.R;
 public class MultiSampleAdapter extends MultiAdapter<SkillEntity, BaseViewHolder> {
 
   public MultiSampleAdapter() {
-    bindTypeAndLayout(SkillEntity.TYPE_NAME, R.layout.item_skill_name);
-    bindTypeAndLayout(SkillEntity.TYPE_DESCRIPTION, R.layout.item_skill_description);
+    setItemLayout(SkillEntity.TYPE_NAME, R.layout.item_skill_name);
+    setItemLayout(SkillEntity.TYPE_DESCRIPTION, R.layout.item_skill_description);
   }
 
   @Override protected void convert(BaseViewHolder holder, SkillEntity item) {
