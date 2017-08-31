@@ -5,6 +5,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,18 +36,17 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   //view type
-  public static final int VIEW_TYPE_DATA   = 0;
-  public static final int VIEW_TYPE_HEADER = 1;
-  public static final int VIEW_TYPE_FOOTER = 2;
-  public static final int VIEW_TYPE_LOAD   = 3;
-  public static final int VIEW_TYPE_EMPTY  = 4;
+  public static final int VIEW_TYPE_EMPTY  = 1;
+  public static final int VIEW_TYPE_HEADER = 2;
+  public static final int VIEW_TYPE_FOOTER = 3;
+  public static final int VIEW_TYPE_LOAD   = 4;
 
   protected Context        mContext;
   protected RecyclerView   mRecyclerView;
   protected LayoutInflater mLayoutInflater;
 
   protected List<T> mData = new ArrayList<>();
-  protected int mLayoutResId;
+  //protected int mLayoutResId;
 
   /* 空 */
   private FrameLayout mEmptyLayout;
@@ -70,12 +70,6 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   public static final int                  PENDING_EMPTY                 = 3;
 
   /* ******************************* */
-  public BaseAdapter() {
-  }
-
-  public BaseAdapter(int mLayoutResId) {
-    this.mLayoutResId = mLayoutResId;
-  }
 
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
     super.onAttachedToRecyclerView(recyclerView);
@@ -156,60 +150,37 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   @Override public H onCreateViewHolder(ViewGroup parent, int viewType) {
-    H baseViewHolder = null;
+    H holder;
 
     switch (viewType) {
-      //case VIEW_TYPE_DATA:
-      //  baseViewHolder = onCreateDefViewHolder(parent, viewType);
-      //  break;
+      case VIEW_TYPE_EMPTY:
+        holder = buildStaticHolder(mEmptyLayout);
+        break;
       case VIEW_TYPE_HEADER:
-        baseViewHolder = createBaseViewHolder(mHeaderLayout);
+        holder = buildStaticHolder(mHeaderLayout);
         break;
       case VIEW_TYPE_FOOTER:
-        baseViewHolder = createBaseViewHolder(mFooterLayout);
+        holder = buildStaticHolder(mFooterLayout);
         break;
       case VIEW_TYPE_LOAD:
-        baseViewHolder = getLoadMoreViewHolder(parent);
-        break;
-      case VIEW_TYPE_EMPTY:
-        baseViewHolder = createBaseViewHolder(mEmptyLayout);
+        //holder = buildLoadMoreHolder(parent);
+        View load = mLayoutInflater.inflate(mLoadMoreView.getLayoutId(), parent, false);
+        holder = buildStaticHolder(load);
         break;
       default:
-        baseViewHolder = onCreateDefViewHolder(parent, viewType);
-        //bindViewClickListener(baseViewHolder);
+        //holder = buildDataHolder(parent, viewType);
+        View itemView = mLayoutInflater.inflate(typeArray.get(viewType), parent, false);
+        holder = buildStaticHolder(itemView);
         break;
     }
-    //baseViewHolder.setAdapter(this);
-    return baseViewHolder;
-  }
-
-  private H getLoadMoreViewHolder(ViewGroup parent) {
-    View view = mLayoutInflater.inflate(mLoadMoreView.getLayoutId(), parent, false);
-    //View view = getItemView(mLoadMoreView.getLayoutId(), parent);
-    H holder = createBaseViewHolder(view);
-    holder.itemView.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        //if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.FAILED) {
-        //  notifyLoadMoreToLoading();
-        //}
-        //if (mEnableLoadMoreEndClick
-        //    && mLoadMoreView.getLoadMoreStatus() == LoadMoreView.END) {
-        //  notifyLoadMoreToLoading();
-        //}
-      }
-    });
     return holder;
   }
 
-  protected H onCreateDefViewHolder(ViewGroup parent, int viewType) {
-    //int layoutId = mLayoutResId;
-    //if (mMultiTypeDelegate != null) {
-    //  layoutId = mMultiTypeDelegate.getLayoutId(viewType);
-    //}
-    return createBaseViewHolder(mLayoutInflater.inflate(mLayoutResId, parent, false));
-  }
+  //protected H buildDataHolder(ViewGroup parent, int viewType) {
+  //  return buildStaticHolder(mLayoutInflater.inflate(typeArray.get(viewType), parent, false));
+  //}
 
-  @SuppressWarnings("unchecked") protected H createBaseViewHolder(View view) {
+  @SuppressWarnings("unchecked") protected H buildStaticHolder(View view) {
     Class temp = getClass();
     Class z = null;
     while (z == null && null != temp) {
@@ -225,6 +196,24 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     }
     return h != null ? h : (H) new BaseViewHolder(view);
   }
+
+  //private H buildLoadMoreHolder(ViewGroup parent) {
+  //  View view = mLayoutInflater.inflate(mLoadMoreView.getLayoutId(), parent, false);
+  //  //View view = getItemView(mLoadMoreView.getLayoutId(), parent);
+  //  H holder = buildStaticHolder(view);
+  //  holder.itemView.setOnClickListener(new View.OnClickListener() {
+  //    @Override public void onClick(View v) {
+  //      //if (mLoadMoreView.getLoadMoreStatus() == LoadMoreView.FAILED) {
+  //      //  notifyLoadMoreToLoading();
+  //      //}
+  //      //if (mEnableLoadMoreEndClick
+  //      //    && mLoadMoreView.getLoadMoreStatus() == LoadMoreView.END) {
+  //      //  notifyLoadMoreToLoading();
+  //      //}
+  //    }
+  //  });
+  //  return holder;
+  //}
 
   private Class getInstancedGenericKClass(Class z) {
     Type type = z.getGenericSuperclass();
@@ -268,15 +257,10 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   @Override public void onBindViewHolder(H holder, int position) {
-    int viewType = holder.getItemViewType();
-    //int offset = 0;
-    //if (hasHeader()) {
-    //  offset++;
-    //}
-    switch (viewType) {
-      //case VIEW_TYPE_DATA:
-      //  convert(holder, getData(position - offset));
-      //  break;
+    int type = holder.getItemViewType();
+    switch (type) {
+      case VIEW_TYPE_EMPTY:
+        break;
       case VIEW_TYPE_HEADER:
         break;
       case VIEW_TYPE_FOOTER:
@@ -284,13 +268,20 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
       case VIEW_TYPE_LOAD:
         mLoadMoreView.convert(holder);
         break;
-      case VIEW_TYPE_EMPTY:
-        break;
 
       default:
         convert(holder, getData(position));
         break;
     }
+  }
+
+  private SparseIntArray typeArray;// viewType and layoutId
+
+  protected void bindTypeAndLayout(int type, int layoutId) {
+    if (typeArray == null) {
+      typeArray = new SparseIntArray();
+    }
+    typeArray.put(type, layoutId);
   }
 
   protected abstract void convert(H holder, T item);
@@ -360,10 +351,11 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   protected int getDataItemViewType(int position) {
-    //if (mMultiTypeDelegate != null) {
-    //  return mMultiTypeDelegate.getDataItemViewType(mData, position);
-    //}
-    return VIEW_TYPE_DATA;
+    T item = getData(position);
+    if (item instanceof MultiEntity) {
+      return ((MultiEntity) item).getItemType();
+    }
+    return -1;
   }
 
   /* **************************** data **************************** */

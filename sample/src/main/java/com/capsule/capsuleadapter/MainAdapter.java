@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class MainAdapter extends BaseAdapter<SkillBean, BaseViewHolder> {
 
-  public MainAdapter(int mLayoutResId) {
-    super(mLayoutResId);
+  public MainAdapter() {
+    bindTypeAndLayout(-1,R.layout.item_test);
   }
 
   @Override protected void convert(BaseViewHolder holder, SkillBean item) {
@@ -24,4 +24,6 @@ public class MainAdapter extends BaseAdapter<SkillBean, BaseViewHolder> {
 
     holder.setClickableId(R.id.icon);
   }
+
+
 }

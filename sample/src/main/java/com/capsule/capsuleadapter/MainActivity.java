@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void initAdapter() {
-    adapter = new MainAdapter(R.layout.item_test);
+    adapter = new MainAdapter();
 
     adapter.setEmptyView(R.layout.layout_empty);
     adapter.setLoadMoreView(new CustomLoadMoreView());
