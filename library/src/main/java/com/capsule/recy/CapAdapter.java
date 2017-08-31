@@ -5,6 +5,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +19,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -30,13 +29,11 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 14:50
  */
-public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerView.Adapter<H> {
+public abstract class CapAdapter<T, H extends CapViewHolder> extends RecyclerView.Adapter<H> {
 
   public interface OnLoadMoreListener {
     void onLoadMore();
   }
-
-
 
   protected Context        mContext;
   protected RecyclerView   mRecyclerView;
@@ -65,7 +62,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   private OnLoadMoreListener onLoadMoreListener;
 
   /* pending */
-  private static Map<Integer, Object> pendingMap = new HashMap<>();
+  private static SparseArray<Object> pendingConfig = new SparseArray<>();
 
   public static final int PENDING_ON_LOAD_MORE_LISTENER = 1;
   public static final int PENDING_HEADER                = 2;
@@ -85,12 +82,12 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
   }
 
   private void putPending(int key, Object o) {
-    pendingMap.put(key, o);
+    pendingConfig.put(key, o);
   }
 
   private void executePending() {
-    if (pendingMap.containsKey(PENDING_ON_LOAD_MORE_LISTENER)) {
-      onLoadMoreListener = (OnLoadMoreListener) pendingMap.get(PENDING_ON_LOAD_MORE_LISTENER);
+    if (pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER) != null) {
+      onLoadMoreListener = (OnLoadMoreListener) pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER);
       mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
         @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
           if (mLoadMoreView.isEnd()) {
@@ -113,8 +110,8 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
         }
       });
     }
-    if (pendingMap.containsKey(PENDING_EMPTY)) {
-      int layoutId = (int) pendingMap.get(PENDING_EMPTY);
+    if (pendingConfig.get(PENDING_EMPTY) != null) {
+      int layoutId = (int) pendingConfig.get(PENDING_EMPTY);
       if (!hasEmptyView()) {
         mEmptyLayout = new FrameLayout(mContext);
         RecyclerView.LayoutParams lp =
@@ -127,9 +124,9 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
       mEmptyLayout.addView(view);
     }
 
-    if (pendingMap.containsKey(PENDING_HEADER)) {
-      View header = (View) pendingMap.get(PENDING_HEADER);
-      int index = (int) pendingMap.get(PENDING_HEADER_INDEX);
+    if (pendingConfig.get(PENDING_HEADER) != null) {
+      View header = (View) pendingConfig.get(PENDING_HEADER);
+      int index = (int) pendingConfig.get(PENDING_HEADER_INDEX);
       if (!hasHeader() || mHeaderLayout.getChildCount() <= index) {
         addHeaderView(header, index);
       } else {
@@ -137,16 +134,16 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
       }
     }
 
-    if (pendingMap.containsKey(PENDING_FOOTER)) {
-      View footer = (View) pendingMap.get(PENDING_FOOTER);
-      int index = (int) pendingMap.get(PENDING_FOOTER_INDEX);
+    if (pendingConfig.get(PENDING_FOOTER) != null) {
+      View footer = (View) pendingConfig.get(PENDING_FOOTER);
+      int index = (int) pendingConfig.get(PENDING_FOOTER_INDEX);
       if (!hasFooter() || mFooterLayout.getChildCount() <= index) {
         addFooterView(footer, index);
       } else {
         replaceFooterView(footer, index);
       }
     }
-    pendingMap.clear();
+    pendingConfig.clear();
   }
 
   @Override public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
@@ -196,11 +193,11 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
     H h;
     // 泛型擦除会导致z为null
     if (z == null) {
-      h = (H) new BaseViewHolder(view);
+      h = (H) new CapViewHolder(view);
     } else {
       h = createGenericKInstance(z, view);
     }
-    return h != null ? h : (H) new BaseViewHolder(view);
+    return h != null ? h : (H) new CapViewHolder(view);
   }
 
   //private H buildLoadMoreHolder(ViewGroup parent) {
@@ -228,7 +225,7 @@ public abstract class BaseAdapter<T, H extends BaseViewHolder> extends RecyclerV
       for (Type temp : types) {
         if (temp instanceof Class) {
           Class tempClass = (Class) temp;
-          if (BaseViewHolder.class.isAssignableFrom(tempClass)) {
+          if (CapViewHolder.class.isAssignableFrom(tempClass)) {
             return tempClass;
           }
         }

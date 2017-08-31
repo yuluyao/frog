@@ -3,7 +3,7 @@ package com.capsule.recy.load;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.view.View;
-import com.capsule.recy.BaseViewHolder;
+import com.capsule.recy.CapViewHolder;
 
 /**
  * Created by BlingBling on 2016/11/11.
@@ -22,7 +22,7 @@ public abstract class LoadMoreView {
 
   private int mStatus = IDLE;
 
-  public void convert(BaseViewHolder holder) {
+  public void convert(CapViewHolder holder) {
     view_loading = holder.itemView.findViewById(getLoadingViewId());
     view_failed = holder.itemView.findViewById(getLoadFailViewId());
     view_end = holder.itemView.findViewById(getLoadEndViewId());

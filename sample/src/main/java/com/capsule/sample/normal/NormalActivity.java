@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.capsule.recy.BaseAdapter;
+import com.capsule.recy.CapAdapter;
 import com.capsule.recy.click.ItemClickListener;
 import com.capsule.sample.DataRepo;
 import com.capsule.sample.R;
@@ -110,7 +110,7 @@ public class NormalActivity extends AppCompatActivity {
 
     adapter.setEmptyView(R.layout.layout_empty);
     adapter.setLoadMoreView(new SimpleLoadMoreView());
-    adapter.setOnLoadMoreListener(new BaseAdapter.OnLoadMoreListener() {
+    adapter.setOnLoadMoreListener(new CapAdapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
 
         Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {

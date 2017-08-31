@@ -2,8 +2,8 @@ package com.capsule.sample.multi;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.capsule.recy.BaseViewHolder;
-import com.capsule.recy.multi.MultiAdapter;
+import com.capsule.recy.CapViewHolder;
+import com.capsule.recy.multi.CapMultiAdapter;
 import com.capsule.sample.R;
 
 /**
@@ -11,14 +11,14 @@ import com.capsule.sample.R;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/31 13:06
  */
-public class MultiSampleAdapter extends MultiAdapter<SkillEntity, BaseViewHolder> {
+public class CapMultiSampleAdapter extends CapMultiAdapter<SkillEntity, CapViewHolder> {
 
-  public MultiSampleAdapter() {
+  public CapMultiSampleAdapter() {
     setItemLayout(SkillEntity.TYPE_NAME, R.layout.item_skill_name);
     setItemLayout(SkillEntity.TYPE_DESCRIPTION, R.layout.item_skill_description);
   }
 
-  @Override protected void convert(BaseViewHolder holder, SkillEntity item) {
+  @Override protected void convert(CapViewHolder holder, SkillEntity item) {
     switch (item.getItemType()) {
       case SkillEntity.TYPE_NAME:
         ((ImageView) holder.itemView.findViewById(R.id.icon)).setImageResource(item.getIcon());

@@ -16,14 +16,14 @@ import java.util.List;
  */
 public class MultiItemActivity extends AppCompatActivity {
 
-  private RecyclerView       recyclerView;
-  private MultiSampleAdapter adapter;
+  private RecyclerView          recyclerView;
+  private CapMultiSampleAdapter adapter;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_multi_item);
     recyclerView = (RecyclerView) findViewById(R.id.rv);
-    adapter = new MultiSampleAdapter();
+    adapter = new CapMultiSampleAdapter();
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setAdapter(adapter);

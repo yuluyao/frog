@@ -7,7 +7,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import com.capsule.recy.BaseViewHolder;
+import com.capsule.recy.CapViewHolder;
 
 /**
  * 描 述：
@@ -46,7 +46,7 @@ public abstract class ChildItemClickListener extends ItemClickListener {
       if (itemView == null) {
         return false;
       }
-      BaseViewHolder holder = (BaseViewHolder) mRecyclerView.getChildViewHolder(itemView);
+      CapViewHolder holder = (CapViewHolder) mRecyclerView.getChildViewHolder(itemView);
       int position = mRecyclerView.getChildLayoutPosition(itemView);
 
       View child = findChildViewUnder(holder, itemView, e.getX(), e.getY());
@@ -59,7 +59,7 @@ public abstract class ChildItemClickListener extends ItemClickListener {
       }
     }
 
-    private View findChildViewUnder(BaseViewHolder holder, ViewGroup itemView, float x, float y) {
+    private View findChildViewUnder(CapViewHolder holder, ViewGroup itemView, float x, float y) {
       for (int i = 0; i < itemView.getChildCount(); i++) {
         float topOffset = itemView.getTop() + ViewCompat.getTranslationY(itemView);
 
