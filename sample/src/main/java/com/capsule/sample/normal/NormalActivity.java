@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.capsule.recy.CapAdapter;
+import com.capsule.recy.click.ChildItemClickListener;
 import com.capsule.recy.click.ItemClickListener;
 import com.capsule.recy.decoration.SimpleDecoration;
 import com.capsule.sample.DataRepo;
@@ -37,6 +40,7 @@ public class NormalActivity extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_base);
+    setTitle("常规用法");
     initRefresh();
     initRecyclerView();
     initAdapter();
@@ -89,9 +93,19 @@ public class NormalActivity extends AppCompatActivity {
         new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
     recyclerView.setLayoutManager(manager);
     recyclerView.addItemDecoration(new SimpleDecoration());
-    recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
+    //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
+    //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
+    //    Log.i("vegeta", "item clicked!");
+    //  }
+    //});
+    recyclerView.addOnItemTouchListener(new ChildItemClickListener(recyclerView) {
+      @Override
+      public void onChildItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
+        Toast.makeText(NormalActivity.this, "子item", Toast.LENGTH_SHORT).show();
+      }
+
       @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-        Log.i("vegeta", "item clicked!");
+        Toast.makeText(NormalActivity.this, "点击item", Toast.LENGTH_SHORT).show();
       }
     });
 
