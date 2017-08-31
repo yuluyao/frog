@@ -49,7 +49,9 @@ public abstract class ChildItemClickListener extends ItemClickListener {
       CapViewHolder holder = (CapViewHolder) mRecyclerView.getChildViewHolder(itemView);
       int position = mRecyclerView.getChildLayoutPosition(itemView);
 
-      View child = findChildViewUnder(holder, itemView, e.getX(), e.getY());
+      float x_offset = itemView.getX();
+      float y_offset = itemView.getY();
+      View child = findChildViewUnder(itemView, e.getX() - x_offset, e.getY() - y_offset, holder);
       if (child != null) {
         onChildItemClick(holder, position, child);
         return true;
@@ -59,20 +61,24 @@ public abstract class ChildItemClickListener extends ItemClickListener {
       }
     }
 
-    private View findChildViewUnder(CapViewHolder holder, ViewGroup itemView, float x, float y) {
+    private View findChildViewUnder(ViewGroup itemView, float x, float y, CapViewHolder holder) {
       for (int i = 0; i < itemView.getChildCount(); i++) {
-        float topOffset = itemView.getTop() + ViewCompat.getTranslationY(itemView);
-
         View child = itemView.getChildAt(i);
-        final float translationX = ViewCompat.getTranslationX(child);
-        final float translationY = ViewCompat.getTranslationY(child);
-
-        if (x >= child.getLeft() + translationX
-            && x <= child.getRight() + translationX
-            && y >= child.getTop() + translationY + topOffset
-            && y <= child.getBottom() + translationY + topOffset) {
-          if (holder.getClickableId().contains(child.getId())) {
-            return child;
+        if ((child instanceof ViewGroup)) {
+          float x_offset = child.getX();
+          float y_offset = child.getY();
+          return findChildViewUnder((ViewGroup) child, x - x_offset, y - y_offset, holder);
+        } else {
+          final float translationX = ViewCompat.getTranslationX(child);
+          final float translationY = ViewCompat.getTranslationY(child);
+          float left = child.getLeft() + translationX;
+          float right = child.getRight() + translationX;
+          float top = child.getTop() + translationY;
+          float bottom = child.getBottom() + translationY;
+          if (x >= left && x <= right && y >= top && y <= bottom) {
+            if (holder.getClickableId().contains(child.getId())) {
+              return child;
+            }
           }
         }
       }

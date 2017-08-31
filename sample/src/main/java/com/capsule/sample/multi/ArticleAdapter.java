@@ -39,6 +39,7 @@ public class ArticleAdapter extends CapMultiAdapter<ArticleBean, CapViewHolder> 
       case ArticleBean.TYPE_SINGLE_JPG:
         ((TextView) holder.itemView.findViewById(R.id.title)).setText(item.getTitle());
         ((ImageView) holder.itemView.findViewById(R.id.iv)).setImageResource(item.getImgs().get(0));
+        holder.setClickableId(R.id.iv);
         break;
     }
   }
