@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import com.capsule.recy.decoration.SimpleDecoration;
 import com.capsule.sample.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class MultiItemActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setAdapter(adapter);
+    recyclerView.addItemDecoration(new SimpleDecoration());
     adapter.setData(mockData());
     adapter.notifyDataSetChanged();
   }

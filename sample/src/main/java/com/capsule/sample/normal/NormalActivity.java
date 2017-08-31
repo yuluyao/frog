@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.capsule.recy.CapAdapter;
 import com.capsule.recy.click.ItemClickListener;
+import com.capsule.recy.decoration.SimpleDecoration;
 import com.capsule.sample.DataRepo;
 import com.capsule.sample.R;
 import com.capsule.sample.SkillBean;
@@ -42,7 +43,7 @@ public class NormalActivity extends AppCompatActivity {
     initData();
     adapter.notifyDataSetChanged();
 
-    //addHeader();
+    addHeader();
     //addFooter();
   }
 
@@ -87,6 +88,7 @@ public class NormalActivity extends AppCompatActivity {
     RecyclerView.LayoutManager manager =
         new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
     recyclerView.setLayoutManager(manager);
+    recyclerView.addItemDecoration(new SimpleDecoration());
     recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
       @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
         Log.i("vegeta", "item clicked!");

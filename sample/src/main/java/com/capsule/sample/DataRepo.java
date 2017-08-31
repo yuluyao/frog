@@ -95,8 +95,6 @@ public class DataRepo {
     return list;
   }
 
-
-
   public List<SkillBean> loadMore(int id) {
     if (id <= 0) {
       return refreshList();
