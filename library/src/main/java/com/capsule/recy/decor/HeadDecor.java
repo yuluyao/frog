@@ -53,14 +53,27 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
       return;
     }
     ViewGroup itemView = (ViewGroup) parent.getChildAt(0);
-    float left = parent.getPaddingLeft();
-    float right = parent.getWidth() - parent.getPaddingRight();
-    float top = itemView.getY() - layoutHeight;
-    float bottom = itemView.getY();
-
+    float left;
+    float right;
+    float top;
+    float bottom;
+    if (orientation == LinearLayoutManager.VERTICAL) {
+      left = parent.getPaddingLeft();
+      top = itemView.getY() - layoutHeight;
+    } else {
+      left = parent.getPaddingLeft() - layoutWidth;
+      top = itemView.getY();
+    }
+    right = parent.getWidth() - parent.getPaddingRight();
+    bottom = itemView.getY();
     layoutHead(left, top, right, bottom);
+
     if (!sticky) {
-      c.translate(0, top);
+      if (orientation == LinearLayoutManager.VERTICAL) {
+        c.translate(0, top);
+      } else {
+        c.translate(left, 0);
+      }
     }
     header.draw(c);
   }
