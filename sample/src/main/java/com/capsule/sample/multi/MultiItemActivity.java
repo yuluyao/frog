@@ -8,9 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 import com.capsule.recy.click.ChildItemClickListener;
-import com.capsule.recy.click.ItemClickListener;
-import com.capsule.recy.decoration.SimpleDecoration;
 import com.capsule.sample.R;
+import com.capsule.sample.decor.SimpleDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +32,11 @@ public class MultiItemActivity extends AppCompatActivity {
     recyclerView = (RecyclerView) findViewById(R.id.rv);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);
-    recyclerView.addItemDecoration(new SimpleDecoration());
+    recyclerView.addItemDecoration(new SimpleDecoration(this));
     recyclerView.addOnItemTouchListener(new ChildItemClickListener(recyclerView) {
       @Override
       public void onChildItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
-        Toast.makeText(MultiItemActivity.this,"点击图片",Toast.LENGTH_SHORT).show();
+        Toast.makeText(MultiItemActivity.this, "点击图片", Toast.LENGTH_SHORT).show();
       }
 
       @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {

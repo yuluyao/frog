@@ -1,4 +1,4 @@
-package com.capsule.sample;
+package com.capsule.sample.repo;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,6 +1,7 @@
-package com.capsule.sample;
+package com.capsule.sample.repo;
 
 import android.content.Context;
+import com.capsule.sample.R;
 import java.util.ArrayList;
 import java.util.List;
 

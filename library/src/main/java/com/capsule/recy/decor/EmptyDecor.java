@@ -1,4 +1,4 @@
-package com.capsule.recy.decoration;
+package com.capsule.recy.decor;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -8,15 +8,9 @@ import android.view.View;
 /**
  * 描 述：
  * 作 者：Vegeta Yu
- * 时 间：2017/8/31 14:51
+ * 时 间：2017/9/1 14:30
  */
-public class SimpleDecoration extends RecyclerView.ItemDecoration {
-
-  private int dividerHeight;
-
-  public SimpleDecoration() {
-    dividerHeight = 6;
-  }
+public class EmptyDecor extends RecyclerView.ItemDecoration {
 
   @Override public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
     super.onDraw(c, parent, state);
@@ -29,7 +23,5 @@ public class SimpleDecoration extends RecyclerView.ItemDecoration {
   @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
       RecyclerView.State state) {
     super.getItemOffsets(outRect, view, parent, state);
-    outRect.bottom = dividerHeight;
-
   }
 }

@@ -29,7 +29,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 14:50
  */
-public abstract class CapAdapter<T, VH extends CapViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerView.Adapter<VH> {
 
   public interface OnLoadMoreListener {
     void onLoadMore();

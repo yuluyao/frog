@@ -5,7 +5,7 @@ import android.widget.TextView;
 import com.capsule.recy.CapAdapter;
 import com.capsule.recy.CapViewHolder;
 import com.capsule.sample.R;
-import com.capsule.sample.SkillBean;
+import com.capsule.sample.repo.SkillBean;
 
 /**
  * 描 述：

@@ -5,7 +5,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -13,11 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.capsule.recy.CapAdapter;
 import com.capsule.recy.click.ChildItemClickListener;
-import com.capsule.recy.click.ItemClickListener;
-import com.capsule.recy.decoration.SimpleDecoration;
-import com.capsule.sample.DataRepo;
+import com.capsule.sample.repo.DataRepo;
 import com.capsule.sample.R;
-import com.capsule.sample.SkillBean;
+import com.capsule.sample.decor.SimpleDecoration;
+import com.capsule.sample.repo.SkillBean;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -92,7 +90,7 @@ public class NormalActivity extends AppCompatActivity {
     RecyclerView.LayoutManager manager =
         new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
     recyclerView.setLayoutManager(manager);
-    recyclerView.addItemDecoration(new SimpleDecoration());
+    recyclerView.addItemDecoration(new SimpleDecoration(this));
     //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
     //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
     //    Log.i("vegeta", "item clicked!");
