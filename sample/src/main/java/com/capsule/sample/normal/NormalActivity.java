@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.capsule.recy.CapAdapter;
 import com.capsule.recy.click.ChildItemClickListener;
+import com.capsule.recy.decor.EmptyDecor;
+import com.capsule.recy.decor.HeadDecor;
 import com.capsule.sample.repo.DataRepo;
 import com.capsule.sample.R;
 import com.capsule.sample.decor.SimpleDecoration;
@@ -45,7 +47,7 @@ public class NormalActivity extends AppCompatActivity {
     initData();
     adapter.notifyDataSetChanged();
 
-    addHeader();
+    //addHeader();
     //addFooter();
   }
 
@@ -90,7 +92,9 @@ public class NormalActivity extends AppCompatActivity {
     RecyclerView.LayoutManager manager =
         new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
     recyclerView.setLayoutManager(manager);
-    recyclerView.addItemDecoration(new SimpleDecoration(this));
+
+    recyclerView.addItemDecoration(new EmptyDecor(R.layout.layout_empty));
+    recyclerView.addItemDecoration(new HeadDecor(R.layout.layout_head));
     //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
     //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
     //    Log.i("vegeta", "item clicked!");
@@ -107,6 +111,12 @@ public class NormalActivity extends AppCompatActivity {
       }
     });
 
+    //recyclerView.setOnClickListener(new View.OnClickListener() {
+    //  @Override public void onClick(View v) {
+    //    Toast.makeText(NormalActivity.this, "OnClickListener!!!", Toast.LENGTH_SHORT).show();
+    //  }
+    //});
+
     //recyclerView.addOnItemTouchListener(new ChildItemClickListener(recyclerView) {
     //  @Override public void onItemClick(RecyclerView.ViewHolder vh, Object item) {
     //    Log.i("vegeta", "item clicked!");
@@ -122,40 +132,40 @@ public class NormalActivity extends AppCompatActivity {
   private void initAdapter() {
     adapter = new NormalAdapter();
 
-    adapter.setEmptyView(R.layout.layout_empty);
-    adapter.setLoadMoreView(new SimpleLoadMoreView());
-    adapter.setOnLoadMoreListener(new CapAdapter.OnLoadMoreListener() {
-      @Override public void onLoadMore() {
-
-        Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {
-          @Override public void subscribe(@NonNull ObservableEmitter<List<SkillBean>> e)
-              throws Exception {
-            List<SkillBean> data = repo.loadMore(adapter.getLastData().getId());
-            e.onNext(data);
-          }
-        })
-            .subscribeOn(Schedulers.io())
-            .delay(500, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Observer<List<SkillBean>>() {
-              @Override public void onSubscribe(@NonNull Disposable d) {
-
-              }
-
-              @Override public void onNext(@NonNull List<SkillBean> list) {
-                adapter.notifyLoadMoreCompleted(list);
-              }
-
-              @Override public void onError(@NonNull Throwable e) {
-
-              }
-
-              @Override public void onComplete() {
-
-              }
-            });
-      }
-    });
+    //adapter.setEmptyView(R.layout.layout_empty);
+    //adapter.setLoadMoreView(new SimpleLoadMoreView());
+    //adapter.setOnLoadMoreListener(new CapAdapter.OnLoadMoreListener() {
+    //  @Override public void onLoadMore() {
+    //
+    //    Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {
+    //      @Override public void subscribe(@NonNull ObservableEmitter<List<SkillBean>> e)
+    //          throws Exception {
+    //        List<SkillBean> data = repo.loadMore(adapter.getLastData().getId());
+    //        e.onNext(data);
+    //      }
+    //    })
+    //        .subscribeOn(Schedulers.io())
+    //        .delay(500, TimeUnit.MILLISECONDS)
+    //        .observeOn(AndroidSchedulers.mainThread())
+    //        .subscribe(new Observer<List<SkillBean>>() {
+    //          @Override public void onSubscribe(@NonNull Disposable d) {
+    //
+    //          }
+    //
+    //          @Override public void onNext(@NonNull List<SkillBean> list) {
+    //            adapter.notifyLoadMoreCompleted(list);
+    //          }
+    //
+    //          @Override public void onError(@NonNull Throwable e) {
+    //
+    //          }
+    //
+    //          @Override public void onComplete() {
+    //
+    //          }
+    //        });
+    //  }
+    //});
     recyclerView.setAdapter(adapter);
   }
 
