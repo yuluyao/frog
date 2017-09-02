@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 import com.capsule.recy.click.ItemClickListener;
 import com.capsule.sample.R;
@@ -27,8 +28,8 @@ public class ClickActivity extends BaseActivity {
     recyclerView = (RecyclerView) findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.addOnItemTouchListener(new ItemClickListener() {
-      @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-        Toast.makeText(ClickActivity.this, "点击："+position, Toast.LENGTH_SHORT).show();
+      @Override public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
+        Toast.makeText(ClickActivity.this, "点击：" + position, Toast.LENGTH_SHORT).show();
       }
     });
 
@@ -43,6 +44,5 @@ public class ClickActivity extends BaseActivity {
     return R.layout.activity_click;
   }
 
-
-
+  //Toast.makeText(ClickActivity.this, "点击："+position, Toast.LENGTH_SHORT).show();
 }

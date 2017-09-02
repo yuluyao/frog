@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.capsule.recy.click.ChildItemClickListener;
+import com.capsule.recy.click.ItemClickListener;
 import com.capsule.recy.decor.EmptyDecor;
 import com.capsule.recy.decor.HeadDecor;
 import com.capsule.sample.base.BaseActivity;
@@ -96,21 +96,21 @@ public class LoadActivity extends BaseActivity {
 
     recyclerView.addItemDecoration(new EmptyDecor(R.layout.layout_empty));
     recyclerView.addItemDecoration(new HeadDecor(R.layout.layout_head));
-    //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
+    //recyclerView.addOnItemTouchListener(new SimpleClickListener(recyclerView) {
     //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
     //    Log.i("vegeta", "item clicked!");
     //  }
     //});
-    recyclerView.addOnItemTouchListener(new ChildItemClickListener(recyclerView) {
-      @Override
-      public void onChildItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
-        Toast.makeText(LoadActivity.this, "子item", Toast.LENGTH_SHORT).show();
-      }
-
-      @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-        Toast.makeText(LoadActivity.this, "点击item", Toast.LENGTH_SHORT).show();
-      }
-    });
+    //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
+    //  @Override
+    //  public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
+    //    Toast.makeText(LoadActivity.this, "子item", Toast.LENGTH_SHORT).show();
+    //  }
+    //
+    //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
+    //    Toast.makeText(LoadActivity.this, "点击item", Toast.LENGTH_SHORT).show();
+    //  }
+    //});
 
     //recyclerView.setOnClickListener(new View.OnClickListener() {
     //  @Override public void onClick(View v) {
@@ -118,13 +118,13 @@ public class LoadActivity extends BaseActivity {
     //  }
     //});
 
-    //recyclerView.addOnItemTouchListener(new ChildItemClickListener(recyclerView) {
+    //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
     //  @Override public void onItemClick(RecyclerView.ViewHolder vh, Object item) {
     //    Log.i("vegeta", "item clicked!");
     //  }
     //
     //  @Override
-    //  public void onChildItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
+    //  public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
     //    Log.i("vegeta", "child clicked : "+childView.toString());
     //  }
     //});

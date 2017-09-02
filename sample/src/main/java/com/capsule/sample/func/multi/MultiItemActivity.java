@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
-import com.capsule.recy.click.ChildItemClickListener;
+import com.capsule.recy.click.ItemClickListener;
 import com.capsule.sample.R;
 import com.capsule.sample.decor.SimpleDecoration;
 import java.util.ArrayList;
@@ -33,17 +33,17 @@ public class MultiItemActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.addItemDecoration(new SimpleDecoration(this));
-    recyclerView.addOnItemTouchListener(new ChildItemClickListener(recyclerView) {
-      @Override
-      public void onChildItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
-        Toast.makeText(MultiItemActivity.this, "点击图片", Toast.LENGTH_SHORT).show();
-      }
-
-      @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-        Toast.makeText(MultiItemActivity.this, "点击item", Toast.LENGTH_SHORT).show();
-      }
-    });
     //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
+    //  @Override
+    //  public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
+    //    Toast.makeText(MultiItemActivity.this, "点击图片", Toast.LENGTH_SHORT).show();
+    //  }
+    //
+    //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
+    //    Toast.makeText(MultiItemActivity.this, "点击item", Toast.LENGTH_SHORT).show();
+    //  }
+    //});
+    //recyclerView.addOnItemTouchListener(new SimpleClickListener(recyclerView) {
     //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
     //    Toast.makeText(MultiItemActivity.this, "点击item", Toast.LENGTH_SHORT).show();
     //  }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import com.capsule.recy.click.ItemClickListener;
 import com.capsule.recy.decor.HeadDecor;
 import com.capsule.sample.base.BaseActivity;
@@ -20,24 +21,6 @@ public class MainActivity extends BaseActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    //ListView listView = (ListView) findViewById(R.id.list);
-    //ArrayAdapter<String> adapter =
-    //    new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
-    //        new String[] { "base use", "multiple item" });
-    //listView.setAdapter(adapter);
-    //listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-    //  @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    //    switch (position) {
-    //      case 0:
-    //        startActivity(new Intent(MainActivity.this, LoadActivity.class));
-    //        break;
-    //      case 1:
-    //        startActivity(new Intent(MainActivity.this, MultiItemActivity.class));
-    //        break;
-    //    }
-    //  }
-    //});
     setTitle("主页");
     initView();
   }
@@ -50,7 +33,7 @@ public class MainActivity extends BaseActivity {
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.addOnItemTouchListener(new ItemClickListener() {
-      @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
+      @Override public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
         startByPosition(position);
       }
     });
