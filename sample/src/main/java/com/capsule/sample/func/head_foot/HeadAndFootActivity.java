@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import com.capsule.recy.decor.FootDecor;
 import com.capsule.recy.decor.HeadDecor;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
@@ -25,7 +26,9 @@ public class HeadAndFootActivity extends BaseActivity {
 
     recyclerView = (RecyclerView) findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    recyclerView.addItemDecoration(new HeadDecor(R.layout.layout_head));
+    //recyclerView.addItemDecoration(new HeadDecor(R.layout.layout_head));
+    recyclerView.addItemDecoration(new FootDecor(R.layout.layout_foot));
+
 
     repo = new DataRepo(this);
 

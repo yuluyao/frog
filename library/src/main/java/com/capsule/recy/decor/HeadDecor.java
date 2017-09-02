@@ -42,10 +42,6 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
     mPaint.setColor(0x6f0000ff);
   }
 
-  @Override public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-    super.onDraw(c, parent, state);
-  }
-
   @Override public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
     super.onDrawOver(c, parent, state);
     int childCount = parent.getChildCount();
