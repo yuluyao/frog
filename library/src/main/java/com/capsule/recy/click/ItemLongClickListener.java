@@ -14,7 +14,8 @@ import com.capsule.recy.CapViewHolder;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/29 17:24
  */
-public abstract class ItemLongClickListener implements RecyclerView.OnItemTouchListener {
+public abstract class ItemLongClickListener extends RecyclerView.SimpleOnItemTouchListener {
+
   private RecyclerView          recyclerView;
   private GestureDetectorCompat mGestureDetector;
 
