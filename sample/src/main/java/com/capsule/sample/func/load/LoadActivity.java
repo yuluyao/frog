@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.capsule.recy.CapAdapter;
 import com.capsule.recy.click.ItemClickListener;
 import com.capsule.recy.decor.EmptyDecor;
 import com.capsule.recy.decor.HeadDecor;
@@ -94,86 +95,53 @@ public class LoadActivity extends BaseActivity {
         new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
     recyclerView.setLayoutManager(manager);
 
-    recyclerView.addItemDecoration(new EmptyDecor(R.layout.layout_empty));
-    recyclerView.addItemDecoration(new HeadDecor(R.layout.layout_head));
-    //recyclerView.addOnItemTouchListener(new SimpleClickListener(recyclerView) {
-    //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-    //    Log.i("vegeta", "item clicked!");
-    //  }
-    //});
-    //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
-    //  @Override
-    //  public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
-    //    Toast.makeText(LoadActivity.this, "子item", Toast.LENGTH_SHORT).show();
-    //  }
-    //
-    //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-    //    Toast.makeText(LoadActivity.this, "点击item", Toast.LENGTH_SHORT).show();
-    //  }
-    //});
-
-    //recyclerView.setOnClickListener(new View.OnClickListener() {
-    //  @Override public void onClick(View v) {
-    //    Toast.makeText(LoadActivity.this, "OnClickListener!!!", Toast.LENGTH_SHORT).show();
-    //  }
-    //});
-
-    //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
-    //  @Override public void onItemClick(RecyclerView.ViewHolder vh, Object item) {
-    //    Log.i("vegeta", "item clicked!");
-    //  }
-    //
-    //  @Override
-    //  public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
-    //    Log.i("vegeta", "child clicked : "+childView.toString());
-    //  }
-    //});
+    //recyclerView.addItemDecoration(new EmptyDecor(R.layout.layout_empty));
   }
 
   private void initAdapter() {
     adapter = new LoadAdapter();
 
-    //adapter.setEmptyView(R.layout.layout_empty);
-    //adapter.setLoadMoreView(new SimpleLoadMoreView());
-    //adapter.setOnLoadMoreListener(new CapAdapter.OnLoadMoreListener() {
-    //  @Override public void onLoadMore() {
-    //
-    //    Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {
-    //      @Override public void subscribe(@NonNull ObservableEmitter<List<SkillBean>> e)
-    //          throws Exception {
-    //        List<SkillBean> data = repo.loadMore(adapter.getLastData().getId());
-    //        e.onNext(data);
-    //      }
-    //    })
-    //        .subscribeOn(Schedulers.io())
-    //        .delay(500, TimeUnit.MILLISECONDS)
-    //        .observeOn(AndroidSchedulers.mainThread())
-    //        .subscribe(new Observer<List<SkillBean>>() {
-    //          @Override public void onSubscribe(@NonNull Disposable d) {
-    //
-    //          }
-    //
-    //          @Override public void onNext(@NonNull List<SkillBean> list) {
-    //            adapter.notifyLoadMoreCompleted(list);
-    //          }
-    //
-    //          @Override public void onError(@NonNull Throwable e) {
-    //
-    //          }
-    //
-    //          @Override public void onComplete() {
-    //
-    //          }
-    //        });
-    //  }
-    //});
+    adapter.setEmptyView(R.layout.layout_empty);
+    adapter.setLoadMoreView(new SimpleLoadMoreView());
+    adapter.setOnLoadMoreListener(new CapAdapter.OnLoadMoreListener() {
+      @Override public void onLoadMore() {
+
+        Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {
+          @Override public void subscribe(@NonNull ObservableEmitter<List<SkillBean>> e)
+              throws Exception {
+            List<SkillBean> data = repo.loadMore(adapter.getLastData().getId());
+            e.onNext(data);
+          }
+        })
+            .subscribeOn(Schedulers.io())
+            .delay(500, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Observer<List<SkillBean>>() {
+              @Override public void onSubscribe(@NonNull Disposable d) {
+
+              }
+
+              @Override public void onNext(@NonNull List<SkillBean> list) {
+                adapter.notifyLoadMoreCompleted(list);
+              }
+
+              @Override public void onError(@NonNull Throwable e) {
+
+              }
+
+              @Override public void onComplete() {
+
+              }
+            });
+      }
+    });
     recyclerView.setAdapter(adapter);
   }
 
   private void initData() {
     repo = new DataRepo(this);
-    //adapter.setData(repo.refreshList());
-    adapter.setData(new ArrayList<SkillBean>());
+    adapter.setData(repo.refreshList());
+    //adapter.setData(new ArrayList<SkillBean>());
   }
 
   private void addHeader() {
