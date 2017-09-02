@@ -1,4 +1,4 @@
-package com.capsule.sample.multi;
+package com.capsule.sample.func.multi;
 
 import com.capsule.recy.multi.MultiEntity;
 import java.sql.Array;

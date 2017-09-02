@@ -1,4 +1,4 @@
-package com.capsule.sample.multi;
+package com.capsule.sample.func.multi;
 
 import android.widget.ImageView;
 import android.widget.TextView;

@@ -1,4 +1,4 @@
-package com.capsule.sample.normal;
+package com.capsule.sample.func.load;
 
 import com.capsule.recy.load.LoadMoreView;
 import com.capsule.sample.R;

@@ -17,8 +17,13 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name="com.capsule.sample.normal.NormalActivity" />
-    <activity android:name="com.capsule.sample.multi.MultiItemActivity" />
+
+    <activity android:name=".func.empty.EmptyViewActivity" />
+    <activity android:name=".func.head_foot.HeadAndFootActivity" />
+    <activity android:name=".func.load.LoadActivity" />
+    <activity android:name=".func.click.ClickActivity" />
+    <activity android:name=".func.divider.DividerActivity" />
+    <activity android:name=".func.multi.MultiItemActivity" />
   </application>
 
 </manifest>

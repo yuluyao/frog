@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.capsule.sample.normal.NormalActivity"
+    tools:context="com.capsule.sample.func.load.LoadActivity"
     >
 
   <android.support.v4.widget.SwipeRefreshLayout

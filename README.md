@@ -7,25 +7,25 @@ recylerview adapter
 
 将要完成的功能：
 
+- 显示加载为空 EmptyView
+
 - 添加 header 、 footer
 
-- 加载更多 
+- 加载更多 LoadMore
 
-- 显示加载为空
+- 触摸事件 ClickListener LongCLickListener
 
-- 触摸事件
+- 多类型 MultiItem
 
-- 多类型
+- 展开 Expandable
 
-- 展开
+- 分组 Group
 
-- 分组
+- 动画 Animation
 
-- 动画
+- 分割线 ItemDecoration
 
-- 分割线
+- 扫 Swipe
 
-- 扫
-
-- 拖放
+- 拖放 Drag
 

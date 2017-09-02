@@ -1,4 +1,4 @@
-package com.capsule.sample.normal;
+package com.capsule.sample.func.load;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.capsule.recy.CapAdapter;
 import com.capsule.recy.click.ChildItemClickListener;
 import com.capsule.recy.decor.EmptyDecor;
 import com.capsule.recy.decor.HeadDecor;
 import com.capsule.sample.repo.DataRepo;
 import com.capsule.sample.R;
-import com.capsule.sample.decor.SimpleDecoration;
 import com.capsule.sample.repo.SkillBean;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -30,9 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class NormalActivity extends AppCompatActivity {
+public class LoadActivity extends AppCompatActivity {
 
-  private NormalAdapter      adapter;
+  private LoadAdapter        adapter;
   private SwipeRefreshLayout refreshLayout;
   private RecyclerView       recyclerView;
   private DataRepo           repo;
@@ -103,17 +101,17 @@ public class NormalActivity extends AppCompatActivity {
     recyclerView.addOnItemTouchListener(new ChildItemClickListener(recyclerView) {
       @Override
       public void onChildItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
-        Toast.makeText(NormalActivity.this, "子item", Toast.LENGTH_SHORT).show();
+        Toast.makeText(LoadActivity.this, "子item", Toast.LENGTH_SHORT).show();
       }
 
       @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-        Toast.makeText(NormalActivity.this, "点击item", Toast.LENGTH_SHORT).show();
+        Toast.makeText(LoadActivity.this, "点击item", Toast.LENGTH_SHORT).show();
       }
     });
 
     //recyclerView.setOnClickListener(new View.OnClickListener() {
     //  @Override public void onClick(View v) {
-    //    Toast.makeText(NormalActivity.this, "OnClickListener!!!", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(LoadActivity.this, "OnClickListener!!!", Toast.LENGTH_SHORT).show();
     //  }
     //});
 
@@ -130,7 +128,7 @@ public class NormalActivity extends AppCompatActivity {
   }
 
   private void initAdapter() {
-    adapter = new NormalAdapter();
+    adapter = new LoadAdapter();
 
     //adapter.setEmptyView(R.layout.layout_empty);
     //adapter.setLoadMoreView(new SimpleLoadMoreView());

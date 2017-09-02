@@ -2,22 +2,24 @@ package com.capsule.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.capsule.recy.click.ItemClickListener;
-import com.capsule.recy.decor.EmptyDecor;
 import com.capsule.recy.decor.HeadDecor;
-import com.capsule.sample.multi.MultiItemActivity;
-import com.capsule.sample.normal.NormalActivity;
+import com.capsule.sample.base.BaseActivity;
+import com.capsule.sample.func.click.ClickActivity;
+import com.capsule.sample.func.divider.DividerActivity;
+import com.capsule.sample.func.empty.EmptyViewActivity;
+import com.capsule.sample.func.head_foot.HeadAndFootActivity;
+import com.capsule.sample.func.load.LoadActivity;
+import com.capsule.sample.func.multi.MultiItemActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
 
     //ListView listView = (ListView) findViewById(R.id.list);
     //ArrayAdapter<String> adapter =
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     //  @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     //    switch (position) {
     //      case 0:
-    //        startActivity(new Intent(MainActivity.this, NormalActivity.class));
+    //        startActivity(new Intent(MainActivity.this, LoadActivity.class));
     //        break;
     //      case 1:
     //        startActivity(new Intent(MainActivity.this, MultiItemActivity.class));
@@ -36,8 +38,12 @@ public class MainActivity extends AppCompatActivity {
     //    }
     //  }
     //});
-
+    setTitle("主页");
     initView();
+  }
+
+  @Override protected int onGetLayoutId() {
+    return R.layout.activity_main;
   }
 
   private void initView() {
@@ -48,11 +54,10 @@ public class MainActivity extends AppCompatActivity {
         startByPosition(position);
       }
     });
-    recyclerView.addItemDecoration(new HeadDecor(R.layout.layout_head,true));
+    recyclerView.addItemDecoration(new HeadDecor(R.layout.layout_head, true));
 
     MainAdapter adapter = new MainAdapter();
     recyclerView.setAdapter(adapter);
-
 
     adapter.setData(mockData());
     adapter.notifyDataSetChanged();
@@ -60,12 +65,12 @@ public class MainActivity extends AppCompatActivity {
 
   private List<String> mockData() {
     List<String> list = new ArrayList<>();
-    list.add("normal use");
-    list.add("multiple item");
-    list.add("...");
-    list.add("...");
-    list.add("...");
-    list.add("...");
+    list.add("empty view");
+    list.add("head and foot");
+    list.add("load");
+    list.add("click listener");
+    list.add("divider");
+    list.add("multiple item type");
     list.add("...");
     list.add("...");
     list.add("...");
@@ -85,9 +90,21 @@ public class MainActivity extends AppCompatActivity {
     Intent intent = null;
     switch (position) {
       case 0:
-        intent = new Intent(this, NormalActivity.class);
+        intent = new Intent(this, EmptyViewActivity.class);
         break;
       case 1:
+        intent = new Intent(this, HeadAndFootActivity.class);
+        break;
+      case 2:
+        intent = new Intent(this, LoadActivity.class);
+        break;
+      case 3:
+        intent = new Intent(this, ClickActivity.class);
+        break;
+      case 4:
+        intent = new Intent(this, DividerActivity.class);
+        break;
+      case 5:
         intent = new Intent(this, MultiItemActivity.class);
         break;
 

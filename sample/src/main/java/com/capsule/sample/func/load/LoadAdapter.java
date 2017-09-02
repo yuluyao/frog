@@ -1,4 +1,4 @@
-package com.capsule.sample.normal;
+package com.capsule.sample.func.load;
 
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,9 +12,9 @@ import com.capsule.sample.repo.SkillBean;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 21:44
  */
-public class NormalAdapter extends CapAdapter<SkillBean, CapViewHolder> {
+public class LoadAdapter extends CapAdapter<SkillBean, CapViewHolder> {
 
-  public NormalAdapter() {
+  public LoadAdapter() {
     setItemLayout(R.layout.item_normal_list);
   }
 
