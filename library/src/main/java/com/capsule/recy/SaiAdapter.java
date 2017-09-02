@@ -8,7 +8,8 @@ import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.capsule.recy.load.LoadMoreView;
+import com.capsule.recy.decor.FootDecor;
+import com.capsule.recy.load.Load;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
@@ -34,13 +35,12 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
 
   protected List<T> mData = new ArrayList<>();
 
-  public static final int VIEW_TYPE_LOAD   = -4;
+  public static final int VIEW_TYPE_LOAD = -4;
 
   private SparseIntArray typeArray;// viewType and layoutId
 
-
   /* load more */
-  private LoadMoreView       mLoadMoreView;
+  //private LoadMoreView       mLoadMoreView;
   private OnLoadMoreListener onLoadMoreListener;
 
   /* pending */
@@ -53,6 +53,7 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
     super.onAttachedToRecyclerView(recyclerView);
     mRecyclerView = recyclerView;
+    load = new Load(mRecyclerView);
     mContext = mRecyclerView.getContext();
     mLayoutInflater = LayoutInflater.from(mContext);
     executePending();
@@ -64,28 +65,29 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
 
   private void executePending() {
     if (pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER) != null) {
-      onLoadMoreListener = (OnLoadMoreListener) pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER);
-      mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-        @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-          if (mLoadMoreView.isEnd()) {
-            return;
-          }
-
-          RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
-          int visibleChildCount = layoutManager.getChildCount();
-          if (mData.size() > 0//有item
-              && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
-              && !mLoadMoreView.isLoading()) {//没有正在加载
-            View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
-            int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
-            if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
-
-              mLoadMoreView.setStatus(LoadMoreView.LOADING);
-              onLoadMoreListener.onLoadMore();
-            }
-          }
-        }
-      });
+      setScrollListener((OnLoadMoreListener) pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER));
+      //onLoadMoreListener = (OnLoadMoreListener) pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER);
+      //mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+      //  @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+      //    if (mLoadMoreView.isEnd()) {
+      //      return;
+      //    }
+      //
+      //    RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+      //    int visibleChildCount = layoutManager.getChildCount();
+      //    if (mData.size() > 0//有item
+      //        && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
+      //        && !mLoadMoreView.isLoading()) {//没有正在加载
+      //      View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
+      //      int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
+      //      if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
+      //
+      //        mLoadMoreView.setStatus(LoadMoreView.LOADING);
+      //        onLoadMoreListener.onLoadMore();
+      //      }
+      //    }
+      //  }
+      //});
     }
     pendingConfig.clear();
   }
@@ -99,10 +101,10 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
     VH holder;
 
     switch (viewType) {
-      case VIEW_TYPE_LOAD:
-        View load = mLayoutInflater.inflate(mLoadMoreView.getLayoutId(), parent, false);
-        holder = buildStaticHolder(load);
-        break;
+      //case VIEW_TYPE_LOAD:
+      //  View load = mLayoutInflater.inflate(mLoadMoreView.getLayoutId(), parent, false);
+      //  holder = buildStaticHolder(load);
+      //  break;
       default:
         View itemView = mLayoutInflater.inflate(typeArray.get(viewType), parent, false);
         holder = buildStaticHolder(itemView);
@@ -173,9 +175,9 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
   @Override public void onBindViewHolder(VH holder, int position) {
     int type = holder.getItemViewType();
     switch (type) {
-      case VIEW_TYPE_LOAD:
-        mLoadMoreView.convert(holder);
-        break;
+      //case VIEW_TYPE_LOAD:
+      //  mLoadMoreView.convert(holder);
+      //  break;
 
       default:
         convert(holder, getData(position));
@@ -199,9 +201,9 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
   /* ************************* adapter ************************* */
   @Override public int getItemCount() {
     int count = mData.size();
-    if (hasLoadMoreView()) {
-      count++;
-    }
+    //if (hasLoadMoreView()) {
+    //  count++;
+    //}
 
     return count;
   }
@@ -211,7 +213,6 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
       return getDataItemViewType(position); //VIEW_TYPE_DATA
     }
     return VIEW_TYPE_LOAD;
-
   }
 
   protected int getDataItemViewType(int position) {
@@ -261,27 +262,53 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
   public void notifyRefreshCompleted(List<T> data) {
     setData(data);
     notifyDataSetChanged();
+    load.setAble();//如果刷新之前有加载失败的情况，列表状态会变为不可加载，刷新以后，要使列表变为可加载状态
   }
 
   /* ************************** loadmore ************************** */
 
-  public void setLoadMoreView(LoadMoreView view) {
-    mLoadMoreView = view;
-  }
+  //public void setLoadMoreView(LoadMoreView view) {
+  //  mLoadMoreView = view;
+  //}
 
-  public boolean hasLoadMoreView() {
-    return mLoadMoreView != null;
-  }
+  //public boolean hasLoadMoreView() {
+  //  return mLoadMoreView != null;
+  //}
 
   public void setOnLoadMoreListener(OnLoadMoreListener listener) {
     if (mRecyclerView == null) {
       putPending(PENDING_ON_LOAD_MORE_LISTENER, listener);
       return;
     }
+    setScrollListener(listener);
+    //onLoadMoreListener = listener;
+    //mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+    //  @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+    //    if (mLoadMoreView.isEnd()) {
+    //      return;
+    //    }
+    //
+    //    RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+    //    int visibleChildCount = layoutManager.getChildCount();
+    //    if (mData.size() > 0//有item
+    //        && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
+    //        && !mLoadMoreView.isLoading()) {//没有正在加载
+    //      View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
+    //      int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
+    //      if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
+    //          mLoadMoreView.setStatus(LoadMoreView.LOADING);
+    //          onLoadMoreListener.onLoadMore();
+    //      }
+    //    }
+    //  }
+    //});
+  }
+
+  private void setScrollListener(OnLoadMoreListener listener) {
     onLoadMoreListener = listener;
     mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-        if (mLoadMoreView.isEnd()) {
+        if (load.isEnd()) {
           return;
         }
 
@@ -289,33 +316,39 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
         int visibleChildCount = layoutManager.getChildCount();
         if (mData.size() > 0//有item
             && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
-            && !mLoadMoreView.isLoading()) {//没有正在加载
+            && !(load.isLoading())) {//没有正在加载
           View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
           int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
           if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
-
-            mLoadMoreView.setStatus(LoadMoreView.LOADING);
-            onLoadMoreListener.onLoadMore();
+            if (load.isAble()) {
+              load.setBegin();
+            } else {
+              load.setLoading();
+              onLoadMoreListener.onLoadMore();
+            }
           }
         }
       }
     });
+    load.setAble();
   }
+
+  private Load load ;
 
   public void notifyLoadMoreCompleted(List<T> data) {
     if (null == data) {
-      mLoadMoreView.setStatus(LoadMoreView.FAILED);
+      load.setFailed();
       return;
     }
     if (data.size() == 0) {
-      mLoadMoreView.setStatus(LoadMoreView.END);
+      load.setEnd();
+      notifyDataSetChanged();
       return;
     }
-    mLoadMoreView.setStatus(LoadMoreView.IDLE);
-    int insertPosition = getLastDataPosition() + 1;
+    load.setAble();
     addData(data);
-    notifyItemInserted(insertPosition);
+    notifyDataSetChanged();
+    //notifyItemChanged(getLastDataPosition());
+    //notifyItemRangeInserted(getLastDataPosition()+1,data.size());
   }
-
-
 }

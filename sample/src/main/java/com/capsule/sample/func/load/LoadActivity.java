@@ -4,19 +4,12 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.capsule.recy.CapAdapter;
 import com.capsule.recy.SaiAdapter;
-import com.capsule.recy.click.ItemClickListener;
-import com.capsule.recy.decor.EmptyDecor;
-import com.capsule.recy.decor.HeadDecor;
+import com.capsule.recy.decor.FootDecor;
+import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
 import com.capsule.sample.repo.DataRepo;
-import com.capsule.sample.R;
 import com.capsule.sample.repo.SkillBean;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -26,7 +19,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -95,6 +87,7 @@ public class LoadActivity extends BaseActivity {
     RecyclerView.LayoutManager manager =
         new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
     recyclerView.setLayoutManager(manager);
+    //recyclerView.addItemDecoration(new FootDecor(R.layout.layout_foot));
 
     //recyclerView.addItemDecoration(new EmptyDecor(R.layout.layout_empty));
   }
@@ -103,7 +96,9 @@ public class LoadActivity extends BaseActivity {
     adapter = new LoadAdapter();
 
     //adapter.setEmptyView(R.layout.layout_empty);
-    adapter.setLoadMoreView(new SimpleLoadMoreView());
+    //adapter.setLoadMoreView(new SimpleLoadMoreView());
+    recyclerView.setAdapter(adapter);
+
     adapter.setOnLoadMoreListener(new SaiAdapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
 
@@ -136,7 +131,6 @@ public class LoadActivity extends BaseActivity {
             });
       }
     });
-    recyclerView.setAdapter(adapter);
   }
 
   private void initData() {
