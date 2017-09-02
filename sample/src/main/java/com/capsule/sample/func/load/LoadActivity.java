@@ -2,7 +2,6 @@ package com.capsule.sample.func.load;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import com.capsule.recy.click.ChildItemClickListener;
 import com.capsule.recy.decor.EmptyDecor;
 import com.capsule.recy.decor.HeadDecor;
+import com.capsule.sample.base.BaseActivity;
 import com.capsule.sample.repo.DataRepo;
 import com.capsule.sample.R;
 import com.capsule.sample.repo.SkillBean;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class LoadActivity extends AppCompatActivity {
+public class LoadActivity extends BaseActivity {
 
   private LoadAdapter        adapter;
   private SwipeRefreshLayout refreshLayout;
@@ -37,8 +37,7 @@ public class LoadActivity extends AppCompatActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_base);
-    setTitle("常规用法");
+    setTitle("加载更多");
     initRefresh();
     initRecyclerView();
     initAdapter();
@@ -47,6 +46,10 @@ public class LoadActivity extends AppCompatActivity {
 
     //addHeader();
     //addFooter();
+  }
+
+  @Override protected int onGetLayoutId() {
+    return R.layout.activity_load;
   }
 
   private void initRefresh() {

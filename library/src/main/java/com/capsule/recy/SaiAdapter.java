@@ -292,7 +292,7 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
   protected abstract void convert(VH holder, T item);
 
   //public boolean isBottom() {
-  //  LinearLayoutManager layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+  //  LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
   //  //屏幕中最后一个可见子项的position
   //  int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
   //  //当前屏幕所看到的子项个数
@@ -300,7 +300,7 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
   //  //当前RecyclerView的所有子项个数
   //  int totalItemCount = layoutManager.getItemCount();
   //  //RecyclerView的滑动状态
-  //  int state = mRecyclerView.getScrollState();
+  //  int state = recyclerView.getScrollState();
   //  if (visibleItemCount > 0
   //      && lastVisibleItemPosition == totalItemCount - 1
   //      && state == RecyclerView.SCROLL_STATE_IDLE) {

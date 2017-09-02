@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
   private void initView() {
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
+    recyclerView.addOnItemTouchListener(new ItemClickListener() {
       @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
         startByPosition(position);
       }

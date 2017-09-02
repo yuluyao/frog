@@ -13,21 +13,20 @@ import android.view.View;
  */
 public abstract class ItemClickListener implements RecyclerView.OnItemTouchListener {
 
-  protected RecyclerView          mRecyclerView;
+  protected RecyclerView          recyclerView;
   private   GestureDetectorCompat mGestureDetector;
-
-  public ItemClickListener(RecyclerView recyclerView) {
-    mRecyclerView = recyclerView;
-    mGestureDetector = new GestureDetectorCompat(mRecyclerView.getContext(), new ClickListener());
-  }
 
   @Override public void onTouchEvent(RecyclerView rv, MotionEvent e) {
     mGestureDetector.onTouchEvent(e);
   }
 
   @Override public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-    mGestureDetector.onTouchEvent(e);
-    return false;
+    if (recyclerView == null) {
+      recyclerView = rv;
+      mGestureDetector = new GestureDetectorCompat(recyclerView.getContext(), new ClickListener());
+    }
+    //mGestureDetector.onTouchEvent(e);
+    return mGestureDetector.onTouchEvent(e);
   }
 
   @Override public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
@@ -39,10 +38,10 @@ public abstract class ItemClickListener implements RecyclerView.OnItemTouchListe
   private class ClickListener extends GestureDetector.SimpleOnGestureListener {
 
     @Override public boolean onSingleTapUp(MotionEvent e) {
-      View child = mRecyclerView.findChildViewUnder(e.getX(), e.getY());
-      int position = mRecyclerView.getChildLayoutPosition(child);
+      View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+      int position = recyclerView.getChildLayoutPosition(child);
       if (child != null) {
-        RecyclerView.ViewHolder holder = mRecyclerView.getChildViewHolder(child);
+        RecyclerView.ViewHolder holder = recyclerView.getChildViewHolder(child);
         onItemClick(holder, position);
       }
       return true;

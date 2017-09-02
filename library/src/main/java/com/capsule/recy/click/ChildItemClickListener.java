@@ -19,7 +19,7 @@ public abstract class ChildItemClickListener extends ItemClickListener {
   private GestureDetectorCompat mGestureDetector;
 
   public ChildItemClickListener(RecyclerView recyclerView) {
-    super(recyclerView);
+    super();
     mGestureDetector =
         new GestureDetectorCompat(recyclerView.getContext(), new ChildClickListener());
   }
@@ -42,12 +42,12 @@ public abstract class ChildItemClickListener extends ItemClickListener {
   private class ChildClickListener extends GestureDetector.SimpleOnGestureListener {
 
     @Override public boolean onSingleTapUp(MotionEvent e) {
-      ViewGroup itemView = (ViewGroup) mRecyclerView.findChildViewUnder(e.getX(), e.getY());
+      ViewGroup itemView = (ViewGroup) recyclerView.findChildViewUnder(e.getX(), e.getY());
       if (itemView == null) {
         return false;
       }
-      CapViewHolder holder = (CapViewHolder) mRecyclerView.getChildViewHolder(itemView);
-      int position = mRecyclerView.getChildLayoutPosition(itemView);
+      CapViewHolder holder = (CapViewHolder) recyclerView.getChildViewHolder(itemView);
+      int position = recyclerView.getChildLayoutPosition(itemView);
 
       float x_offset = itemView.getX();
       float y_offset = itemView.getY();
