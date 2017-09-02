@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.capsule.recy.CapAdapter;
+import com.capsule.recy.SaiAdapter;
 import com.capsule.recy.click.ItemClickListener;
 import com.capsule.recy.decor.EmptyDecor;
 import com.capsule.recy.decor.HeadDecor;
@@ -101,9 +102,9 @@ public class LoadActivity extends BaseActivity {
   private void initAdapter() {
     adapter = new LoadAdapter();
 
-    adapter.setEmptyView(R.layout.layout_empty);
+    //adapter.setEmptyView(R.layout.layout_empty);
     adapter.setLoadMoreView(new SimpleLoadMoreView());
-    adapter.setOnLoadMoreListener(new CapAdapter.OnLoadMoreListener() {
+    adapter.setOnLoadMoreListener(new SaiAdapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
 
         Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {
@@ -144,25 +145,25 @@ public class LoadActivity extends BaseActivity {
     //adapter.setData(new ArrayList<SkillBean>());
   }
 
-  private void addHeader() {
-    int height = (int) (getResources().getDisplayMetrics().density * 48);
-    TextView tv = new TextView(this);
-    RecyclerView.LayoutParams lp =
-        new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
-    tv.setBackgroundResource(R.color.colorAccent);
-    tv.setLayoutParams(lp);
-    tv.setText("我是头");
-    adapter.setHeader(tv);
-  }
-
-  private void addFooter() {
-    int height = (int) (getResources().getDisplayMetrics().density * 48);
-    TextView tv = new TextView(this);
-    RecyclerView.LayoutParams lp =
-        new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
-    tv.setBackgroundResource(R.color.colorAccent);
-    tv.setLayoutParams(lp);
-    tv.setText("我是尾");
-    adapter.setFooter(tv);
-  }
+  //private void addHeader() {
+  //  int height = (int) (getResources().getDisplayMetrics().density * 48);
+  //  TextView tv = new TextView(this);
+  //  RecyclerView.LayoutParams lp =
+  //      new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+  //  tv.setBackgroundResource(R.color.colorAccent);
+  //  tv.setLayoutParams(lp);
+  //  tv.setText("我是头");
+  //  adapter.setHeader(tv);
+  //}
+  //
+  //private void addFooter() {
+  //  int height = (int) (getResources().getDisplayMetrics().density * 48);
+  //  TextView tv = new TextView(this);
+  //  RecyclerView.LayoutParams lp =
+  //      new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
+  //  tv.setBackgroundResource(R.color.colorAccent);
+  //  tv.setLayoutParams(lp);
+  //  tv.setText("我是尾");
+  //  adapter.setFooter(tv);
+  //}
 }

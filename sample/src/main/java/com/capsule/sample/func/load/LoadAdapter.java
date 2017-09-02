@@ -4,6 +4,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.capsule.recy.CapAdapter;
 import com.capsule.recy.CapViewHolder;
+import com.capsule.recy.SaiAdapter;
 import com.capsule.sample.R;
 import com.capsule.sample.repo.SkillBean;
 
@@ -12,7 +13,7 @@ import com.capsule.sample.repo.SkillBean;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 21:44
  */
-public class LoadAdapter extends CapAdapter<SkillBean, CapViewHolder> {
+public class LoadAdapter extends SaiAdapter<SkillBean, CapViewHolder> {
 
   public LoadAdapter() {
     setItemLayout(R.layout.item_normal_list);
