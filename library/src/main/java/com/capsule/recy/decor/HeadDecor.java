@@ -71,11 +71,16 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
     if (!sticky) {
       if (orientation == LinearLayoutManager.VERTICAL) {
         c.translate(0, top);
+        header.draw(c);
+        c.translate(0, -top);
       } else {
         c.translate(left, 0);
+        header.draw(c);
+        c.translate(-left, 0);
       }
+    } else {
+      header.draw(c);
     }
-    header.draw(c);
   }
 
   @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
