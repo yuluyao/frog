@@ -9,7 +9,11 @@ import android.view.MenuItem;
 import com.capsule.recy.decor.HeadDecor;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
+import com.capsule.sample.repo.Data;
 import com.capsule.sample.repo.Repo;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import java.util.List;
 
 /**
  * Created by wusheng on 2017/9/2.
@@ -27,14 +31,15 @@ public class HeadActivity extends BaseActivity {
     recyclerView = (RecyclerView) findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.addItemDecoration(new HeadDecor(R.layout.layout_head));
-    //recyclerView.addItemDecoration(new FootDecor(R.layout.layout_foot));
-
-
 
     adapter = new HeadAdapter();
     recyclerView.setAdapter(adapter);
-    adapter.setData(Repo.getInstance(this).refreshList());
-    adapter.notifyDataSetChanged();
+
+    Repo.getInstance(this).refresh().subscribe(new Consumer<List<Data>>() {
+      @Override public void accept(@NonNull List<Data> datas) throws Exception {
+        adapter.setData(datas);
+      }
+    });
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,7 +51,7 @@ public class HeadActivity extends BaseActivity {
     switch (item.getItemId()) {
       case R.id.item1:
         break;
-      case  R.id.item2:
+      case R.id.item2:
         break;
     }
     return true;

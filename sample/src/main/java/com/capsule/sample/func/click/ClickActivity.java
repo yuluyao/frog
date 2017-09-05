@@ -11,6 +11,8 @@ import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
 import com.capsule.sample.repo.Data;
 import com.capsule.sample.repo.Repo;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 import java.util.List;
 
 /**
@@ -29,14 +31,23 @@ public class ClickActivity extends BaseActivity {
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.addOnItemTouchListener(new ItemClickListener() {
       @Override public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
-        Toast.makeText(ClickActivity.this, "点击：" + position, Toast.LENGTH_SHORT).show();
+        if (childView != null) {
+          Toast.makeText(ClickActivity.this, "点击 child:" + childView.toString(), Toast.LENGTH_SHORT)
+              .show();
+        } else {
+          Toast.makeText(ClickActivity.this, "点击：" + position, Toast.LENGTH_SHORT).show();
+        }
       }
     });
 
     adapter = new ClickAdapter();
     recyclerView.setAdapter(adapter);
-    List<Data> data = Repo.getInstance(this).refreshList();
-    adapter.notifyRefreshCompleted(data);
+    Repo.getInstance(this).refresh()
+        .subscribe(new Consumer<List<Data>>() {
+          @Override public void accept(@NonNull List<Data> datas) throws Exception {
+            adapter.notifyRefreshCompleted(datas);
+          }
+        });
   }
 
   @Override protected int onGetLayoutId() {

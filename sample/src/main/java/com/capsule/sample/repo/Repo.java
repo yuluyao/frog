@@ -3,8 +3,12 @@ package com.capsule.sample.repo;
 import android.content.Context;
 import android.content.res.Resources;
 import com.capsule.sample.R;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 描 述：
@@ -50,16 +54,18 @@ public class Repo {
     }
   }
 
-  public List<Data> refreshList() {
-    List<Data> list = new ArrayList<>();
-    list.addAll(datas.subList(0, 10));
-    return list;
+  public Observable<List<Data>> refresh() {
+    return Observable.just(datas.subList(0, 10))
+        .subscribeOn(Schedulers.io())
+        .delay(300, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread());
   }
 
-  public List<Data> loadMore(int id) {
+  public Observable<List<Data>> load(int id) {
     if (id <= 0) {
-      return refreshList();
+      return refresh();
     }
+    List<Data> list = new ArrayList<>();
     for (int i = 0; i < datas.size(); i++) {
       if (datas.get(i).getId() == id) {
         int lastPosition = datas.size() - 1;//63
@@ -67,15 +73,47 @@ public class Repo {
 
         int leftCount = lastPosition - startPosition;
 
-        if (leftCount <= 0) {
-          return new ArrayList<>();
-        } else if (leftCount <= 10) {
-          return datas.subList(startPosition, lastPosition + 1);
-        } else {
-          return datas.subList(startPosition, startPosition + 10);
+        if (leftCount <= 0) {//没有了
+
+        } else if (leftCount <= 10) {//没有下一页了
+          list = datas.subList(startPosition, lastPosition + 1);
+        } else {//正常，下一页
+          list = datas.subList(startPosition, startPosition + 10);
         }
       }
     }
-    return null;
+    return Observable.just(list)
+        .subscribeOn(Schedulers.io())
+        .delay(300, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread());
   }
+
+  //public List<Data> refreshList() {
+  //  List<Data> list = new ArrayList<>();
+  //  list.addAll(datas.subList(0, 10));
+  //  return list;
+  //}
+  //
+  //public List<Data> loadMore(int id) {
+  //  if (id <= 0) {
+  //    return refreshList();
+  //  }
+  //  for (int i = 0; i < datas.size(); i++) {
+  //    if (datas.get(i).getId() == id) {
+  //      int lastPosition = datas.size() - 1;//63
+  //      int startPosition = i + 1;//61
+  //
+  //      int leftCount = lastPosition - startPosition;
+  //
+  //      if (leftCount <= 0) {
+  //        return new ArrayList<>();
+  //      } else if (leftCount <= 10) {
+  //        return datas.subList(startPosition, lastPosition + 1);
+  //      } else {
+  //        return datas.subList(startPosition, startPosition + 10);
+  //      }
+  //    }
+  //  }
+  //  return null;
+  //}
 }
