@@ -1,21 +1,12 @@
 package com.capsule.sample.func.divider;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
-import com.capsule.sample.repo.Data;
-import com.capsule.sample.repo.Repo;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import java.util.List;
 
 /**
  * Created by wusheng on 2017/9/2.
@@ -52,6 +43,10 @@ public class DividerActivity extends BaseActivity {
             .commit();
         break;
       case R.id.grid:
+        Fragment fragment2 = DividerGridFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.container, fragment2, "grid")
+            .commit();
         break;
       case R.id.staggered:
         break;

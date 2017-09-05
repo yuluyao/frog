@@ -114,6 +114,34 @@ public class Divider extends RecyclerView.ItemDecoration {
     canvas.restore();
   }
 
+  @SuppressLint("NewApi") private void drawGrid(Canvas canvas, RecyclerView parent) {
+    canvas.save();
+    final int top;
+    final int bottom;
+    if (parent.getClipToPadding()) {
+      top = parent.getPaddingTop();
+      bottom = parent.getHeight() - parent.getPaddingBottom();
+      canvas.clipRect(parent.getPaddingLeft(), top, parent.getWidth() - parent.getPaddingRight(),
+          bottom);
+    } else {
+      top = 0;
+      bottom = parent.getHeight();
+    }
+
+    final int childCount = parent.getChildCount();
+    for (int i = 0; i < childCount; i++) {
+      final View child = parent.getChildAt(i);
+      Rect mBounds = new Rect();
+      parent.getLayoutManager().getDecoratedBoundsWithMargins(child, mBounds);
+      final int right = mBounds.right + Math.round(ViewCompat.getTranslationX(child));
+      final int left = right - dividerWidth;
+      //mDivider.setBounds(left, top, right, bottom);
+      //mDivider.draw(canvas);
+      canvas.drawRect(left, top, right, bottom, paint);
+    }
+    canvas.restore();
+  }
+
   @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
       RecyclerView.State state) {
     super.getItemOffsets(outRect, view, parent, state);
