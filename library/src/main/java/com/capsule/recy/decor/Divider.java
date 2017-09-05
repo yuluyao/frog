@@ -2,6 +2,7 @@ package com.capsule.recy.decor;
 
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v4.view.ViewCompat;
@@ -120,33 +121,38 @@ public class Divider extends RecyclerView.ItemDecoration {
   }
 
   @SuppressLint("NewApi") private void drawGrid(Canvas canvas, RecyclerView parent) {
-    drawVertical(canvas, parent);
-    drawHorizontal(canvas, parent);
-    //final int top;
-    //final int bottom;
-    //if (parent.getClipToPadding()) {
-    //  top = parent.getPaddingTop();
-    //  bottom = parent.getHeight() - parent.getPaddingBottom();
-    //  canvas.clipRect(parent.getPaddingLeft(), top, parent.getWidth() - parent.getPaddingRight(),
-    //      bottom);
-    //} else {
-    //  top = 0;
-    //  bottom = parent.getHeight();
-    //}
+    drawGridVertical(canvas, parent);
+    drawGridHorizontal(canvas, parent);
+  }
 
-    //final int childCount = parent.getChildCount();
-    //for (int i = 0; i < childCount; i++) {
-    //  final View child = parent.getChildAt(i);
-    //  Rect mBounds = new Rect();
-    //  parent.getLayoutManager().getDecoratedBoundsWithMargins(child, mBounds);
-    //  final int top
-    //  final int right = mBounds.right + Math.round(ViewCompat.getTranslationX(child));
-    //  final int left = right - dividerWidth;
-    //  //mDivider.setBounds(left, top, right, bottom);
-    //  //mDivider.draw(canvas);
-    //  canvas.drawRect(left, top, right, bottom, paint);
-    //}
-    //canvas.restore();
+  private void drawGridVertical(Canvas canvas, RecyclerView parent) {
+    final int childCount = parent.getChildCount();
+    for (int i = 0; i < childCount; i++) {
+      final View child = parent.getChildAt(i);
+      Rect mBounds = new Rect();
+      parent.getLayoutManager().getDecoratedBoundsWithMargins(child, mBounds);
+      //final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+      float top = child.getY();
+      float bottom = mBounds.bottom + Math.round(ViewCompat.getTranslationY(child));
+      float right = mBounds.right + Math.round(ViewCompat.getTranslationX(child));
+      float left = right - dividerWidth;
+      canvas.drawRect(left, top, right, bottom, paint);
+    }
+  }
+
+  private void drawGridHorizontal(Canvas canvas, RecyclerView parent) {
+    int childCount = parent.getChildCount();
+    for (int i = 0; i < childCount; i++) {
+      final View child = parent.getChildAt(i);
+      Rect mBounds = new Rect();
+      parent.getLayoutManager().getDecoratedBoundsWithMargins(child, mBounds);
+
+      float left = child.getX();
+      float right = left + child.getWidth();
+      float bottom = mBounds.bottom + Math.round(ViewCompat.getTranslationY(child));
+      float top = bottom - dividerWidth;
+      canvas.drawRect(left, top, right, bottom, paint);
+    }
   }
 
   @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
