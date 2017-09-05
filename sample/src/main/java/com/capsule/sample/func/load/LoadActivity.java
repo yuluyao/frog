@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import com.capsule.recy.Adapter;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
-import com.capsule.sample.repo.DataRepo;
-import com.capsule.sample.repo.SkillBean;
+import com.capsule.sample.repo.Data;
+import com.capsule.sample.repo.Repo;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -26,7 +26,8 @@ public class LoadActivity extends BaseActivity {
   private LoadAdapter        adapter;
   private SwipeRefreshLayout refreshLayout;
   private RecyclerView       recyclerView;
-  private DataRepo           repo;
+
+  private Repo repo;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -49,22 +50,22 @@ public class LoadActivity extends BaseActivity {
     refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
     refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
-        Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {
-          @Override public void subscribe(@NonNull ObservableEmitter<List<SkillBean>> e)
+        Observable.create(new ObservableOnSubscribe<List<Data>>() {
+          @Override public void subscribe(@NonNull ObservableEmitter<List<Data>> e)
               throws Exception {
-            List<SkillBean> data = repo.refreshList();
+            List<Data> data = repo.refreshList();
             e.onNext(data);
           }
         })
             .subscribeOn(Schedulers.io())
             .delay(500, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Observer<List<SkillBean>>() {
+            .subscribe(new Observer<List<Data>>() {
               @Override public void onSubscribe(@NonNull Disposable d) {
 
               }
 
-              @Override public void onNext(@NonNull List<SkillBean> list) {
+              @Override public void onNext(@NonNull List<Data> list) {
                 refreshLayout.setRefreshing(false);
                 adapter.notifyRefreshCompleted(list);
               }
@@ -101,22 +102,22 @@ public class LoadActivity extends BaseActivity {
     adapter.setOnLoadMoreListener(new Adapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
 
-        Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {
-          @Override public void subscribe(@NonNull ObservableEmitter<List<SkillBean>> e)
+        Observable.create(new ObservableOnSubscribe<List<Data>>() {
+          @Override public void subscribe(@NonNull ObservableEmitter<List<Data>> e)
               throws Exception {
-            List<SkillBean> data = repo.loadMore(adapter.getLastData().getId());
+            List<Data> data = repo.loadMore(adapter.getLastData().getId());
             e.onNext(data);
           }
         })
             .subscribeOn(Schedulers.io())
             .delay(500, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Observer<List<SkillBean>>() {
+            .subscribe(new Observer<List<Data>>() {
               @Override public void onSubscribe(@NonNull Disposable d) {
 
               }
 
-              @Override public void onNext(@NonNull List<SkillBean> list) {
+              @Override public void onNext(@NonNull List<Data> list) {
                 adapter.notifyLoadMoreCompleted(list);
               }
 
@@ -133,7 +134,7 @@ public class LoadActivity extends BaseActivity {
   }
 
   private void initData() {
-    repo = new DataRepo(this);
+    repo = Repo.getInstance(this);
     adapter.setData(repo.refreshList());
     //adapter.setData(new ArrayList<SkillBean>());
   }

@@ -10,7 +10,6 @@ import com.capsule.recy.click.ItemClickListener;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
 import com.capsule.sample.repo.Data;
-import com.capsule.sample.repo.DataRepo;
 import com.capsule.sample.repo.Repo;
 import java.util.List;
 

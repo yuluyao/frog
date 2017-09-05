@@ -1,28 +1,25 @@
 package com.capsule.sample.func.load;
 
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.capsule.recy.ViewHolder;
 import com.capsule.recy.Adapter;
+import com.capsule.recy.ViewHolder;
 import com.capsule.sample.R;
-import com.capsule.sample.repo.SkillBean;
+import com.capsule.sample.repo.Data;
 
 /**
  * 描 述：
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 21:44
  */
-public class LoadAdapter extends Adapter<SkillBean, ViewHolder> {
+public class LoadAdapter extends Adapter<Data, ViewHolder> {
 
   public LoadAdapter() {
-    setItemLayout(R.layout.item_normal_list);
+    setItemLayout(R.layout.item_data_vertical);
   }
 
-  @Override protected void convert(ViewHolder holder, SkillBean item) {
-    holder.setText(R.id.tv, item.getName());
-    ((ImageView) holder.itemView.findViewById(R.id.icon)).setImageResource(item.getIconRes());
-    ((TextView) holder.itemView.findViewById(R.id.icon_id)).setText(String.valueOf(item.getId()));
-
-    holder.setClickableId(R.id.icon);
+  @Override protected void convert(ViewHolder holder, Data item) {
+    holder.setImageResource(R.id.icon, item.getIconRes())
+        .setText(R.id.title, item.getTitle())
+        .setText(R.id.content, item.getContent())
+        .setClickableId(R.id.icon);
   }
 }

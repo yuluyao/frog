@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.capsule.recy.decor.HeadDecor;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
-import com.capsule.sample.repo.DataRepo;
+import com.capsule.sample.repo.Repo;
 
 /**
  * Created by wusheng on 2017/9/2.
@@ -19,7 +19,6 @@ public class HeadActivity extends BaseActivity {
 
   private RecyclerView recyclerView;
   private HeadAdapter  adapter;
-  private DataRepo     repo;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -31,11 +30,10 @@ public class HeadActivity extends BaseActivity {
     //recyclerView.addItemDecoration(new FootDecor(R.layout.layout_foot));
 
 
-    repo = new DataRepo(this);
 
     adapter = new HeadAdapter();
     recyclerView.setAdapter(adapter);
-    adapter.setData(repo.refreshList());
+    adapter.setData(Repo.getInstance(this).refreshList());
     adapter.notifyDataSetChanged();
   }
 

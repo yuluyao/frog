@@ -52,7 +52,6 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
     super.onAttachedToRecyclerView(recyclerView);
     mRecyclerView = recyclerView;
-    load = new Load(mRecyclerView);
     mContext = mRecyclerView.getContext();
     mLayoutInflater = LayoutInflater.from(mContext);
     executePending();
@@ -261,7 +260,9 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   public void notifyRefreshCompleted(List<T> data) {
     setData(data);
     notifyDataSetChanged();
-    load.setAble();//如果刷新之前有加载失败的情况，列表状态会变为不可加载，刷新以后，要使列表变为可加载状态
+    if (null != load) {
+      load.setAble();//如果刷新之前有加载失败的情况，列表状态会变为不可加载，刷新以后，要使列表变为可加载状态
+    }
   }
 
   /* ************************** loadmore ************************** */
@@ -304,15 +305,15 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   }
 
   private void setScrollListener(OnLoadMoreListener listener) {
+    load = new Load(mRecyclerView);
     onLoadMoreListener = listener;
     mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         if (load.isEnd()) {
           return;
         }
-
         RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
-        int visibleChildCount = layoutManager.getChildCount();
+        //int visibleChildCount = layoutManager.getChildCount();
         if (mData.size() > 0//有item
             && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
             && !(load.isLoading())) {//没有正在加载
@@ -332,7 +333,7 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     load.setAble();
   }
 
-  private Load load ;
+  private Load load;
 
   public void notifyLoadMoreCompleted(List<T> data) {
     if (null == data) {
