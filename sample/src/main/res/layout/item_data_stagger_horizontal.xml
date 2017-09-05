@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/item_background"
-    android:layout_height="wrap_content"
     android:orientation="vertical"
     >
 
   <TextView
-      android:layout_width="wrap_content"
       android:id="@+id/title"
-      android:text="dskfhksljahgklahk"
-      android:maxLines="8"
-      android:textSize="16sp"
-      android:textColor="#333333"
-      android:ems="1"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:maxEms="5"
+      android:maxLines="1"
+      android:text="dskfhksljahgklahk"
+      android:textColor="#333333"
+      android:textSize="16sp"
       />
 
 </LinearLayout>
