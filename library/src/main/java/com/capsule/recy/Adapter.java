@@ -34,12 +34,9 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   protected List<T> mData = new ArrayList<>();
 
-  public static final int VIEW_TYPE_LOAD = -4;
-
   private SparseIntArray typeArray;// viewType and layoutId
 
   /* load more */
-  //private LoadMoreView       mLoadMoreView;
   private OnLoadMoreListener onLoadMoreListener;
 
   /* pending */
@@ -64,28 +61,6 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   private void executePending() {
     if (pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER) != null) {
       setScrollListener((OnLoadMoreListener) pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER));
-      //onLoadMoreListener = (OnLoadMoreListener) pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER);
-      //mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-      //  @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-      //    if (mLoadMoreView.isEnd()) {
-      //      return;
-      //    }
-      //
-      //    RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
-      //    int visibleChildCount = layoutManager.getChildCount();
-      //    if (mData.size() > 0//有item
-      //        && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
-      //        && !mLoadMoreView.isLoading()) {//没有正在加载
-      //      View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
-      //      int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
-      //      if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
-      //
-      //        mLoadMoreView.setStatus(LoadMoreView.LOADING);
-      //        onLoadMoreListener.onLoadMore();
-      //      }
-      //    }
-      //  }
-      //});
     }
     pendingConfig.clear();
   }
@@ -198,24 +173,16 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   /* ************************* adapter ************************* */
   @Override public int getItemCount() {
-    int count = mData.size();
-    //if (hasLoadMoreView()) {
-    //  count++;
-    //}
-
-    return count;
+    return mData.size();
   }
 
-  @Override public int getItemViewType(int position) {
-    if (position < mData.size()) {
-      return getDataItemViewType(position); //VIEW_TYPE_DATA
-    }
-    return VIEW_TYPE_LOAD;
-  }
-
-  protected int getDataItemViewType(int position) {
-    return super.getItemViewType(position);
-  }
+  //@Override public int getItemViewType(int position) {
+  //  return getDataItemViewType(position); //VIEW_TYPE_DATA
+  //}
+  //
+  //protected int getDataItemViewType(int position) {
+  //  return super.getItemViewType(position);
+  //}
 
   /* **************************** data **************************** */
   @Nullable public T getData(int position) {
@@ -267,41 +234,12 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   /* ************************** loadmore ************************** */
 
-  //public void setLoadMoreView(LoadMoreView view) {
-  //  mLoadMoreView = view;
-  //}
-
-  //public boolean hasLoadMoreView() {
-  //  return mLoadMoreView != null;
-  //}
-
   public void setOnLoadMoreListener(OnLoadMoreListener listener) {
     if (mRecyclerView == null) {
       putPending(PENDING_ON_LOAD_MORE_LISTENER, listener);
       return;
     }
     setScrollListener(listener);
-    //onLoadMoreListener = listener;
-    //mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-    //  @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-    //    if (mLoadMoreView.isEnd()) {
-    //      return;
-    //    }
-    //
-    //    RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
-    //    int visibleChildCount = layoutManager.getChildCount();
-    //    if (mData.size() > 0//有item
-    //        && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
-    //        && !mLoadMoreView.isLoading()) {//没有正在加载
-    //      View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
-    //      int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
-    //      if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
-    //          mLoadMoreView.setStatus(LoadMoreView.LOADING);
-    //          onLoadMoreListener.onLoadMore();
-    //      }
-    //    }
-    //  }
-    //});
   }
 
   private void setScrollListener(OnLoadMoreListener listener) {
