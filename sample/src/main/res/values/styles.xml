@@ -10,7 +10,7 @@
 
   <style name="AppToolbarText">
     <item name="android:textSize">20sp</item>
-    <item name="android:textColor">#FF6600</item>
+    <item name="android:textColor">#FFffff</item>
   </style>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.capsule.sample.func.head_foot;
+package com.capsule.sample.func.head;
 
 import android.widget.ImageView;
 import com.capsule.recy.ViewHolder;
@@ -10,9 +10,9 @@ import com.capsule.sample.repo.SkillBean;
  * Created by wusheng on 2017/9/2.
  */
 
-public class HeadAndFootAdapter extends Adapter<SkillBean, ViewHolder> {
+public class HeadAdapter extends Adapter<SkillBean, ViewHolder> {
 
-  public HeadAndFootAdapter() {
+  public HeadAdapter() {
     setItemLayout(R.layout.item_skill_name);
   }
 

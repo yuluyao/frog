@@ -14,7 +14,7 @@ import com.capsule.sample.base.BaseActivity;
  * Created by wusheng on 2017/9/2.
  */
 
-public class EmptyViewActivity extends BaseActivity {
+public class EmptyActivity extends BaseActivity {
 
   private RecyclerView recyclerView;
   private EmptyAdapter adapter;
@@ -27,7 +27,7 @@ public class EmptyViewActivity extends BaseActivity {
     recyclerView.addItemDecoration(new EmptyDecor(R.layout.layout_empty));
     recyclerView.addOnItemTouchListener(new EmptyClickListener() {
       @Override public void onEmptyClick() {
-        Toast.makeText(EmptyViewActivity.this, "点击任意地方刷新...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EmptyActivity.this, "点击任意地方刷新...", Toast.LENGTH_SHORT).show();
       }
     });
 

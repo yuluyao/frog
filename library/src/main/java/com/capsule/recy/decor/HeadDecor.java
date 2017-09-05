@@ -96,8 +96,8 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
 
   private View header;
 
-  private void measureHead(ViewGroup parent) {
-    header = LayoutInflater.from(parent.getContext()).inflate(layoutRes, null, false);
+  private void measureHead(View recyclerView) {
+    header = LayoutInflater.from(recyclerView.getContext()).inflate(layoutRes, null, false);
     if (header.getLayoutParams() == null) {
       header.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
           ViewGroup.LayoutParams.MATCH_PARENT));
@@ -106,17 +106,22 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
     int widthSpec;
     int heightSpec;
     if (orientation == LinearLayoutManager.VERTICAL) {
-      widthSpec = View.MeasureSpec.makeMeasureSpec(parent.getWidth(), View.MeasureSpec.EXACTLY);
-      heightSpec = View.MeasureSpec.makeMeasureSpec(parent.getHeight(), View.MeasureSpec.AT_MOST);
+      widthSpec =
+          View.MeasureSpec.makeMeasureSpec(recyclerView.getWidth(), View.MeasureSpec.EXACTLY);
+      heightSpec =
+          View.MeasureSpec.makeMeasureSpec(recyclerView.getHeight(), View.MeasureSpec.AT_MOST);
     } else {
-      widthSpec = View.MeasureSpec.makeMeasureSpec(parent.getWidth(), View.MeasureSpec.AT_MOST);
-      heightSpec = View.MeasureSpec.makeMeasureSpec(parent.getHeight(), View.MeasureSpec.EXACTLY);
+      widthSpec =
+          View.MeasureSpec.makeMeasureSpec(recyclerView.getWidth(), View.MeasureSpec.AT_MOST);
+      heightSpec =
+          View.MeasureSpec.makeMeasureSpec(recyclerView.getHeight(), View.MeasureSpec.EXACTLY);
     }
-    int childWidth =
-        ViewGroup.getChildMeasureSpec(widthSpec, parent.getPaddingLeft() + parent.getPaddingRight(),
-            header.getLayoutParams().width);
+    int childWidth = ViewGroup.getChildMeasureSpec(widthSpec,
+        recyclerView.getPaddingLeft() + recyclerView.getPaddingRight(),
+        header.getLayoutParams().width);
     int childHeight = ViewGroup.getChildMeasureSpec(heightSpec,
-        parent.getPaddingTop() + parent.getPaddingBottom(), header.getLayoutParams().height);
+        recyclerView.getPaddingTop() + recyclerView.getPaddingBottom(),
+        header.getLayoutParams().height);
 
     header.measure(childWidth, childHeight);
 

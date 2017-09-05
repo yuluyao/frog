@@ -10,10 +10,10 @@ import com.capsule.recy.decor.HeadDecor;
 import com.capsule.sample.base.BaseActivity;
 import com.capsule.sample.func.click.ClickActivity;
 import com.capsule.sample.func.divider.DividerActivity;
-import com.capsule.sample.func.empty.EmptyViewActivity;
-import com.capsule.sample.func.head_foot.HeadAndFootActivity;
+import com.capsule.sample.func.empty.EmptyActivity;
+import com.capsule.sample.func.head.HeadActivity;
 import com.capsule.sample.func.load.LoadActivity;
-import com.capsule.sample.func.multi.MultiItemActivity;
+import com.capsule.sample.func.multi.MultipleActivity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,10 +73,10 @@ public class MainActivity extends BaseActivity {
     Intent intent = null;
     switch (position) {
       case 0:
-        intent = new Intent(this, EmptyViewActivity.class);
+        intent = new Intent(this, EmptyActivity.class);
         break;
       case 1:
-        intent = new Intent(this, HeadAndFootActivity.class);
+        intent = new Intent(this, HeadActivity.class);
         break;
       case 2:
         intent = new Intent(this, LoadActivity.class);
@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity {
         intent = new Intent(this, DividerActivity.class);
         break;
       case 5:
-        intent = new Intent(this, MultiItemActivity.class);
+        intent = new Intent(this, MultipleActivity.class);
         break;
 
       default:

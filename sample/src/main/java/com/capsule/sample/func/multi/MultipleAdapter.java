@@ -11,9 +11,9 @@ import com.capsule.sample.R;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/31 15:49
  */
-public class ArticleAdapter extends CapMultiAdapter<ArticleBean, ViewHolder> {
+public class MultipleAdapter extends CapMultiAdapter<ArticleBean, ViewHolder> {
 
-  public ArticleAdapter() {
+  public MultipleAdapter() {
     setItemLayout(ArticleBean.TYPE_NORMAL, R.layout.item_article_normal);
     setItemLayout(ArticleBean.TYPE_MULTI_JPG, R.layout.item_article_multi_jpg);
     setItemLayout(ArticleBean.TYPE_SINGLE_JPG, R.layout.item_article_single_jpg);

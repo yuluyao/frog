@@ -36,8 +36,6 @@ public class FootDecor extends RecyclerView.ItemDecoration {
     init();
   }
 
-
-
   private void init() {
     mPaint = new Paint();
     mPaint.setColor(0x6f0000ff);
@@ -108,8 +106,8 @@ public class FootDecor extends RecyclerView.ItemDecoration {
 
   private View footer;
 
-  private void measureFoot(ViewGroup parent) {
-    footer = LayoutInflater.from(parent.getContext()).inflate(layoutRes, null, false);
+  private void measureFoot(View recyclerView) {
+    footer = LayoutInflater.from(recyclerView.getContext()).inflate(layoutRes, null, false);
     if (footer.getLayoutParams() == null) {
       footer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
           ViewGroup.LayoutParams.MATCH_PARENT));
@@ -118,17 +116,22 @@ public class FootDecor extends RecyclerView.ItemDecoration {
     int widthSpec;
     int heightSpec;
     if (orientation == LinearLayoutManager.VERTICAL) {
-      widthSpec = View.MeasureSpec.makeMeasureSpec(parent.getWidth(), View.MeasureSpec.EXACTLY);
-      heightSpec = View.MeasureSpec.makeMeasureSpec(parent.getHeight(), View.MeasureSpec.AT_MOST);
+      widthSpec =
+          View.MeasureSpec.makeMeasureSpec(recyclerView.getWidth(), View.MeasureSpec.EXACTLY);
+      heightSpec =
+          View.MeasureSpec.makeMeasureSpec(recyclerView.getHeight(), View.MeasureSpec.AT_MOST);
     } else {
-      widthSpec = View.MeasureSpec.makeMeasureSpec(parent.getWidth(), View.MeasureSpec.AT_MOST);
-      heightSpec = View.MeasureSpec.makeMeasureSpec(parent.getHeight(), View.MeasureSpec.EXACTLY);
+      widthSpec =
+          View.MeasureSpec.makeMeasureSpec(recyclerView.getWidth(), View.MeasureSpec.AT_MOST);
+      heightSpec =
+          View.MeasureSpec.makeMeasureSpec(recyclerView.getHeight(), View.MeasureSpec.EXACTLY);
     }
-    int childWidth =
-        ViewGroup.getChildMeasureSpec(widthSpec, parent.getPaddingLeft() + parent.getPaddingRight(),
-            footer.getLayoutParams().width);
+    int childWidth = ViewGroup.getChildMeasureSpec(widthSpec,
+        recyclerView.getPaddingLeft() + recyclerView.getPaddingRight(),
+        footer.getLayoutParams().width);
     int childHeight = ViewGroup.getChildMeasureSpec(heightSpec,
-        parent.getPaddingTop() + parent.getPaddingBottom(), footer.getLayoutParams().height);
+        recyclerView.getPaddingTop() + recyclerView.getPaddingBottom(),
+        footer.getLayoutParams().height);
 
     footer.measure(childWidth, childHeight);
 

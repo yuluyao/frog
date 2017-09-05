@@ -5,11 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Toast;
-import com.capsule.recy.click.ItemClickListener;
 import com.capsule.sample.R;
-import com.capsule.sample.decor.SimpleDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,16 +14,16 @@ import java.util.List;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/31 12:03
  */
-public class MultiItemActivity extends AppCompatActivity {
+public class MultipleActivity extends AppCompatActivity {
 
-  private RecyclerView   recyclerView;
-  private ArticleAdapter adapter;
+  private RecyclerView    recyclerView;
+  private MultipleAdapter adapter;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_multi_item);
     setTitle("多重类型item");
-    adapter = new ArticleAdapter();
+    adapter = new MultipleAdapter();
 
     recyclerView = (RecyclerView) findViewById(R.id.rv);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -36,16 +32,16 @@ public class MultiItemActivity extends AppCompatActivity {
     //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
     //  @Override
     //  public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
-    //    Toast.makeText(MultiItemActivity.this, "点击图片", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(MultipleActivity.this, "点击图片", Toast.LENGTH_SHORT).show();
     //  }
     //
     //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-    //    Toast.makeText(MultiItemActivity.this, "点击item", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(MultipleActivity.this, "点击item", Toast.LENGTH_SHORT).show();
     //  }
     //});
     //recyclerView.addOnItemTouchListener(new SimpleClickListener(recyclerView) {
     //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-    //    Toast.makeText(MultiItemActivity.this, "点击item", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(MultipleActivity.this, "点击item", Toast.LENGTH_SHORT).show();
     //  }
     //});
 
