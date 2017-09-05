@@ -3,7 +3,7 @@ package com.capsule.sample.func.multi;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.capsule.recy.ViewHolder;
-import com.capsule.recy.multi.CapMultiAdapter;
+import com.capsule.recy.multi.MultiAdapter;
 import com.capsule.sample.R;
 
 /**
@@ -11,13 +11,8 @@ import com.capsule.sample.R;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/31 15:49
  */
-public class MultipleAdapter extends CapMultiAdapter<ArticleBean, ViewHolder> {
+public class MultipleAdapter extends MultiAdapter<ArticleBean, ViewHolder> {
 
-  public MultipleAdapter() {
-    setItemLayout(ArticleBean.TYPE_NORMAL, R.layout.item_article_normal);
-    setItemLayout(ArticleBean.TYPE_MULTI_JPG, R.layout.item_article_multi_jpg);
-    setItemLayout(ArticleBean.TYPE_SINGLE_JPG, R.layout.item_article_single_jpg);
-  }
 
   @Override protected void convert(ViewHolder holder, ArticleBean item) {
     switch (item.getItemType()) {
@@ -42,5 +37,11 @@ public class MultipleAdapter extends CapMultiAdapter<ArticleBean, ViewHolder> {
         holder.setClickableId(R.id.iv);
         break;
     }
+  }
+
+  @Override protected void onSetTypes() {
+    setType(ArticleBean.TYPE_NORMAL, R.layout.item_article_normal);
+    setType(ArticleBean.TYPE_MULTI_JPG, R.layout.item_article_multi_jpg);
+    setType(ArticleBean.TYPE_SINGLE_JPG, R.layout.item_article_single_jpg);
   }
 }

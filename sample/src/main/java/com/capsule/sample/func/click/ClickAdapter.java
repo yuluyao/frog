@@ -11,8 +11,8 @@ import com.capsule.sample.repo.Data;
 
 public class ClickAdapter extends Adapter<Data, ViewHolder> {
 
-  public ClickAdapter() {
-    setItemLayout(R.layout.item_data_vertical);
+  @Override protected int onGetItemLayoutId() {
+    return R.layout.item_data_vertical;
   }
 
   @Override protected void convert(ViewHolder holder, Data item) {

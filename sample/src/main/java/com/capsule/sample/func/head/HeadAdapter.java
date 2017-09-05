@@ -11,8 +11,9 @@ import com.capsule.sample.repo.Data;
 
 public class HeadAdapter extends Adapter<Data, ViewHolder> {
 
-  public HeadAdapter() {
-    setItemLayout(R.layout.item_data_vertical);
+
+  @Override protected int onGetItemLayoutId() {
+    return R.layout.item_data_vertical;
   }
 
   @Override protected void convert(ViewHolder holder, Data item) {

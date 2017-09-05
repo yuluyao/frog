@@ -34,7 +34,6 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   protected List<T> mData = new ArrayList<>();
 
-  private SparseIntArray typeArray;// viewType and layoutId
 
   /* load more */
   private OnLoadMoreListener onLoadMoreListener;
@@ -72,19 +71,12 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   @Override public VH onCreateViewHolder(ViewGroup parent, int viewType) {
     VH holder;
-
-    switch (viewType) {
-      //case VIEW_TYPE_LOAD:
-      //  View load = mLayoutInflater.inflate(mLoadMoreView.getLayoutId(), parent, false);
-      //  holder = buildStaticHolder(load);
-      //  break;
-      default:
-        View itemView = mLayoutInflater.inflate(typeArray.get(viewType), parent, false);
-        holder = buildStaticHolder(itemView);
-        break;
-    }
+    View itemView = mLayoutInflater.inflate(onGetItemLayoutId(), parent, false);
+    holder = buildStaticHolder(itemView);
     return holder;
   }
+
+  protected abstract int onGetItemLayoutId();
 
   @SuppressWarnings("unchecked") protected VH buildStaticHolder(View view) {
     Class temp = getClass();
@@ -146,28 +138,19 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   }
 
   @Override public void onBindViewHolder(VH holder, int position) {
-    int type = holder.getItemViewType();
-    switch (type) {
-      //case VIEW_TYPE_LOAD:
-      //  mLoadMoreView.convert(holder);
-      //  break;
-
-      default:
-        convert(holder, getData(position));
-        break;
-    }
+    convert(holder, getData(position));
   }
 
-  protected void setItemLayout(int layoutId) {
-    setItemLayout(0, layoutId);
-  }
-
-  protected void setItemLayout(int type, int layoutId) {
-    if (typeArray == null) {
-      typeArray = new SparseIntArray();
-    }
-    typeArray.put(type, layoutId);
-  }
+  //protected void setType(int layoutId) {
+  //  setType(0, layoutId);
+  //}
+  //
+  //protected void setType(int type, int layoutId) {
+  //  if (typeArray == null) {
+  //    typeArray = new SparseIntArray();
+  //  }
+  //  typeArray.put(type, layoutId);
+  //}
 
   protected abstract void convert(VH holder, T item);
 
