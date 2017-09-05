@@ -16,7 +16,7 @@ public class Load {
   public static final int LOAD_STATE_BEGIN   = 2;
   public static final int LOAD_STATE_LOADING = 3;
   public static final int LOAD_STATE_FAILED  = 4;
-  public static final int LOAD_STATE_END     = 4;
+  public static final int LOAD_STATE_END     = 5;
 
   private int state = LOAD_STATE_ABLE;
 
