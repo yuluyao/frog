@@ -141,17 +141,6 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     convert(holder, getData(position));
   }
 
-  //protected void setType(int layoutId) {
-  //  setType(0, layoutId);
-  //}
-  //
-  //protected void setType(int type, int layoutId) {
-  //  if (typeArray == null) {
-  //    typeArray = new SparseIntArray();
-  //  }
-  //  typeArray.put(type, layoutId);
-  //}
-
   protected abstract void convert(VH holder, T item);
 
   /* ************************* adapter ************************* */
@@ -159,13 +148,6 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     return mData.size();
   }
 
-  //@Override public int getItemViewType(int position) {
-  //  return getDataItemViewType(position); //VIEW_TYPE_DATA
-  //}
-  //
-  //protected int getDataItemViewType(int position) {
-  //  return super.getItemViewType(position);
-  //}
 
   /* **************************** data **************************** */
   @Nullable public T getData(int position) {

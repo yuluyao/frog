@@ -53,14 +53,12 @@ public class DividerActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction()
             .replace(R.id.container, fragment3, "stagger_v")
             .commit();
-
         break;
       case R.id.staggered_horizontal:
         Fragment fragment4 = DividerStaggeredHorizontalFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
             .replace(R.id.container, fragment4, "stagger_h")
             .commit();
-
         break;
     }
     return true;

@@ -4,27 +4,27 @@
 
   <item
       android:id="@+id/vertical"
-      android:title="vertical"
+      android:title="LinearLayout_vertical"
       app:showAsAction="never" />
 
   <item
       android:id="@+id/horizontal"
-      android:title="horizontal"
+      android:title="LinearLayout_horizontal"
       app:showAsAction="never" />
 
   <item
       android:id="@+id/grid"
-      android:title="grid"
+      android:title="GridLayout"
       app:showAsAction="never" />
 
   <item
       android:id="@+id/staggered_vertical"
-      android:title="staggered_vertical"
+      android:title="StaggeredGrid_vertical"
       app:showAsAction="never" />
 
   <item
       android:id="@+id/staggered_horizontal"
-      android:title="staggered_horizontal"
+      android:title="StaggeredGrid_horizontal"
       app:showAsAction="never" />
 
 
