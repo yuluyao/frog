@@ -2,6 +2,7 @@ package com.capsule.recy;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,13 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     super(itemView);
   }
 
-  public void setClickableId(int... id) {
+  public ViewHolder setClickableId(int... id) {
     for (int i : id) {
       if (!clickableId.contains(i)) {
         clickableId.add(i);
       }
     }
+    return this;
   }
 
   public List<Integer> getClickableId() {
@@ -36,8 +38,18 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     return this;
   }
 
+  public ViewHolder setImageResource(int id , int res){
+    ((ImageView) itemView.findViewById(id)).setImageResource(res);
+    return this;
+  }
+
   public ViewHolder setVisibility(int id, boolean visible) {
     itemView.findViewById(id).setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+    return this;
+  }
+
+  public ViewHolder setVisibility(int id, int visibility) {
+    itemView.findViewById(id).setVisibility(visibility);
     return this;
   }
 }

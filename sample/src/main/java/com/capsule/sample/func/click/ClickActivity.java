@@ -9,7 +9,10 @@ import android.widget.Toast;
 import com.capsule.recy.click.ItemClickListener;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
+import com.capsule.sample.repo.Data;
 import com.capsule.sample.repo.DataRepo;
+import com.capsule.sample.repo.Repo;
+import java.util.List;
 
 /**
  * Created by wusheng on 2017/9/2.
@@ -19,8 +22,6 @@ public class ClickActivity extends BaseActivity {
 
   private RecyclerView recyclerView;
   private ClickAdapter adapter;
-
-  private DataRepo repo;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -33,11 +34,10 @@ public class ClickActivity extends BaseActivity {
       }
     });
 
-    repo = new DataRepo(this);
-
     adapter = new ClickAdapter();
     recyclerView.setAdapter(adapter);
-    adapter.notifyRefreshCompleted(repo.refreshList());
+    List<Data> data = Repo.getInstance(this).refreshList();
+    adapter.notifyRefreshCompleted(data);
   }
 
   @Override protected int onGetLayoutId() {

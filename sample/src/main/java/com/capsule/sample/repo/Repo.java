@@ -16,6 +16,22 @@ public class Repo {
   private static Repo instance;
   private static List<Data> datas = new ArrayList<>();
 
+  private int[] drawables = {
+      R.drawable.mh_1, R.drawable.mh_2, R.drawable.mh_3, R.drawable.mh_4, R.drawable.mh_5,
+      R.drawable.mh_6, R.drawable.mh_7, R.drawable.mh_8, R.drawable.mh_9, R.drawable.mh_10,
+      R.drawable.mh_11, R.drawable.mh_12, R.drawable.mh_13, R.drawable.mh_14, R.drawable.mh_15,
+      R.drawable.mh_16, R.drawable.mh_17, R.drawable.mh_18, R.drawable.mh_19, R.drawable.mh_20,
+      R.drawable.mh_21, R.drawable.mh_22, R.drawable.mh_23, R.drawable.mh_24, R.drawable.mh_25,
+      R.drawable.mh_26, R.drawable.mh_27, R.drawable.mh_28, R.drawable.mh_29, R.drawable.mh_30,
+      R.drawable.mh_31, R.drawable.mh_32, R.drawable.mh_33, R.drawable.mh_34, R.drawable.mh_35,
+      R.drawable.mh_36, R.drawable.mh_37, R.drawable.mh_38, R.drawable.mh_39, R.drawable.mh_40,
+      R.drawable.mh_41, R.drawable.mh_42, R.drawable.mh_43, R.drawable.mh_44, R.drawable.mh_45,
+      R.drawable.mh_46, R.drawable.mh_47, R.drawable.mh_48, R.drawable.mh_49, R.drawable.mh_50,
+      R.drawable.mh_51, R.drawable.mh_52, R.drawable.mh_53, R.drawable.mh_54, R.drawable.mh_55,
+      R.drawable.mh_56, R.drawable.mh_57, R.drawable.mh_58, R.drawable.mh_59, R.drawable.mh_60,
+      R.drawable.mh_61, R.drawable.mh_62, R.drawable.mh_63, R.drawable.mh_64
+  };
+
   public static Repo getInstance(Context context) {
     if (instance == null) {
       instance = new Repo(context);
@@ -28,7 +44,7 @@ public class Repo {
     int[] ids = res.getIntArray(R.array.data_id);
     String[] titles = res.getStringArray(R.array.data_title);
     String[] contents = res.getStringArray(R.array.data_content);
-    int[] icons = res.getIntArray(R.array.data_icon);
+    int[] icons = drawables;
     for (int i = 0; i < ids.length; i++) {
       datas.add(new Data(ids[i], titles[i], contents[i], icons[i]));
     }
