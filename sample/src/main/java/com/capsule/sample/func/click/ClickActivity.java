@@ -42,12 +42,11 @@ public class ClickActivity extends BaseActivity {
 
     adapter = new ClickAdapter();
     recyclerView.setAdapter(adapter);
-    Repo.getInstance(this).refresh()
-        .subscribe(new Consumer<List<Data>>() {
-          @Override public void accept(@NonNull List<Data> datas) throws Exception {
-            adapter.notifyRefreshCompleted(datas);
-          }
-        });
+    Repo.getInstance(this).refresh().subscribe(new Consumer<List<Data>>() {
+      @Override public void accept(@NonNull List<Data> datas) throws Exception {
+        adapter.notifyRefreshCompleted(datas);
+      }
+    });
   }
 
   @Override protected int onGetLayoutId() {

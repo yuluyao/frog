@@ -58,6 +58,6 @@ public class HeadActivity extends BaseActivity {
   }
 
   @Override protected int onGetLayoutId() {
-    return R.layout.activity_head_foot;
+    return R.layout.activity_head;
   }
 }
