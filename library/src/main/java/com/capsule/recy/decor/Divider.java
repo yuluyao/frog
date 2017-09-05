@@ -56,10 +56,10 @@ public class Divider extends RecyclerView.ItemDecoration {
         drawGrid(c, parent);
         break;
       case LAYOUT_STAGGERED_GRID_VERTICAL:
-
+        drawGrid(c, parent);
         break;
       case LAYOUT_STAGGERED_GRID_HORIZONTAL:
-
+        drawGrid(c, parent);
         break;
     }
   }
@@ -131,7 +131,6 @@ public class Divider extends RecyclerView.ItemDecoration {
       final View child = parent.getChildAt(i);
       Rect mBounds = new Rect();
       parent.getLayoutManager().getDecoratedBoundsWithMargins(child, mBounds);
-      //final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
       float top = child.getY();
       float bottom = mBounds.bottom + Math.round(ViewCompat.getTranslationY(child));
       float right = mBounds.right + Math.round(ViewCompat.getTranslationX(child));
@@ -178,24 +177,27 @@ public class Divider extends RecyclerView.ItemDecoration {
         break;
     }
 
+    int l = 0;
+    int t = 0;
+    int r = dividerWidth;
+    int b = dividerWidth;
     int childCount = parent.getAdapter().getItemCount();
     int itemPosition = parent.getChildAdapterPosition(view);
-    if (isLastRaw(parent, itemPosition, spanCount, childCount)) {
+    if (isLastRaw(itemPosition, spanCount, childCount)) {
       // 如果是最后一行，则不需要绘制底部
-      outRect.set(0, 0, dividerWidth, 0);
-    } else if (isLastColumn(parent, itemPosition, spanCount, childCount)) {
-      // 如果是最后一列，则不需要绘制右边
-      outRect.set(0, 0, 0, dividerWidth);
-    } else {
-      // 画右下2个地方
-      outRect.set(0, 0, dividerWidth, dividerWidth);
+      b = 0;
     }
+    if (isLastColumn(itemPosition, spanCount, childCount)) {
+      // 如果是最后一列，则不需要绘制右边
+      r = 0;
+    }
+    outRect.set(l, t, r, b);
   }
 
   /**
    * 判断是否是最后一列
    */
-  private boolean isLastColumn(RecyclerView parent, int pos, int spanCount, int childCount) {
+  private boolean isLastColumn(int pos, int spanCount, int childCount) {
     switch (layout_type) {
       case LAYOUT_GRID:// 如果是最后一列，则不需要绘制右边
         if ((pos + 1) % spanCount == 0) {
@@ -208,7 +210,8 @@ public class Divider extends RecyclerView.ItemDecoration {
         }
         break;
       case LAYOUT_STAGGERED_GRID_HORIZONTAL:// 如果是最后一列，则不需要绘制右边
-        childCount = childCount - childCount % spanCount;
+        childCount =
+            childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
         if (pos >= childCount) {
           return true;
         }
@@ -221,16 +224,18 @@ public class Divider extends RecyclerView.ItemDecoration {
   /**
    * 是否是最后一行
    */
-  private boolean isLastRaw(RecyclerView parent, int pos, int spanCount, int childCount) {
+  private boolean isLastRaw(int pos, int spanCount, int childCount) {
     switch (layout_type) {
       case LAYOUT_GRID: // 如果是最后一行，则不需要绘制底部
-        childCount = childCount - childCount % spanCount;
+        childCount =
+            childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
         if (pos >= childCount) {
           return true;
         }
         break;
       case LAYOUT_STAGGERED_GRID_VERTICAL: // 如果是最后一行，则不需要绘制底部
-        childCount = childCount - childCount % spanCount;
+        childCount =
+            childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
         if (pos >= childCount) {
           return true;
         }

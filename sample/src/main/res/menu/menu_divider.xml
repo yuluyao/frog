@@ -18,9 +18,15 @@
       app:showAsAction="never" />
 
   <item
-      android:id="@+id/staggered"
-      android:title="staggered"
+      android:id="@+id/staggered_vertical"
+      android:title="staggered_vertical"
       app:showAsAction="never" />
+
+  <item
+      android:id="@+id/staggered_horizontal"
+      android:title="staggered_horizontal"
+      app:showAsAction="never" />
+
 
 
 </menu>

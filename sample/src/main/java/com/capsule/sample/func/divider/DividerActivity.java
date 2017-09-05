@@ -48,7 +48,19 @@ public class DividerActivity extends BaseActivity {
             .replace(R.id.container, fragment2, "grid")
             .commit();
         break;
-      case R.id.staggered:
+      case R.id.staggered_vertical:
+        Fragment fragment3 = DividerStaggeredVerticalFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.container, fragment3, "stagger_v")
+            .commit();
+
+        break;
+      case R.id.staggered_horizontal:
+        Fragment fragment4 = DividerStaggeredHorizontalFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.container, fragment4, "stagger_h")
+            .commit();
+
         break;
     }
     return true;
