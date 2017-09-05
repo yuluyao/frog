@@ -11,11 +11,11 @@ import java.util.List;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 14:49
  */
-public class CapViewHolder extends RecyclerView.ViewHolder {
+public class ViewHolder extends RecyclerView.ViewHolder {
 
   private List<Integer> clickableId = new ArrayList<>();
 
-  public CapViewHolder(View itemView) {
+  public ViewHolder(View itemView) {
     super(itemView);
   }
 
@@ -31,12 +31,12 @@ public class CapViewHolder extends RecyclerView.ViewHolder {
     return clickableId;
   }
 
-  public CapViewHolder setText(int id, String text) {
+  public ViewHolder setText(int id, String text) {
     ((TextView) itemView.findViewById(id)).setText(text);
     return this;
   }
 
-  public CapViewHolder setVisibility(int id, boolean visible) {
+  public ViewHolder setVisibility(int id, boolean visible) {
     itemView.findViewById(id).setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     return this;
   }

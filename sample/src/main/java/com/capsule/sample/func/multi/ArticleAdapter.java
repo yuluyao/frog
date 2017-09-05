@@ -2,7 +2,7 @@ package com.capsule.sample.func.multi;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.capsule.recy.CapViewHolder;
+import com.capsule.recy.ViewHolder;
 import com.capsule.recy.multi.CapMultiAdapter;
 import com.capsule.sample.R;
 
@@ -11,7 +11,7 @@ import com.capsule.sample.R;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/31 15:49
  */
-public class ArticleAdapter extends CapMultiAdapter<ArticleBean, CapViewHolder> {
+public class ArticleAdapter extends CapMultiAdapter<ArticleBean, ViewHolder> {
 
   public ArticleAdapter() {
     setItemLayout(ArticleBean.TYPE_NORMAL, R.layout.item_article_normal);
@@ -19,7 +19,7 @@ public class ArticleAdapter extends CapMultiAdapter<ArticleBean, CapViewHolder> 
     setItemLayout(ArticleBean.TYPE_SINGLE_JPG, R.layout.item_article_single_jpg);
   }
 
-  @Override protected void convert(CapViewHolder holder, ArticleBean item) {
+  @Override protected void convert(ViewHolder holder, ArticleBean item) {
     switch (item.getItemType()) {
       case ArticleBean.TYPE_NORMAL:
         ((TextView) holder.itemView.findViewById(R.id.title)).setText(item.getTitle());

@@ -32,7 +32,7 @@ public class MultiItemActivity extends AppCompatActivity {
     recyclerView = (RecyclerView) findViewById(R.id.rv);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);
-    recyclerView.addItemDecoration(new SimpleDecoration(this));
+    //recyclerView.addItemDecoration(new SimpleDecoration(this));
     //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
     //  @Override
     //  public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {

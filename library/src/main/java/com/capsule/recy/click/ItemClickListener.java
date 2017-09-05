@@ -7,7 +7,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import com.capsule.recy.CapViewHolder;
+import com.capsule.recy.ViewHolder;
 
 /**
  * 描 述：
@@ -46,7 +46,7 @@ public abstract class ItemClickListener extends RecyclerView.SimpleOnItemTouchLi
       if (itemView == null) {
         return false;
       }
-      CapViewHolder holder = (CapViewHolder) recyclerView.getChildViewHolder(itemView);
+      ViewHolder holder = (ViewHolder) recyclerView.getChildViewHolder(itemView);
       int position = recyclerView.getChildLayoutPosition(itemView);
 
       float x_offset = itemView.getX();
@@ -63,7 +63,7 @@ public abstract class ItemClickListener extends RecyclerView.SimpleOnItemTouchLi
       return true;
     }
 
-    private View findChildViewUnder(ViewGroup itemView, float x, float y, CapViewHolder holder) {
+    private View findChildViewUnder(ViewGroup itemView, float x, float y, ViewHolder holder) {
       for (int i = 0; i < itemView.getChildCount(); i++) {
         View child = itemView.getChildAt(i);
         if ((child instanceof ViewGroup)) {

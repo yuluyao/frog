@@ -5,8 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
-import com.capsule.recy.SaiAdapter;
-import com.capsule.recy.decor.FootDecor;
+import com.capsule.recy.Adapter;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
 import com.capsule.sample.repo.DataRepo;
@@ -99,7 +98,7 @@ public class LoadActivity extends BaseActivity {
     //adapter.setLoadMoreView(new SimpleLoadMoreView());
     recyclerView.setAdapter(adapter);
 
-    adapter.setOnLoadMoreListener(new SaiAdapter.OnLoadMoreListener() {
+    adapter.setOnLoadMoreListener(new Adapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
 
         Observable.create(new ObservableOnSubscribe<List<SkillBean>>() {

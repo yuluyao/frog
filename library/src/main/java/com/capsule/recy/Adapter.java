@@ -8,7 +8,6 @@ import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.capsule.recy.decor.FootDecor;
 import com.capsule.recy.load.Load;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -23,7 +22,7 @@ import java.util.List;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 14:50
  */
-public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Adapter<VH> {
 
   public interface OnLoadMoreListener {
     void onLoadMore();
@@ -124,11 +123,11 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
     VH VH;
     // 泛型擦除会导致z为null
     if (z == null) {
-      VH = (VH) new CapViewHolder(view);
+      VH = (VH) new ViewHolder(view);
     } else {
       VH = createGenericKInstance(z, view);
     }
-    return VH != null ? VH : (VH) new CapViewHolder(view);
+    return VH != null ? VH : (VH) new ViewHolder(view);
   }
 
   private Class getInstancedGenericKClass(Class z) {
@@ -138,7 +137,7 @@ public abstract class SaiAdapter<T, VH extends CapViewHolder> extends RecyclerVi
       for (Type temp : types) {
         if (temp instanceof Class) {
           Class tempClass = (Class) temp;
-          if (CapViewHolder.class.isAssignableFrom(tempClass)) {
+          if (ViewHolder.class.isAssignableFrom(tempClass)) {
             return tempClass;
           }
         }

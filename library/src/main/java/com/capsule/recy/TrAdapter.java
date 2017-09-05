@@ -29,7 +29,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 14:50
  */
-public abstract class CapAdapter<T, VH extends CapViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class TrAdapter<T, VH extends ViewHolder> extends RecyclerView.Adapter<VH> {
 
   public interface OnLoadMoreListener {
     void onLoadMore();
@@ -193,11 +193,11 @@ public abstract class CapAdapter<T, VH extends CapViewHolder> extends RecyclerVi
     VH VH;
     // 泛型擦除会导致z为null
     if (z == null) {
-      VH = (VH) new CapViewHolder(view);
+      VH = (VH) new ViewHolder(view);
     } else {
       VH = createGenericKInstance(z, view);
     }
-    return VH != null ? VH : (VH) new CapViewHolder(view);
+    return VH != null ? VH : (VH) new ViewHolder(view);
   }
 
   //private VH buildLoadMoreHolder(ViewGroup parent) {
@@ -225,7 +225,7 @@ public abstract class CapAdapter<T, VH extends CapViewHolder> extends RecyclerVi
       for (Type temp : types) {
         if (temp instanceof Class) {
           Class tempClass = (Class) temp;
-          if (CapViewHolder.class.isAssignableFrom(tempClass)) {
+          if (ViewHolder.class.isAssignableFrom(tempClass)) {
             return tempClass;
           }
         }
