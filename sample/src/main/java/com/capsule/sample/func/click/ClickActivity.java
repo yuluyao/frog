@@ -32,10 +32,9 @@ public class ClickActivity extends BaseActivity {
     recyclerView.addOnItemTouchListener(new ItemClickListener() {
       @Override public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
         if (childView != null) {
-          Toast.makeText(ClickActivity.this, "点击 child:" + childView.toString(), Toast.LENGTH_SHORT)
-              .show();
+          Toast.makeText(ClickActivity.this, "点击 item child", Toast.LENGTH_SHORT).show();
         } else {
-          Toast.makeText(ClickActivity.this, "点击：" + position, Toast.LENGTH_SHORT).show();
+          Toast.makeText(ClickActivity.this, "点击 item" + position, Toast.LENGTH_SHORT).show();
         }
       }
     });
