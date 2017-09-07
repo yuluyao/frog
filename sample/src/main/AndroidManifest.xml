@@ -25,6 +25,7 @@
     <activity android:name=".func.divider.DividerActivity" />
     <activity android:name=".func.multi.MultipleActivity" />
     <activity android:name=".func.foot.FootActivity" />
+    <activity android:name=".func.anim.AnimActivity" />
   </application>
 
 </manifest>

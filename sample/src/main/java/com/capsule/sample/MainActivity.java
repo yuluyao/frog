@@ -8,9 +8,11 @@ import android.view.View;
 import com.capsule.recy.click.ItemClickListener;
 import com.capsule.recy.decor.HeadDecor;
 import com.capsule.sample.base.BaseActivity;
+import com.capsule.sample.func.anim.AnimActivity;
 import com.capsule.sample.func.click.ClickActivity;
 import com.capsule.sample.func.divider.DividerActivity;
 import com.capsule.sample.func.empty.EmptyActivity;
+import com.capsule.sample.func.foot.FootActivity;
 import com.capsule.sample.func.head.HeadActivity;
 import com.capsule.sample.func.load.LoadActivity;
 import com.capsule.sample.func.multi.MultipleActivity;
@@ -48,13 +50,14 @@ public class MainActivity extends BaseActivity {
 
   private List<String> mockData() {
     List<String> list = new ArrayList<>();
-    list.add("empty view");
-    list.add("head and foot");
-    list.add("load");
-    list.add("click listener");
-    list.add("divider");
-    list.add("multiple item type");
-    list.add("...");
+    list.add("Animator");
+    list.add("ClickListener");
+    list.add("Divider");
+    list.add("EmptyView");
+    list.add("Footer");
+    list.add("Header");
+    list.add("LoadMore");
+    list.add("MultipleItemType");
     list.add("...");
     list.add("...");
     list.add("...");
@@ -73,21 +76,27 @@ public class MainActivity extends BaseActivity {
     Intent intent = null;
     switch (position) {
       case 0:
-        intent = new Intent(this, EmptyActivity.class);
+        intent = new Intent(this, AnimActivity.class);
         break;
       case 1:
-        intent = new Intent(this, HeadActivity.class);
-        break;
-      case 2:
-        intent = new Intent(this, LoadActivity.class);
-        break;
-      case 3:
         intent = new Intent(this, ClickActivity.class);
         break;
-      case 4:
+      case 2:
         intent = new Intent(this, DividerActivity.class);
         break;
+      case 3:
+        intent = new Intent(this, EmptyActivity.class);
+        break;
+      case 4:
+        intent = new Intent(this, FootActivity.class);
+        break;
       case 5:
+        intent = new Intent(this, HeadActivity.class);
+        break;
+      case 6:
+        intent = new Intent(this, LoadActivity.class);
+        break;
+      case 7:
         intent = new Intent(this, MultipleActivity.class);
         break;
 

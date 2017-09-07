@@ -1,4 +1,4 @@
-package com.capsule.sample.func.click;
+package com.capsule.sample.func.anim;
 
 import com.capsule.recy.Adapter;
 import com.capsule.recy.ViewHolder;
@@ -6,10 +6,11 @@ import com.capsule.sample.R;
 import com.capsule.sample.repo.Data;
 
 /**
- * Created by wusheng on 2017/9/2.
+ * 描 述：
+ * 作 者：Vegeta Yu
+ * 时 间：2017/9/7 14:18
  */
-
-public class ClickAdapter extends Adapter<Data, ViewHolder> {
+public class AnimAdapter extends Adapter<Data, ViewHolder> {
 
   @Override protected int onGetItemLayoutId() {
     return R.layout.item_data_common;
@@ -18,7 +19,6 @@ public class ClickAdapter extends Adapter<Data, ViewHolder> {
   @Override protected void convert(ViewHolder holder, Data item) {
     holder.setImageResource(R.id.icon, item.getIconRes())
         .setText(R.id.title, item.getTitle())
-        .setText(R.id.content, item.getContent())
-        .setClickableId(R.id.icon);
+        .setText(R.id.content, item.getContent());
   }
 }
