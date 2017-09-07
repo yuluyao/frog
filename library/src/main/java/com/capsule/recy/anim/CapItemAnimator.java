@@ -23,7 +23,6 @@ import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -210,7 +209,7 @@ public class CapItemAnimator extends SimpleItemAnimator {
 
   @Override public boolean animateAdd(final ViewHolder holder) {
     resetAnimation(holder);
-    ViewCompat.setAlpha(holder.itemView, 0);
+    ViewCompat.setX(holder.itemView, -holder.itemView.getWidth());
     mPendingAdditions.add(holder);
     return true;
   }
@@ -219,14 +218,14 @@ public class CapItemAnimator extends SimpleItemAnimator {
     final View view = holder.itemView;
     final ViewPropertyAnimatorCompat animation = ViewCompat.animate(view);
     mAddAnimations.add(holder);
-    animation.alpha(1).setDuration(getAddDuration()).
+    animation.x(0).setDuration(getAddDuration()).
         setListener(new VpaListenerAdapter() {
           @Override public void onAnimationStart(View view) {
             dispatchAddStarting(holder);
           }
 
           @Override public void onAnimationCancel(View view) {
-            ViewCompat.setAlpha(view, 1);
+            ViewCompat.setX(view, 0);
           }
 
           @Override public void onAnimationEnd(View view) {
@@ -237,7 +236,6 @@ public class CapItemAnimator extends SimpleItemAnimator {
           }
         }).start();
   }
-
 
   @Override
   public boolean animateMove(final ViewHolder holder, int fromX, int fromY, int toX, int toY) {
@@ -434,7 +432,8 @@ public class CapItemAnimator extends SimpleItemAnimator {
       dispatchRemoveFinished(item);
     }
     if (mPendingAdditions.remove(item)) {
-      ViewCompat.setAlpha(view, 1);
+      //ViewCompat.setAlpha(view, 1);
+      ViewCompat.setX(view, 0);
       dispatchAddFinished(item);
     }
 

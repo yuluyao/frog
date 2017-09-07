@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.capsule.recy.anim.CapItemAnimator;
+import com.capsule.recy.decor.Divider;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
 import com.capsule.sample.repo.Data;
@@ -26,11 +27,12 @@ public class AnimActivity extends BaseActivity {
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setTitle("动画");
     recyclerView = (RecyclerView) findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    recyclerView.addItemDecoration(new Divider(3,0x00000000));
 
     CapItemAnimator animator = new CapItemAnimator();
-    animator.setAddDuration(1000);
     recyclerView.setItemAnimator(animator);
 
     adapter = new AnimAdapter();

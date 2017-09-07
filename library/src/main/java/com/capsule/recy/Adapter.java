@@ -192,6 +192,7 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   public void notifyRefreshCompleted(List<T> data) {
     setData(data);
     notifyDataSetChanged();
+    //notifyItemRangeInserted(0,data.size());
     if (null != load) {
       load.setAble();//如果刷新之前有加载失败的情况，列表状态会变为不可加载，刷新以后，要使列表变为可加载状态
     }
