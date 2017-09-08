@@ -38,15 +38,20 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     return this;
   }
 
+  public ViewHolder setTextColor(int id, int color){
+    ((TextView) itemView.findViewById(id)).setTextColor(color);
+    return this;
+  }
+
   public ViewHolder setImageResource(int id , int res){
     ((ImageView) itemView.findViewById(id)).setImageResource(res);
     return this;
   }
 
-  public ViewHolder setVisibility(int id, boolean visible) {
-    itemView.findViewById(id).setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-    return this;
-  }
+  //public ViewHolder setVisibility(int id, boolean visible) {
+  //  itemView.findViewById(id).setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+  //  return this;
+  //}
 
   public ViewHolder setVisibility(int id, int visibility) {
     itemView.findViewById(id).setVisibility(visibility);

@@ -2,9 +2,9 @@ package com.capsule.recy.decor;
 
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.ColorRes;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,8 +19,10 @@ import android.view.View;
  */
 public class Divider extends RecyclerView.ItemDecoration {
 
-  private int dividerWidth;
+  private int dividerWidthPixel;
   private int dividerColor;
+  private int dividerWidthDp;
+  private int colorRes;
 
   private Paint paint;
 
@@ -32,9 +34,9 @@ public class Divider extends RecyclerView.ItemDecoration {
 
   private int layout_type;
 
-  public Divider(int dividerHeight, int dividerColor) {
-    this.dividerWidth = dividerHeight;
-    this.dividerColor = dividerColor;
+  public Divider(int dividerWidthDp, @ColorRes int colorRes) {
+    this.dividerWidthDp = dividerWidthDp;
+    this.colorRes = colorRes;
     init();
   }
 
@@ -84,7 +86,7 @@ public class Divider extends RecyclerView.ItemDecoration {
       Rect mBounds = new Rect();
       parent.getDecoratedBoundsWithMargins(child, mBounds);
       final int bottom = mBounds.bottom + Math.round(ViewCompat.getTranslationY(child));
-      final int top = bottom - dividerWidth;
+      final int top = bottom - dividerWidthPixel;
       //mDivider.setBounds(left, top, right, bottom);
       //mDivider.draw(canvas);
       canvas.drawRect(left, top, right, bottom, paint);
@@ -112,7 +114,7 @@ public class Divider extends RecyclerView.ItemDecoration {
       Rect mBounds = new Rect();
       parent.getLayoutManager().getDecoratedBoundsWithMargins(child, mBounds);
       final int right = mBounds.right + Math.round(ViewCompat.getTranslationX(child));
-      final int left = right - dividerWidth;
+      final int left = right - dividerWidthPixel;
       //mDivider.setBounds(left, top, right, bottom);
       //mDivider.draw(canvas);
       canvas.drawRect(left, top, right, bottom, paint);
@@ -134,7 +136,7 @@ public class Divider extends RecyclerView.ItemDecoration {
       float top = child.getY();
       float bottom = mBounds.bottom + Math.round(ViewCompat.getTranslationY(child));
       float right = mBounds.right + Math.round(ViewCompat.getTranslationX(child));
-      float left = right - dividerWidth;
+      float left = right - dividerWidthPixel;
       canvas.drawRect(left, top, right, bottom, paint);
     }
   }
@@ -149,7 +151,7 @@ public class Divider extends RecyclerView.ItemDecoration {
       float left = child.getX();
       float right = left + child.getWidth();
       float bottom = mBounds.bottom + Math.round(ViewCompat.getTranslationY(child));
-      float top = bottom - dividerWidth;
+      float top = bottom - dividerWidthPixel;
       canvas.drawRect(left, top, right, bottom, paint);
     }
   }
@@ -158,14 +160,17 @@ public class Divider extends RecyclerView.ItemDecoration {
       RecyclerView.State state) {
     super.getItemOffsets(outRect, view, parent, state);
     readLayoutManager(parent);
+    dividerWidthPixel =
+        (int) (parent.getContext().getResources().getDisplayMetrics().density * dividerWidthDp);
+    dividerColor = parent.getContext().getResources().getColor(colorRes);
 
     int spanCount = 0;
     switch (layout_type) {
       case LAYOUT_VERTICAL:
-        outRect.set(0, 0, 0, dividerWidth);
+        outRect.set(0, 0, 0, dividerWidthPixel);
         return;// 线性 manager 简单处理
       case LAYOUT_HORIZONTAL:
-        outRect.set(0, 0, dividerWidth, 0);
+        outRect.set(0, 0, dividerWidthPixel, 0);
         return;// 线性 manager 简单处理
       /* ------------------ */
       case LAYOUT_GRID:
@@ -179,8 +184,8 @@ public class Divider extends RecyclerView.ItemDecoration {
 
     int l = 0;
     int t = 0;
-    int r = dividerWidth;
-    int b = dividerWidth;
+    int r = dividerWidthPixel;
+    int b = dividerWidthPixel;
     int childCount = parent.getAdapter().getItemCount();
     int itemPosition = parent.getChildAdapterPosition(view);
     if (isLastRaw(itemPosition, spanCount, childCount)) {
