@@ -41,7 +41,7 @@ public class DividerGridFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
-    recyclerView.addItemDecoration(new Divider(6, 0x7f00ffff));
+    recyclerView.addItemDecoration(new Divider(2, R.color.colorAccent));
 
 
     final DividerGridAdapter adapter = new DividerGridAdapter();

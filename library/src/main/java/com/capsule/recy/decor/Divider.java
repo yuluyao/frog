@@ -19,20 +19,19 @@ import android.view.View;
  */
 public class Divider extends RecyclerView.ItemDecoration {
 
-  private int dividerWidthPixel;
-  private int dividerColor;
-  private int dividerWidthDp;
-  private int colorRes;
-
-  private Paint paint;
-
   public static final int LAYOUT_VERTICAL                  = 0;//竖向
   public static final int LAYOUT_HORIZONTAL                = 1;//横向
   public static final int LAYOUT_GRID                      = 2;//表格
   public static final int LAYOUT_STAGGERED_GRID_VERTICAL   = 3;//瀑布--vertical
   public static final int LAYOUT_STAGGERED_GRID_HORIZONTAL = 4;//瀑布--horizontal
 
-  private int layout_type;
+  private int   colorRes;
+  private int   dividerWidthDp;
+  private int   dividerWidthPixel;
+  private Paint paint;
+  private int   layout_type;
+
+  private int flag_init_config = 0;
 
   public Divider(int dividerWidthDp, @ColorRes int colorRes) {
     this.dividerWidthDp = dividerWidthDp;
@@ -158,12 +157,8 @@ public class Divider extends RecyclerView.ItemDecoration {
   @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
       RecyclerView.State state) {
     super.getItemOffsets(outRect, view, parent, state);
-    readLayoutManager(parent);
-    dividerWidthPixel =
-        (int) (parent.getContext().getResources().getDisplayMetrics().density * dividerWidthDp);
-    dividerColor = parent.getContext().getResources().getColor(colorRes);
-    if (paint.getColor() == 0) {
-      paint.setColor(dividerColor);
+    if (flag_init_config == 0) {
+      initConfig(parent);
     }
 
     int spanCount = 0;
@@ -256,7 +251,8 @@ public class Divider extends RecyclerView.ItemDecoration {
     return false;
   }
 
-  private void readLayoutManager(RecyclerView recyclerView) {
+  private void initConfig(RecyclerView recyclerView) {
+    //init LayoutManager type
     RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
     if (layoutManager instanceof LinearLayoutManager) {
       if (layoutManager instanceof GridLayoutManager) {
@@ -282,5 +278,13 @@ public class Divider extends RecyclerView.ItemDecoration {
         layout_type = LAYOUT_STAGGERED_GRID_HORIZONTAL;
       }
     }
+
+    //init divider width and color
+    dividerWidthPixel = (int) (recyclerView.getContext().getResources().getDisplayMetrics().density
+        * dividerWidthDp);
+    paint.setColor(recyclerView.getContext().getResources().getColor(colorRes));
+
+    //set flag
+    flag_init_config = 1;
   }
 }

@@ -30,7 +30,7 @@ public class AnimActivity extends BaseActivity {
     setTitle("动画");
     recyclerView = (RecyclerView) findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    recyclerView.addItemDecoration(new Divider(3,0x00000000));
+    recyclerView.addItemDecoration(new Divider(2, R.color.colorAccent));
 
     recyclerView.setItemAnimator(new SlideInLeftAnimator());
 

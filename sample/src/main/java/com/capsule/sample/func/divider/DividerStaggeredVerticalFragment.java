@@ -42,7 +42,7 @@ public class DividerStaggeredVerticalFragment extends Fragment {
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
     recyclerView.setLayoutManager(
         new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
-    recyclerView.addItemDecoration(new Divider(6, 0x7f00ffff));
+    recyclerView.addItemDecoration(new Divider(2, R.color.colorAccent));
 
     final DividerStaggeredVerticalAdapter adapter = new DividerStaggeredVerticalAdapter();
     recyclerView.setAdapter(adapter);

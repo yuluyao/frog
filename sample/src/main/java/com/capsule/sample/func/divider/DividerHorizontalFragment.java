@@ -42,7 +42,7 @@ public class DividerHorizontalFragment extends Fragment {
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
     recyclerView.setLayoutManager(
         new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-    recyclerView.addItemDecoration(new Divider(6, 0x7f00ffff));
+    recyclerView.addItemDecoration(new Divider(2, R.color.colorAccent));
 
     final DividerHorizontalAdapter adapter = new DividerHorizontalAdapter();
     recyclerView.setAdapter(adapter);
