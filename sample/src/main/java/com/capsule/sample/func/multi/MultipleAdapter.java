@@ -3,7 +3,7 @@ package com.capsule.sample.func.multi;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.capsule.recy.ViewHolder;
-import com.capsule.recy.multi.MultiAdapter;
+import com.capsule.recy.deprecate.MultiAdapter;
 import com.capsule.sample.R;
 
 /**
@@ -39,7 +39,7 @@ public class MultipleAdapter extends MultiAdapter<ArticleBean, ViewHolder> {
     }
   }
 
-  @Override protected void onSetTypes() {
+  @Override protected void onSetItemLayout() {
     setItemLayout(ArticleBean.TYPE_NORMAL, R.layout.item_article_normal);
     setItemLayout(ArticleBean.TYPE_MULTI_JPG, R.layout.item_article_multi_jpg);
     setItemLayout(ArticleBean.TYPE_SINGLE_JPG, R.layout.item_article_single_jpg);

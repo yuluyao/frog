@@ -53,7 +53,7 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     mContext = mRecyclerView.getContext();
     mLayoutInflater = LayoutInflater.from(mContext);
     executePending();
-    onSetTypes();
+    onSetItemLayout();
   }
 
   private void putPending(int key, Object o) {
@@ -102,7 +102,7 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   /**
    * call {@link #setItemLayout(int, int)} or {@link #setItemLayout(int)}
    */
-  protected abstract void onSetTypes();
+  protected abstract void onSetItemLayout();
 
   @SuppressWarnings("unchecked") protected VH buildStaticHolder(View view) {
     Class temp = getClass();

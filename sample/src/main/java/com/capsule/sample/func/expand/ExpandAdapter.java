@@ -12,7 +12,7 @@ import com.capsule.sample.R;
 public class ExpandAdapter extends Adapter<ArtBean,ViewHolder> {
 
 
-  @Override protected void onSetTypes() {
+  @Override protected void onSetItemLayout() {
     setItemLayout(R.layout.item_expand);
   }
 

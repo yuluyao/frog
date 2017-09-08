@@ -1,4 +1,4 @@
-package com.capsule.recy;
+package com.capsule.recy.deprecate;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import com.capsule.recy.ViewHolder;
 import com.capsule.recy.load.LoadMoreView;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

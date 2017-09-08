@@ -11,7 +11,7 @@ import com.capsule.sample.repo.Data;
 
 public class ClickAdapter extends Adapter<Data, ViewHolder> {
 
-  @Override protected void onSetTypes() {
+  @Override protected void onSetItemLayout() {
     setItemLayout(R.layout.item_data_common);
   }
 
