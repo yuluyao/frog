@@ -163,17 +163,23 @@ public class MultipleAdapter extends Adapter<ArticleBean, ViewHolder> {
 ```
 
 
-## 十、展开 Expandable
+## 十、展开详情 Expandable
 
 
 
-## 十一、分组 Section
+## 十一、多级列表
 
 
-## 十二、Swipe
+## 十二、字母分组
 
 
-## 十三、Drag
+## 十三、Swipe
+
+
+## 十四、Drag
+
+
+## 十五、多选
 
 
 
