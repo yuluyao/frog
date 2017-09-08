@@ -42,7 +42,6 @@ public class Divider extends RecyclerView.ItemDecoration {
 
   private void init() {
     paint = new Paint();
-    paint.setColor(dividerColor);
   }
 
   @Override public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
@@ -163,6 +162,9 @@ public class Divider extends RecyclerView.ItemDecoration {
     dividerWidthPixel =
         (int) (parent.getContext().getResources().getDisplayMetrics().density * dividerWidthDp);
     dividerColor = parent.getContext().getResources().getColor(colorRes);
+    if (paint.getColor() == 0) {
+      paint.setColor(dividerColor);
+    }
 
     int spanCount = 0;
     switch (layout_type) {
