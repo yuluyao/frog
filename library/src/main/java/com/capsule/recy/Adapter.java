@@ -182,6 +182,10 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     mData.addAll(list);
   }
 
+  public void changeData(T data, int position){
+    mData.set(position, data);
+  }
+
   public void addData(List<T> list) {
     if (list == null) {
       list = new ArrayList<>();

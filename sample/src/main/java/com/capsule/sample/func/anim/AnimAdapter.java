@@ -1,5 +1,6 @@
 package com.capsule.sample.func.anim;
 
+import android.view.View;
 import com.capsule.recy.Adapter;
 import com.capsule.recy.ViewHolder;
 import com.capsule.sample.R;
@@ -20,5 +21,7 @@ public class AnimAdapter extends Adapter<Data, ViewHolder> {
     holder.setImageResource(R.id.icon, item.getIconRes())
         .setText(R.id.title, item.getTitle())
         .setText(R.id.content, item.getContent());
+
+    //holder.itemView.findViewById(R.id.invi).setVisibility(View.VISIBLE);
   }
 }
