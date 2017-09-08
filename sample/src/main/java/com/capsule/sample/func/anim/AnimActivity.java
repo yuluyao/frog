@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import com.capsule.recy.anim.CapItemAnimator;
+import com.capsule.recy.anim.impl.SlideInLeftAnimator;
 import com.capsule.recy.decor.Divider;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
@@ -32,18 +32,18 @@ public class AnimActivity extends BaseActivity {
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.addItemDecoration(new Divider(3,0x00000000));
 
-    CapItemAnimator animator = new CapItemAnimator();
-    recyclerView.setItemAnimator(animator);
+    recyclerView.setItemAnimator(new SlideInLeftAnimator());
 
     adapter = new AnimAdapter();
     recyclerView.setAdapter(adapter);
 
     Repo.getInstance(this)
-        .refresh()
+        .initData(30)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Consumer<List<Data>>() {
           @Override public void accept(@NonNull List<Data> datas) throws Exception {
-            adapter.notifyRefreshCompleted(datas);
+            adapter.setData(datas);
+            adapter.notifyItemRangeInserted(0,datas.size());
           }
         });
   }

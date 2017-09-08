@@ -61,6 +61,15 @@ public class Repo {
         .observeOn(AndroidSchedulers.mainThread());
   }
 
+  public Observable<List<Data>> initData(int size) {
+    size = size < 0 ? 0 : size;
+    size = size > datas.size() ? datas.size() : size;
+    return Observable.just(datas.subList(0, size))
+        .subscribeOn(Schedulers.io())
+        .delay(300, TimeUnit.MILLISECONDS)
+        .observeOn(AndroidSchedulers.mainThread());
+  }
+
   public Observable<List<Data>> load(int id) {
     if (id <= 0) {
       return refresh();
