@@ -11,8 +11,9 @@ import com.capsule.sample.R;
 
 public class ExpandAdapter extends Adapter<ArtBean,ViewHolder> {
 
-  @Override protected int onGetItemLayoutId() {
-    return R.layout.item_expand;
+
+  @Override protected void onSetTypes() {
+    setItemLayout(R.layout.item_expand);
   }
 
   @Override protected void convert(ViewHolder holder, ArtBean item) {

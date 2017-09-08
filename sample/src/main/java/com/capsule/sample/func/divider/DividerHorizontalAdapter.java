@@ -11,8 +11,9 @@ import com.capsule.sample.repo.Data;
  * 时 间：2017/9/5 16:35
  */
 public class DividerHorizontalAdapter extends Adapter<Data,ViewHolder> {
-  @Override protected int onGetItemLayoutId() {
-    return R.layout.item_data_horizontal;
+
+  @Override protected void onSetTypes() {
+    setItemLayout(R.layout.item_data_horizontal);
   }
 
   @Override protected void convert(ViewHolder holder, Data item) {

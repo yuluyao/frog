@@ -38,7 +38,7 @@ public abstract class MultiAdapter<T extends MultiEntity, H extends ViewHolder>
     }
   }
 
-  protected void setType(int type, int layoutId) {
+  protected void setItemLayout(int type, int layoutId) {
     if (typeArray == null) {
       typeArray = new SparseIntArray();
     }
@@ -46,12 +46,8 @@ public abstract class MultiAdapter<T extends MultiEntity, H extends ViewHolder>
   }
 
   /**
-   * call {@link #setType(int, int)}
+   * call {@link #setItemLayout(int, int)}
    */
   protected abstract void onSetTypes();
 
-  //will not be called in this subclass
-  @Override protected int onGetItemLayoutId() {
-    return 0;
-  }
 }

@@ -12,8 +12,9 @@ import com.capsule.sample.repo.Data;
  */
 public class DividerStaggeredHorizontalAdapter extends Adapter<Data,ViewHolder> {
 
-  @Override protected int onGetItemLayoutId() {
-    return R.layout.item_data_stagger_horizontal;
+
+  @Override protected void onSetTypes() {
+    setItemLayout(R.layout.item_data_stagger_horizontal);
   }
 
   @Override protected void convert(ViewHolder holder, Data item) {

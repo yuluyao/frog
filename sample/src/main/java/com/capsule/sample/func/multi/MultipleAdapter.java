@@ -40,8 +40,8 @@ public class MultipleAdapter extends MultiAdapter<ArticleBean, ViewHolder> {
   }
 
   @Override protected void onSetTypes() {
-    setType(ArticleBean.TYPE_NORMAL, R.layout.item_article_normal);
-    setType(ArticleBean.TYPE_MULTI_JPG, R.layout.item_article_multi_jpg);
-    setType(ArticleBean.TYPE_SINGLE_JPG, R.layout.item_article_single_jpg);
+    setItemLayout(ArticleBean.TYPE_NORMAL, R.layout.item_article_normal);
+    setItemLayout(ArticleBean.TYPE_MULTI_JPG, R.layout.item_article_multi_jpg);
+    setItemLayout(ArticleBean.TYPE_SINGLE_JPG, R.layout.item_article_single_jpg);
   }
 }

@@ -13,8 +13,8 @@ import com.capsule.sample.repo.Data;
  */
 public class AnimAdapter extends Adapter<Data, ViewHolder> {
 
-  @Override protected int onGetItemLayoutId() {
-    return R.layout.item_data_common;
+  @Override protected void onSetTypes() {
+    setItemLayout(R.layout.item_data_common);
   }
 
   @Override protected void convert(ViewHolder holder, Data item) {
