@@ -27,11 +27,11 @@ public class BaseItemDecoration extends RecyclerView.ItemDecoration {
       RecyclerView.State state) {
     super.getItemOffsets(outRect, view, parent, state);
     if (layout_type == LAYOUT_INVALID) {
-      getOrientation(parent);
+      getLayoutType(parent);
     }
   }
 
-  private void getOrientation(RecyclerView recyclerView) {
+  private void getLayoutType(RecyclerView recyclerView) {
     //init LayoutManager type
     RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
     if (layoutManager instanceof LinearLayoutManager) {

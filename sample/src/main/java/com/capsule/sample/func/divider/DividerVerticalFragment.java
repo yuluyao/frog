@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.capsule.recy.decor.Divider;
+import com.capsule.recy.drag.SwipeCallback;
 import com.capsule.sample.R;
 import com.capsule.sample.repo.Data;
 import com.capsule.sample.repo.Repo;
@@ -42,6 +44,7 @@ public class DividerVerticalFragment extends Fragment {
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerView.addItemDecoration(new Divider(1f, R.color.colorAccent));
+    setSwipe(recyclerView);
 
     final DividerVerticalAdapter adapter = new DividerVerticalAdapter();
     recyclerView.setAdapter(adapter);
@@ -52,4 +55,10 @@ public class DividerVerticalFragment extends Fragment {
       }
     });
   }
+
+  private void setSwipe(RecyclerView recyclerView) {
+    ItemTouchHelper helper = new ItemTouchHelper(new SwipeCallback());
+    helper.attachToRecyclerView(recyclerView);
+  }
+
 }

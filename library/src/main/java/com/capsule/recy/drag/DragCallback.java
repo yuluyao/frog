@@ -19,14 +19,9 @@ public class DragCallback extends ItemTouchHelper.Callback {
   public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
     int dragFlags;
     int swipeFlags;
-    if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
-      dragFlags =
-          ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-      swipeFlags = 0;
-    } else {
-      dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-      swipeFlags = 0;
-    }
+    dragFlags =
+        ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+    swipeFlags = 0;
     return makeMovementFlags(dragFlags, swipeFlags);
   }
 
