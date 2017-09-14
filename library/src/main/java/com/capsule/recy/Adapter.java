@@ -35,15 +35,15 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   protected List<T> mData = new ArrayList<>();
 
-  private SparseIntArray typeArray;// viewType and layoutId
-
+  private SparseIntArray     typeArray;// viewType and layoutId
   /* load more */
   private OnLoadMoreListener onLoadMoreListener;
-
+  private Load               load;
   /* pending */
+  public static final int PENDING_ON_LOAD_MORE_LISTENER = 1;
+
   private static SparseArray<Object> pendingConfig = new SparseArray<>();
 
-  public static final int PENDING_ON_LOAD_MORE_LISTENER = 1;
 
   /* ******************************* */
 
@@ -265,8 +265,6 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     });
     load.setAble();
   }
-
-  private Load load;
 
   public void notifyLoadMoreCompleted(List<T> data) {
     if (null == data) {

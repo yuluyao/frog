@@ -1,5 +1,6 @@
 package com.capsule.recy;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     super(itemView);
   }
 
+  /* child click */
   public ViewHolder setClickableId(int... id) {
     for (int i : id) {
       if (!clickableId.contains(i)) {
@@ -33,28 +35,53 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     return clickableId;
   }
 
-  public ViewHolder setText(int id, String text) {
-    ((TextView) itemView.findViewById(id)).setText(text);
-    return this;
-  }
-
-  public ViewHolder setTextColor(int id, int color){
-    ((TextView) itemView.findViewById(id)).setTextColor(color);
-    return this;
-  }
-
-  public ViewHolder setImageResource(int id , int res){
-    ((ImageView) itemView.findViewById(id)).setImageResource(res);
-    return this;
-  }
-
-  //public ViewHolder setVisibility(int id, boolean visible) {
-  //  itemView.findViewById(id).setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
-  //  return this;
-  //}
+  /* View */
 
   public ViewHolder setVisibility(int id, int visibility) {
     itemView.findViewById(id).setVisibility(visibility);
     return this;
   }
+
+  /* TextView */
+
+  public TextView findTextViewById(int id) {
+    return (TextView) itemView.findViewById(id);
+  }
+
+  public ViewHolder setText(int id, String text) {
+    ((TextView) itemView.findViewById(id)).setText(text);
+    return this;
+  }
+
+  public ViewHolder setTextColor(int id, int color) {
+    ((TextView) itemView.findViewById(id)).setTextColor(color);
+    return this;
+  }
+
+  public ViewHolder setTextSize(int id, int size) {
+    ((TextView) itemView.findViewById(id)).setTextSize(size);
+    return this;
+  }
+
+  /* ImageView */
+
+  public ImageView findImageViewById(int id) {
+    return (ImageView) itemView.findViewById(id);
+  }
+
+  public ViewHolder setImageResource(int id, int res) {
+    ((ImageView) itemView.findViewById(id)).setImageResource(res);
+    return this;
+  }
+
+  public ViewHolder setImageUrl(int id, String url) {
+    ((ImageView) itemView.findViewById(id)).setImageURI(Uri.parse(url));
+    return this;
+  }
+
+  public ViewHolder setScaleType(int id, ImageView.ScaleType ScaleType) {
+    ((ImageView) itemView.findViewById(id)).setScaleType(ScaleType);
+    return this;
+  }
+
 }

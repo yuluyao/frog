@@ -142,11 +142,6 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
   }
 
   private void layoutHead(float left, float top, float right, float bottom) {
-    //header.layout(0, 0, header.getMeasuredWidth(), header.getMeasuredHeight());
-    int l = (int) left;
-    int t = (int) top;
-    int r = (int) right;
-    int b = (int) bottom;
-    header.layout(l, t, r, b);
+    header.layout(((int) left), ((int) top), ((int) right), ((int) bottom));
   }
 }

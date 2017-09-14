@@ -152,10 +152,6 @@ public class FootDecor extends RecyclerView.ItemDecoration {
   }
 
   private void layoutFoot(float left, float top, float right, float bottom) {
-    int l = (int) left;
-    int t = (int) top;
-    int r = (int) right;
-    int b = (int) bottom;
-    footer.layout(l, t, r, b);
+    footer.layout(((int) left), ((int) top), ((int) right), ((int) bottom));
   }
 }
