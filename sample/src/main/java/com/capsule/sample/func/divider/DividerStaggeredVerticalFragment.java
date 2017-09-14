@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.capsule.recy.decor.Divider;
+import com.capsule.recy.drag.DragCallback;
 import com.capsule.sample.R;
 import com.capsule.sample.repo.Data;
 import com.capsule.sample.repo.Repo;
@@ -43,6 +45,7 @@ public class DividerStaggeredVerticalFragment extends Fragment {
     recyclerView.setLayoutManager(
         new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
     recyclerView.addItemDecoration(new Divider(2, R.color.colorAccent));
+    setDrag(recyclerView);
 
     final DividerStaggeredVerticalAdapter adapter = new DividerStaggeredVerticalAdapter();
     recyclerView.setAdapter(adapter);
@@ -52,5 +55,11 @@ public class DividerStaggeredVerticalFragment extends Fragment {
         adapter.notifyRefreshCompleted(datas);
       }
     });
+  }
+
+
+  private void setDrag(RecyclerView recyclerView) {
+    ItemTouchHelper helper = new ItemTouchHelper(new DragCallback());
+    helper.attachToRecyclerView(recyclerView);
   }
 }

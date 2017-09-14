@@ -14,15 +14,13 @@ import android.view.ViewGroup;
  * 作 者：Vegeta Yu
  * 时 间：2017/9/1 14:31
  */
-public class HeadDecor extends RecyclerView.ItemDecoration {
+public class HeadDecor extends BaseItemDecoration {
 
   /* config */
   private int     layoutRes;//Head 布局
   private boolean sticky;//Head 不随RecyclerView滑动
 
   private Paint mPaint;
-
-  private int orientation = -1;//RecyclerView 的方向
 
   private float layoutWidth;
   private float layoutHeight;
@@ -53,7 +51,7 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
     float right;
     float top;
     float bottom;
-    if (orientation == LinearLayoutManager.VERTICAL) {
+    if (layout_type == LAYOUT_VERTICAL) {
       left = parent.getPaddingLeft();
       top = itemView.getY() - layoutHeight;
     } else {
@@ -65,7 +63,7 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
     layoutHead(left, top, right, bottom);
 
     if (!sticky) {
-      if (orientation == LinearLayoutManager.VERTICAL) {
+      if (layout_type == LAYOUT_VERTICAL) {
         c.translate(0, top);
         header.draw(c);
         c.translate(0, -top);
@@ -82,11 +80,10 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
   @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
       RecyclerView.State state) {
     super.getItemOffsets(outRect, view, parent, state);
-    getOrientation(parent);
     measureHead(parent);
 
     if (parent.getChildAdapterPosition(view) == 0) {
-      if (orientation == LinearLayoutManager.VERTICAL) {
+      if (layout_type == LAYOUT_VERTICAL) {
         outRect.top = (int) layoutHeight;
       } else {
         outRect.left = (int) layoutWidth;
@@ -105,7 +102,7 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
 
     int widthSpec;
     int heightSpec;
-    if (orientation == LinearLayoutManager.VERTICAL) {
+    if (layout_type == LAYOUT_VERTICAL) {
       widthSpec =
           View.MeasureSpec.makeMeasureSpec(recyclerView.getWidth(), View.MeasureSpec.EXACTLY);
       heightSpec =
@@ -129,17 +126,6 @@ public class HeadDecor extends RecyclerView.ItemDecoration {
     layoutHeight = header.getMeasuredHeight();
   }
 
-  private void getOrientation(RecyclerView parent) {
-    if (orientation != -1) {
-      return;
-    }
-    RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-    if (layoutManager instanceof LinearLayoutManager) {
-      orientation = ((LinearLayoutManager) layoutManager).getOrientation();
-    } else {
-      throw new RuntimeException("LayoutManager is not instant of LinearLayoutManager!");
-    }
-  }
 
   private void layoutHead(float left, float top, float right, float bottom) {
     header.layout(((int) left), ((int) top), ((int) right), ((int) bottom));

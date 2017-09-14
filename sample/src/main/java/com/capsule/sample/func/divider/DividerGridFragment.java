@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.capsule.recy.decor.Divider;
+import com.capsule.recy.drag.DragCallback;
 import com.capsule.sample.R;
 import com.capsule.sample.repo.Data;
 import com.capsule.sample.repo.Repo;
@@ -30,7 +32,6 @@ public class DividerGridFragment extends Fragment {
     return fragment;
   }
 
-
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class DividerGridFragment extends Fragment {
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
     recyclerView.addItemDecoration(new Divider(2, R.color.colorAccent));
-
+    //setDrag(recyclerView);
 
     final DividerGridAdapter adapter = new DividerGridAdapter();
     recyclerView.setAdapter(adapter);
@@ -52,5 +53,10 @@ public class DividerGridFragment extends Fragment {
         adapter.notifyRefreshCompleted(datas);
       }
     });
+  }
+
+  private void setDrag(RecyclerView recyclerView) {
+    ItemTouchHelper helper = new ItemTouchHelper(new DragCallback());
+    helper.attachToRecyclerView(recyclerView);
   }
 }

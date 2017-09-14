@@ -175,6 +175,11 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   }
 
   /* **************************** data **************************** */
+  @Nullable public  List<T> getData(){
+    return mData;
+  }
+
+
   @Nullable public T getData(int position) {
     if (position < 0) {
       return null;

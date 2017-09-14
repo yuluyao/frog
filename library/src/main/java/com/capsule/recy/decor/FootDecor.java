@@ -14,14 +14,12 @@ import android.view.ViewGroup;
  * 作 者：Vegeta Yu
  * 时 间：2017/9/1 14:31
  */
-public class FootDecor extends RecyclerView.ItemDecoration {
+public class FootDecor extends BaseItemDecoration {
   /* config */
   private int     layoutRes;//Head 布局
   private boolean sticky;//Head 不随RecyclerView滑动
 
   private Paint mPaint;
-
-  private int orientation = -1;//RecyclerView 的方向
 
   private float layoutWidth;
   private float layoutHeight;
@@ -58,7 +56,7 @@ public class FootDecor extends RecyclerView.ItemDecoration {
     float top;
     float bottom;
 
-    if (orientation == LinearLayoutManager.VERTICAL) {
+    if (layout_type == LAYOUT_VERTICAL) {
       left = parent.getPaddingLeft();
       top = itemView.getY() + itemView.getHeight();
       right = parent.getWidth() - parent.getPaddingRight();
@@ -92,11 +90,10 @@ public class FootDecor extends RecyclerView.ItemDecoration {
   @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
       RecyclerView.State state) {
     super.getItemOffsets(outRect, view, parent, state);
-    getOrientation(parent);
     measureFoot(parent);
 
     if (parent.getChildAdapterPosition(view) == parent.getAdapter().getItemCount() - 1) {
-      if (orientation == LinearLayoutManager.VERTICAL) {
+      if (layout_type == LAYOUT_VERTICAL) {
         outRect.bottom = (int) layoutHeight;
       } else {
         outRect.right = (int) layoutWidth;
@@ -115,7 +112,7 @@ public class FootDecor extends RecyclerView.ItemDecoration {
 
     int widthSpec;
     int heightSpec;
-    if (orientation == LinearLayoutManager.VERTICAL) {
+    if (layout_type == LAYOUT_VERTICAL) {
       widthSpec =
           View.MeasureSpec.makeMeasureSpec(recyclerView.getWidth(), View.MeasureSpec.EXACTLY);
       heightSpec =
@@ -137,18 +134,6 @@ public class FootDecor extends RecyclerView.ItemDecoration {
 
     layoutWidth = footer.getMeasuredWidth();
     layoutHeight = footer.getMeasuredHeight();
-  }
-
-  private void getOrientation(RecyclerView parent) {
-    if (orientation != -1) {
-      return;
-    }
-    RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-    if (layoutManager instanceof LinearLayoutManager) {
-      orientation = ((LinearLayoutManager) layoutManager).getOrientation();
-    } else {
-      throw new RuntimeException("LayoutManager is not instant of LinearLayoutManager!");
-    }
   }
 
   private void layoutFoot(float left, float top, float right, float bottom) {

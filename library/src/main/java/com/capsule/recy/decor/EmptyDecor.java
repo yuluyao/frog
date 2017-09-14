@@ -12,7 +12,7 @@ import android.view.ViewGroup;
  * 作 者：Vegeta Yu
  * 时 间：2017/9/1 14:30
  */
-public class EmptyDecor extends RecyclerView.ItemDecoration {
+public class EmptyDecor extends BaseItemDecoration {
 
   private int layoutRes;
 
@@ -38,8 +38,8 @@ public class EmptyDecor extends RecyclerView.ItemDecoration {
 
     int widthSpec;
     int heightSpec;
-    int orientation = ((LinearLayoutManager) parent.getLayoutManager()).getOrientation();
-    if (orientation == LinearLayoutManager.VERTICAL) {
+    //int orientation = ((LinearLayoutManager) parent.getLayoutManager()).getOrientation();
+    if (layout_type == LAYOUT_VERTICAL) {
       widthSpec = View.MeasureSpec.makeMeasureSpec(parent.getWidth(), View.MeasureSpec.EXACTLY);
       heightSpec = View.MeasureSpec.makeMeasureSpec(parent.getHeight(), View.MeasureSpec.EXACTLY);
     } else {
