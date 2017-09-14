@@ -56,8 +56,8 @@ public class Repo {
 
   public Observable<List<Data>> refresh() {
     return Observable.just(datas.subList(0, 10))
-        .subscribeOn(Schedulers.io())
         .delay(300, TimeUnit.MILLISECONDS)
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
   }
 

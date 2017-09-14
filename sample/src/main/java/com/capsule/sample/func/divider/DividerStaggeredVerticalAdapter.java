@@ -12,8 +12,9 @@ import com.capsule.sample.repo.Data;
  */
 public class DividerStaggeredVerticalAdapter extends Adapter<Data,ViewHolder> {
 
-  @Override protected int onGetItemLayoutId() {
-    return R.layout.item_data_stagger_vertical;
+
+  @Override protected void onSetItemLayout() {
+    setItemLayout(R.layout.item_data_stagger_vertical);
   }
 
   @Override protected void convert(ViewHolder holder, Data item) {

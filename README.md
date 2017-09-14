@@ -99,21 +99,42 @@ recyclerView.addOnItemTouchListener(new ItemClickListener() {
 
 
 ## 五、多种 viewType
-1.继承MultiAdapter类，数据类型要实现 `MultiEntity` 接口
+### 1.实现 `MultiEntity` 接口
+
+MultiEntity 接口如下：
 ```
-public class MultipleAdapter extends MultiAdapter<ArticleBean, ViewHolder> {
+public interface MultiEntity {
+  int getItemType();
+}
+```
+数据类型要实现 MultiEntity 接口：
+```
+public class DataBean implements MultiEntity {
+...
+}
+```
+### 2.设置多个布局
+
+在适配器中根据不同的数据类型设置不同的布局：
+```
+public class MultipleAdapter extends Adapter<ArticleBean, ViewHolder> {
+  ...
+  @Override protected void onSetItemLayout() {
+    setItemLayout(DataBean.TYPE_1, R.layout.item_1);
+    setItemLayout(DataBean.TYPE_2, R.layout.item_2);
+    setItemLayout(DataBean.TYPE_3, R.layout.item_3);
+  }
   ...
 ```
-
 
 
 ## 六、添加分割线
 
 
 ```
-  recyclerView.addItemDecoration(new Divider(6, 0x7f00ffff));
+  recyclerView.addItemDecoration(new Divider(1, R.color.red));//第1个参数的单位是dp
 ```
-
+> 目前，横竖分割线的宽度是一样的，不可分别设置
 
 ## 七、初始 EmptyView
 
@@ -121,9 +142,7 @@ public class MultipleAdapter extends MultiAdapter<ArticleBean, ViewHolder> {
   recyclerView.addItemDecoration(new EmptyDecor(R.layout.layout_empty));
 ```
 
-
 ## 八、添加头和脚
-注意，头部和脚部都是不可点击的
 
 ```
   //可滑动的头部
@@ -133,21 +152,34 @@ public class MultipleAdapter extends MultiAdapter<ArticleBean, ViewHolder> {
   //脚部，可滑动
   recyclerView.addItemDecoration(new FootDecor(R.layout.layout_foot));
 ```
-
+> 注意，头部和脚部都是不可点击的
 
 ## 九、动画
+继承 BaseItemAnimator 类可以实现自己的动画，也可以直接使用目前已经定义好的实现类，详见 com.capsule.recy.anim.impl 包
+
+一行代码即可添加全套（添加、删除、移动、更新）动画：
+```
+  recyclerView.setItemAnimator(new SlideInLeftAnimator());
+```
 
 
-## 十、展开 Expandable
+## 十、展开详情 Expandable
 
 
-## 十一、分组 Section
+
+## 十一、多级列表
 
 
-## 十二、Swipe
+## 十二、字母分组
 
 
-## 十三、Drag
+## 十三、Swipe
+
+
+## 十四、Drag
+
+
+## 十五、多选
 
 
 

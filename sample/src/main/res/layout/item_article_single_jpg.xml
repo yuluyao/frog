@@ -17,7 +17,7 @@
 
   <ImageView
       android:layout_width="match_parent"
-      android:layout_height="100dp"
+      android:layout_height="120dp"
       android:id="@+id/iv"
       android:scaleType="fitXY"
       android:src="@drawable/breakfast_1"

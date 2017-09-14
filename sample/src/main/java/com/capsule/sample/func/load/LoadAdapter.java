@@ -12,9 +12,8 @@ import com.capsule.sample.repo.Data;
  */
 public class LoadAdapter extends Adapter<Data, ViewHolder> {
 
-
-  @Override protected int onGetItemLayoutId() {
-    return R.layout.item_data_vertical;
+  @Override protected void onSetItemLayout() {
+    setItemLayout(R.layout.item_data_vertical);
   }
 
   @Override protected void convert(ViewHolder holder, Data item) {

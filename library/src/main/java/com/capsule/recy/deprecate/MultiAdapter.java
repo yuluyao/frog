@@ -1,4 +1,4 @@
-package com.capsule.recy.multi;
+package com.capsule.recy.deprecate;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseIntArray;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.capsule.recy.ViewHolder;
 import com.capsule.recy.Adapter;
+import com.capsule.recy.multi.MultiEntity;
 
 /**
  * 描 述：
@@ -19,7 +20,7 @@ public abstract class MultiAdapter<T extends MultiEntity, H extends ViewHolder>
 
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
     super.onAttachedToRecyclerView(recyclerView);
-    onSetTypes();
+    onSetItemLayout();
   }
 
   @Override public H onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,7 +39,7 @@ public abstract class MultiAdapter<T extends MultiEntity, H extends ViewHolder>
     }
   }
 
-  protected void setType(int type, int layoutId) {
+  protected void setItemLayout(int type, int layoutId) {
     if (typeArray == null) {
       typeArray = new SparseIntArray();
     }
@@ -46,12 +47,8 @@ public abstract class MultiAdapter<T extends MultiEntity, H extends ViewHolder>
   }
 
   /**
-   * call {@link #setType(int, int)}
+   * call {@link #setItemLayout(int, int)}
    */
-  protected abstract void onSetTypes();
+  protected abstract void onSetItemLayout();
 
-  //will not be called in this subclass
-  @Override protected int onGetItemLayoutId() {
-    return 0;
-  }
 }

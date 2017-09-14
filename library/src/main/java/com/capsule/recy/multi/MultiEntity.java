@@ -6,7 +6,5 @@ package com.capsule.recy.multi;
  * 时 间：2017/8/29 15:49
  */
 public interface MultiEntity {
-
   int getItemType();
-
 }

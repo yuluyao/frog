@@ -12,6 +12,7 @@ import com.capsule.sample.func.anim.AnimActivity;
 import com.capsule.sample.func.click.ClickActivity;
 import com.capsule.sample.func.divider.DividerActivity;
 import com.capsule.sample.func.empty.EmptyActivity;
+import com.capsule.sample.func.expand.ExpandActivity;
 import com.capsule.sample.func.foot.FootActivity;
 import com.capsule.sample.func.head.HeadActivity;
 import com.capsule.sample.func.load.LoadActivity;
@@ -54,6 +55,7 @@ public class MainActivity extends BaseActivity {
     list.add("ClickListener");
     list.add("Divider");
     list.add("EmptyView");
+    list.add("Expand");
     list.add("Footer");
     list.add("Header");
     list.add("LoadMore");
@@ -88,15 +90,18 @@ public class MainActivity extends BaseActivity {
         intent = new Intent(this, EmptyActivity.class);
         break;
       case 4:
-        intent = new Intent(this, FootActivity.class);
+        intent = new Intent(this, ExpandActivity.class);
         break;
       case 5:
-        intent = new Intent(this, HeadActivity.class);
+        intent = new Intent(this, FootActivity.class);
         break;
       case 6:
-        intent = new Intent(this, LoadActivity.class);
+        intent = new Intent(this, HeadActivity.class);
         break;
       case 7:
+        intent = new Intent(this, LoadActivity.class);
+        break;
+      case 8:
         intent = new Intent(this, MultipleActivity.class);
         break;
 

@@ -38,6 +38,7 @@ public class HeadActivity extends BaseActivity {
     Repo.getInstance(this).refresh().subscribe(new Consumer<List<Data>>() {
       @Override public void accept(@NonNull List<Data> datas) throws Exception {
         adapter.setData(datas);
+        adapter.notifyItemRangeInserted(0,datas.size());
       }
     });
   }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.capsule.recy.load.Load;
+import com.capsule.recy.multi.MultiEntity;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
@@ -34,6 +35,7 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   protected List<T> mData = new ArrayList<>();
 
+  private SparseIntArray typeArray;// viewType and layoutId
 
   /* load more */
   private OnLoadMoreListener onLoadMoreListener;
@@ -51,6 +53,7 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     mContext = mRecyclerView.getContext();
     mLayoutInflater = LayoutInflater.from(mContext);
     executePending();
+    onSetItemLayout();
   }
 
   private void putPending(int key, Object o) {
@@ -71,12 +74,35 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   @Override public VH onCreateViewHolder(ViewGroup parent, int viewType) {
     VH holder;
-    View itemView = mLayoutInflater.inflate(onGetItemLayoutId(), parent, false);
+    View itemView = mLayoutInflater.inflate(typeArray.get(viewType), parent, false);
     holder = buildStaticHolder(itemView);
     return holder;
   }
 
-  protected abstract int onGetItemLayoutId();
+  @Override public int getItemViewType(int position) {
+    T item = getData(position);
+    if (item != null && item instanceof MultiEntity) {
+      return ((MultiEntity) item).getItemType();
+    } else {
+      return super.getItemViewType(position);
+    }
+  }
+
+  protected void setItemLayout(int layoutId) {
+    setItemLayout(0, layoutId);
+  }
+
+  protected void setItemLayout(int type, int layoutId) {
+    if (typeArray == null) {
+      typeArray = new SparseIntArray();
+    }
+    typeArray.put(type, layoutId);
+  }
+
+  /**
+   * call {@link #setItemLayout(int, int)} or {@link #setItemLayout(int)}
+   */
+  protected abstract void onSetItemLayout();
 
   @SuppressWarnings("unchecked") protected VH buildStaticHolder(View view) {
     Class temp = getClass();
@@ -148,7 +174,6 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     return mData.size();
   }
 
-
   /* **************************** data **************************** */
   @Nullable public T getData(int position) {
     if (position < 0) {
@@ -180,6 +205,10 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     }
     mData.clear();
     mData.addAll(list);
+  }
+
+  public void changeData(T data, int position) {
+    mData.set(position, data);
   }
 
   public void addData(List<T> list) {

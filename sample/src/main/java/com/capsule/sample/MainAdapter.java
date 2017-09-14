@@ -11,8 +11,8 @@ import com.capsule.recy.Adapter;
  */
 public class MainAdapter extends Adapter<String,ViewHolder> {
 
-  @Override protected int onGetItemLayoutId() {
-    return R.layout.item_main;
+  @Override protected void onSetItemLayout() {
+    setItemLayout(R.layout.item_main);
   }
 
   @Override protected void convert(ViewHolder holder, String item) {
