@@ -26,14 +26,14 @@ public class Divider extends RecyclerView.ItemDecoration {
   public static final int LAYOUT_STAGGERED_GRID_HORIZONTAL = 4;//瀑布--horizontal
 
   private int   colorRes;
-  private int   dividerWidthDp;
-  private int   dividerWidthPixel;
+  private float dividerWidthDp;
+  private float dividerWidthPixel;
   private Paint paint;
   private int   layout_type;
 
   private int flag_init_config = 0;
 
-  public Divider(int dividerWidthDp, @ColorRes int colorRes) {
+  public Divider(float dividerWidthDp, @ColorRes int colorRes) {
     this.dividerWidthDp = dividerWidthDp;
     this.colorRes = colorRes;
     init();
@@ -64,27 +64,27 @@ public class Divider extends RecyclerView.ItemDecoration {
     }
   }
 
-  @SuppressLint("NewApi") private void drawVertical(Canvas canvas, RecyclerView parent) {
+  private void drawVertical(Canvas canvas, RecyclerView parent) {
     canvas.save();
-    final int left;
-    final int right;
-    if (parent.getClipToPadding()) {
-      left = parent.getPaddingLeft();
-      right = parent.getWidth() - parent.getPaddingRight();
-      canvas.clipRect(left, parent.getPaddingTop(), right,
-          parent.getHeight() - parent.getPaddingBottom());
-    } else {
-      left = 0;
-      right = parent.getWidth();
-    }
+    final float left;
+    final float right;
+    //if (parent.getClipToPadding()) {
+    left = parent.getPaddingLeft();
+    right = parent.getWidth() - parent.getPaddingRight();
+    canvas.clipRect(left, parent.getPaddingTop(), right,
+        parent.getHeight() - parent.getPaddingBottom());
+    //} else {
+    //  left = 0;
+    //  right = parent.getWidth();
+    //}
 
     final int childCount = parent.getChildCount();
     for (int i = 0; i < childCount; i++) {
       final View child = parent.getChildAt(i);
       Rect mBounds = new Rect();
       parent.getDecoratedBoundsWithMargins(child, mBounds);
-      final int bottom = mBounds.bottom + Math.round(ViewCompat.getTranslationY(child));
-      final int top = bottom - dividerWidthPixel;
+      final float bottom = mBounds.bottom + Math.round(ViewCompat.getTranslationY(child));
+      final float top = bottom - dividerWidthPixel;
       //mDivider.setBounds(left, top, right, bottom);
       //mDivider.draw(canvas);
       canvas.drawRect(left, top, right, bottom, paint);
@@ -92,27 +92,27 @@ public class Divider extends RecyclerView.ItemDecoration {
     canvas.restore();
   }
 
-  @SuppressLint("NewApi") private void drawHorizontal(Canvas canvas, RecyclerView parent) {
+  private void drawHorizontal(Canvas canvas, RecyclerView parent) {
     canvas.save();
-    final int top;
-    final int bottom;
-    if (parent.getClipToPadding()) {
-      top = parent.getPaddingTop();
-      bottom = parent.getHeight() - parent.getPaddingBottom();
-      canvas.clipRect(parent.getPaddingLeft(), top, parent.getWidth() - parent.getPaddingRight(),
-          bottom);
-    } else {
-      top = 0;
-      bottom = parent.getHeight();
-    }
+    final float top;
+    final float bottom;
+    //if (parent.getClipToPadding()) {
+    top = parent.getPaddingTop();
+    bottom = parent.getHeight() - parent.getPaddingBottom();
+    canvas.clipRect(parent.getPaddingLeft(), top, parent.getWidth() - parent.getPaddingRight(),
+        bottom);
+    //} else {
+    //  top = 0;
+    //  bottom = parent.getHeight();
+    //}
 
     final int childCount = parent.getChildCount();
     for (int i = 0; i < childCount; i++) {
       final View child = parent.getChildAt(i);
       Rect mBounds = new Rect();
       parent.getLayoutManager().getDecoratedBoundsWithMargins(child, mBounds);
-      final int right = mBounds.right + Math.round(ViewCompat.getTranslationX(child));
-      final int left = right - dividerWidthPixel;
+      final float right = mBounds.right + Math.round(ViewCompat.getTranslationX(child));
+      final float left = right - dividerWidthPixel;
       //mDivider.setBounds(left, top, right, bottom);
       //mDivider.draw(canvas);
       canvas.drawRect(left, top, right, bottom, paint);
@@ -164,10 +164,10 @@ public class Divider extends RecyclerView.ItemDecoration {
     int spanCount = 0;
     switch (layout_type) {
       case LAYOUT_VERTICAL:
-        outRect.set(0, 0, 0, dividerWidthPixel);
+        outRect.set(0, 0, 0, (int) dividerWidthPixel);
         return;// 线性 manager 简单处理
       case LAYOUT_HORIZONTAL:
-        outRect.set(0, 0, dividerWidthPixel, 0);
+        outRect.set(0, 0, (int) dividerWidthPixel, 0);
         return;// 线性 manager 简单处理
       /* ------------------ */
       case LAYOUT_GRID:
@@ -179,10 +179,10 @@ public class Divider extends RecyclerView.ItemDecoration {
         break;
     }
 
-    int l = 0;
-    int t = 0;
-    int r = dividerWidthPixel;
-    int b = dividerWidthPixel;
+    float l = 0;
+    float t = 0;
+    float r = dividerWidthPixel;
+    float b = dividerWidthPixel;
     int childCount = parent.getAdapter().getItemCount();
     int itemPosition = parent.getChildAdapterPosition(view);
     if (isLastRaw(itemPosition, spanCount, childCount)) {
@@ -193,7 +193,7 @@ public class Divider extends RecyclerView.ItemDecoration {
       // 如果是最后一列，则不需要绘制右边
       r = 0;
     }
-    outRect.set(l, t, r, b);
+    outRect.set(((int) l), ((int) t), ((int) r), ((int) b));
   }
 
   /**

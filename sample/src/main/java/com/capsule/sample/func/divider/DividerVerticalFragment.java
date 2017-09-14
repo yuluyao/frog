@@ -41,7 +41,7 @@ public class DividerVerticalFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    recyclerView.addItemDecoration(new Divider(2, R.color.colorAccent));
+    recyclerView.addItemDecoration(new Divider(1f, R.color.colorAccent));
 
     final DividerVerticalAdapter adapter = new DividerVerticalAdapter();
     recyclerView.setAdapter(adapter);
