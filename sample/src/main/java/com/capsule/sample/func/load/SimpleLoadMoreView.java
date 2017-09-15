@@ -1,6 +1,6 @@
 package com.capsule.sample.func.load;
 
-import com.capsule.recy.load.LoadMoreView;
+import com.capsule.recy.deprecate.LoadMoreView;
 import com.capsule.sample.R;
 
 /**

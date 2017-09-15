@@ -67,6 +67,7 @@ adapter.setOnLoadMoreListener(new Adapter.OnLoadMoreListener() {
 
 2.加载完成调用`adapter.notifyLoadMoreCompleted()`更新ui，在方法中已对传入参数做了处理，自动处理底部的加载视图
 
+3.自定义加载提示的UI，调用`adapter.setLoadDecor()`方法。需要继承 BaseLoadDecor 或 SimpleLoadDecor 类。
 
 ## 四、点击事件和长按事件
 ### 1.点击监听

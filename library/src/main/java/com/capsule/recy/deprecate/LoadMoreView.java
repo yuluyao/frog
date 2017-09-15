@@ -1,4 +1,4 @@
-package com.capsule.recy.load;
+package com.capsule.recy.deprecate;
 
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;

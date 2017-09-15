@@ -8,7 +8,8 @@ import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.capsule.recy.load.Load;
+import com.capsule.recy.load.BaseLoadDecor;
+import com.capsule.recy.load.DefaultLoadDecor;
 import com.capsule.recy.multi.MultiEntity;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -36,9 +37,9 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   protected List<T> mData = new ArrayList<>();
 
   private SparseIntArray     typeArray;// viewType and layoutId
-  /* load more */
+  /* loadDecor more */
   private OnLoadMoreListener onLoadMoreListener;
-  private Load               load;
+  private BaseLoadDecor      loadDecor;
   /* pending */
   public static final int PENDING_ON_LOAD_MORE_LISTENER = 1;
 
@@ -227,12 +228,15 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     setData(data);
     notifyDataSetChanged();
     //notifyItemRangeInserted(0,data.size());
-    if (null != load) {
-      load.setAble();//如果刷新之前有加载失败的情况，列表状态会变为不可加载，刷新以后，要使列表变为可加载状态
+    if (null != loadDecor) {
+      loadDecor.setAble();//如果刷新之前有加载失败的情况，列表状态会变为不可加载，刷新以后，要使列表变为可加载状态
     }
   }
 
   /* ************************** loadmore ************************** */
+  public void setLoadDecor(BaseLoadDecor decor){
+    loadDecor = decor;
+  }
 
   public void setOnLoadMoreListener(OnLoadMoreListener listener) {
     if (mRecyclerView == null) {
@@ -243,45 +247,45 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   }
 
   private void setScrollListener(OnLoadMoreListener listener) {
-    load = new Load(mRecyclerView);
+    loadDecor = new DefaultLoadDecor(mRecyclerView);
     onLoadMoreListener = listener;
     mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-        if (load.isEnd()) {
+        if (loadDecor.isEnd()) {
           return;
         }
         RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
         //int visibleChildCount = layoutManager.getChildCount();
         if (mData.size() > 0//有item
             && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
-            && !(load.isLoading())) {//没有正在加载
+            && !(loadDecor.isLoading())) {//没有正在加载
           View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
           int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
           if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
-            if (load.isAble()) {
-              load.setBegin();
-            } else {
-              load.setLoading();
+            //if (loadDecor.isAble()) {
+            //  loadDecor.setBegin();
+            //} else {
+              loadDecor.setLoading();
               onLoadMoreListener.onLoadMore();
-            }
+            //}
           }
         }
       }
     });
-    load.setAble();
+    //loadDecor.setAble();
   }
 
   public void notifyLoadMoreCompleted(List<T> data) {
     if (null == data) {
-      load.setFailed();
+      loadDecor.setFailed();
       return;
     }
     if (data.size() == 0) {
-      load.setEnd();
+      loadDecor.setEnd();
       notifyDataSetChanged();
       return;
     }
-    load.setAble();
+    loadDecor.setAble();
     addData(data);
     notifyDataSetChanged();
     //notifyItemChanged(getLastDataPosition());

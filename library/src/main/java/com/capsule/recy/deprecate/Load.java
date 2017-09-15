@@ -1,4 +1,4 @@
-package com.capsule.recy.load;
+package com.capsule.recy.deprecate;
 
 import android.support.v7.widget.RecyclerView;
 import com.capsule.recy.R;
