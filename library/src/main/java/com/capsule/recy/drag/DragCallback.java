@@ -29,18 +29,17 @@ public class DragCallback extends ItemTouchHelper.Callback {
       RecyclerView.ViewHolder target) {
     int fromPosition = viewHolder.getAdapterPosition();//得到拖动ViewHolder的position
     int toPosition = target.getAdapterPosition();//得到目标ViewHolder的position
+    List list = ((Adapter) recyclerView.getAdapter()).getData();
     if (fromPosition < toPosition) {
       for (int i = fromPosition; i < toPosition; i++) {
-        List data = ((Adapter) recyclerView.getAdapter()).getData();
-        if (data != null) {
-          Collections.swap(data, i, i + 1);
+        if (list != null) {
+          Collections.swap(list, i, i + 1);
         }
       }
     } else {
       for (int i = fromPosition; i > toPosition; i--) {
-        List data = ((Adapter) recyclerView.getAdapter()).getData();
-        if (data != null) {
-          Collections.swap(data, i, i - 1);
+        if (list != null) {
+          Collections.swap(list, i, i - 1);
         }
       }
     }

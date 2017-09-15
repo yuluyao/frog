@@ -1,5 +1,6 @@
-package com.capsule.recy.drag;
+package com.capsule.recy.swipe;
 
+import android.graphics.Canvas;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,20 @@ public class SwipeCallback extends ItemTouchHelper.Callback {
   }
 
   @Override public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+    //List list = ((Adapter) recyclerView.getAdapter()).getData();
+
+  }
+
+  @Override
+  public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+      float dX, float dY, int actionState, boolean isCurrentlyActive) {
+    if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+      if (Math.abs(dX) <= recyclerView.getWidth()) {
+        viewHolder.itemView.scrollTo(-(int) dX, 0);
+      }
+    }
+    //super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
   }
 

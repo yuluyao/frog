@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.capsule.recy.decor.Divider;
-import com.capsule.recy.drag.SwipeCallback;
+import com.capsule.recy.swipe.SwipeCallback;
 import com.capsule.sample.R;
 import com.capsule.sample.repo.Data;
 import com.capsule.sample.repo.Repo;

@@ -1,6 +1,8 @@
 # capsule
-
-一个好用的 RecyclerView Adapter 库！
+高内聚，只有1个 Adapter 类。
+低耦合，Adapter 尽量精简，避免依赖，避免低效封装。低耦合意味着可扩展。
+使用官方提供的类。只继承抽象类。
+通过无参的构造方法创建对象。
 
 ## 一、引用项目
 在 project 的 build.gradle 中添加：
@@ -164,8 +166,13 @@ public class MultipleAdapter extends Adapter<ArticleBean, ViewHolder> {
 
 
 ## 十、展开详情 Expandable
+展开详情功能并没有标准的模板代码，这里提供思路：
 
+1. data实现 Expandable 接口。
+2. 在 adapter 中通过 Expandable.isExpand() 方法判断详情是否展开。
+3. 在点击事件回调中，改变 data 的 expand 状态。
 
+具体可参考 sample 中的代码。
 
 ## 十一、多级列表
 
@@ -173,11 +180,17 @@ public class MultipleAdapter extends Adapter<ArticleBean, ViewHolder> {
 ## 十二、字母分组
 
 
-## 十三、Swipe
+## 十三、Drag
+```
+  ItemTouchHelper helper = new ItemTouchHelper(new DragCallback());
+  helper.attachToRecyclerView(recyclerView);
+```
 
-
-## 十四、Drag
-
+## 十四、Swipe
+```
+  ItemTouchHelper helper = new ItemTouchHelper(new SwipeCallback());
+  helper.attachToRecyclerView(recyclerView);
+```
 
 ## 十五、多选
 
