@@ -33,15 +33,14 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   protected Context        mContext;
   protected RecyclerView   mRecyclerView;
   protected LayoutInflater mLayoutInflater;
+  private List<T> mData = new ArrayList<>();
+  private SparseIntArray mTypeArray;// viewType and layoutId
 
-  protected List<T> mData = new ArrayList<>();
-
-  private SparseIntArray     typeArray;// viewType and layoutId
   /* loadDecor more */
   private OnLoadMoreListener onLoadMoreListener;
   private BaseLoadDecor      loadDecor;
   /* pending */
-  public static final int PENDING_ON_LOAD_MORE_LISTENER = 1;
+  private static final int PENDING_ON_LOAD_MORE_LISTENER = 1;
 
   private static SparseArray<Object> pendingConfig = new SparseArray<>();
 
@@ -75,7 +74,7 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   @Override public VH onCreateViewHolder(ViewGroup parent, int viewType) {
     VH holder;
-    View itemView = mLayoutInflater.inflate(typeArray.get(viewType), parent, false);
+    View itemView = mLayoutInflater.inflate(mTypeArray.get(viewType), parent, false);
     holder = buildStaticHolder(itemView);
     return holder;
   }
@@ -94,10 +93,10 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   }
 
   protected void setItemLayout(int type, int layoutId) {
-    if (typeArray == null) {
-      typeArray = new SparseIntArray();
+    if (mTypeArray == null) {
+      mTypeArray = new SparseIntArray();
     }
-    typeArray.put(type, layoutId);
+    mTypeArray.put(type, layoutId);
   }
 
   /**
@@ -176,10 +175,9 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   }
 
   /* **************************** data **************************** */
-  @Nullable public  List<T> getData(){
+  @Nullable public List<T> getData() {
     return mData;
   }
-
 
   @Nullable public T getData(int position) {
     if (position < 0) {
@@ -234,7 +232,7 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   }
 
   /* ************************** loadmore ************************** */
-  public void setLoadDecor(BaseLoadDecor decor){
+  public void setLoadDecor(BaseLoadDecor decor) {
     loadDecor = decor;
   }
 
@@ -265,8 +263,8 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
             //if (loadDecor.isAble()) {
             //  loadDecor.setBegin();
             //} else {
-              loadDecor.setLoading();
-              onLoadMoreListener.onLoadMore();
+            loadDecor.setLoading();
+            onLoadMoreListener.onLoadMore();
             //}
           }
         }
