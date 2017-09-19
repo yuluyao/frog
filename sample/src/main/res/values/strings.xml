@@ -1,6 +1,148 @@
 <resources>
   <string name="app_name">CapsuleAdapter</string>
 
+
+  <string-array name="sgs_name">
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+    <item>刘备</item>
+  </string-array>
+
+  <string-array name="sgs_desc">
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+    <item>asjgidjhopjsdhposdjohpjsrp</item>
+  </string-array>
+
+
+
+
+
+
+
+
+
+
   <string-array name="skill_name">
     <item>力劈华山</item>
     <item>善恶有报</item>
