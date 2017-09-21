@@ -36,22 +36,6 @@ public class MultipleActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setItemAnimator(new SlideInLeftAnimator());
-    //recyclerView.addItemDecoration(new SimpleDecoration(this));
-    //recyclerView.addOnItemTouchListener(new ItemClickListener(recyclerView) {
-    //  @Override
-    //  public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
-    //    Toast.makeText(MultipleActivity.this, "点击图片", Toast.LENGTH_SHORT).show();
-    //  }
-    //
-    //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-    //    Toast.makeText(MultipleActivity.this, "点击item", Toast.LENGTH_SHORT).show();
-    //  }
-    //});
-    //recyclerView.addOnItemTouchListener(new SimpleClickListener(recyclerView) {
-    //  @Override public void onItemClick(RecyclerView.ViewHolder vh, int position) {
-    //    Toast.makeText(MultipleActivity.this, "点击item", Toast.LENGTH_SHORT).show();
-    //  }
-    //});
 
     recyclerView.setAdapter(adapter);
 
@@ -62,26 +46,8 @@ public class MultipleActivity extends AppCompatActivity {
       }
     });
 
-    //mockOne().subscribe(new Consumer<ArticleBean>() {
-    //  @Override public void accept(@NonNull ArticleBean articleBean) throws Exception {
-    //    adapter.changeData(articleBean, 1);
-    //    adapter.notifyItemChanged(1);
-    //  }
-    //});
   }
 
-  //private List<SkillEntity> mockData() {
-  //  List<SkillEntity> list = new ArrayList<>();
-  //  list.add(new SkillEntity(R.drawable.mh_1, "just name",
-  //      "something description something description something description something description something description something description "));
-  //  list.add(new SkillEntity(R.drawable.mh_2, "just name"));
-  //  list.add(new SkillEntity(R.drawable.mh_3, "just name",
-  //      "something description something description something description something description something description something description "));
-  //  list.add(new SkillEntity(R.drawable.mh_4, "just name"));
-  //  list.add(new SkillEntity(R.drawable.mh_5, "just name"));
-  //  list.add(new SkillEntity(R.drawable.mh_6, "just name"));
-  //  return list;
-  //}
 
   private Observable<List<ArticleBean>> mockArticles() {
     String title = "忙碌的早晨要赶着梳洗换装，处理家里大人小人，总是没有办法吃顿营养的早餐吗?";

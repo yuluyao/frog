@@ -21,7 +21,5 @@ public class AnimAdapter extends Adapter<Data, ViewHolder> {
     holder.setImageResource(R.id.icon, item.getIconRes())
         .setText(R.id.title, item.getTitle())
         .setText(R.id.content, item.getContent());
-
-    //holder.itemView.findViewById(R.id.invi).setVisibility(View.VISIBLE);
   }
 }

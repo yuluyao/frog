@@ -16,6 +16,6 @@ public class MainAdapter extends Adapter<String,ViewHolder> {
   }
 
   @Override protected void convert(ViewHolder holder, String item) {
-    ((TextView) holder.itemView.findViewById(R.id.tv)).setText(item);
+    holder.setText(R.id.tv, item);
   }
 }

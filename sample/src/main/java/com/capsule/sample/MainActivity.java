@@ -65,17 +65,11 @@ public class MainActivity extends BaseActivity {
     list.add("...");
     list.add("...");
     list.add("...");
-    list.add("...");
-    list.add("...");
-    list.add("...");
-    list.add("...");
-    list.add("...");
-    list.add("...");
     return list;
   }
 
   private void startByPosition(int position) {
-    Intent intent = null;
+    Intent intent;
     switch (position) {
       case 0:
         intent = new Intent(this, AnimActivity.class);
