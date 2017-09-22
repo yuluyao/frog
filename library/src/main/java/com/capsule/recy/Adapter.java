@@ -224,8 +224,8 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   public void notifyRefreshCompleted(List<T> data) {
     setData(data);
-    notifyDataSetChanged();
-    //notifyItemRangeInserted(0,data.size());
+    //notifyDataSetChanged();
+    notifyItemRangeInserted(0, data.size());
     if (null != loadDecor) {
       loadDecor.setAble();//如果刷新之前有加载失败的情况，列表状态会变为不可加载，刷新以后，要使列表变为可加载状态
     }
@@ -285,8 +285,8 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     }
     loadDecor.setAble();
     addData(data);
-    notifyDataSetChanged();
+    //notifyDataSetChanged();
     //notifyItemChanged(getLastDataPosition());
-    //notifyItemRangeInserted(getLastDataPosition()+1,data.size());
+    notifyItemRangeInserted(getLastDataPosition()+1,data.size());
   }
 }
