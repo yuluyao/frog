@@ -1,9 +1,7 @@
 # capsule 
-[![Release](https://jitpack.io/v/wushenggit/capsule.svg)](https://jitpack.io/#wushenggit/capsule)
-高内聚，只有1个 Adapter 类。
-低耦合，Adapter 尽量精简，避免依赖，避免低效封装。低耦合意味着可扩展。
-使用官方提供的类。只继承抽象类。
-通过无参的构造方法创建对象。
+latest version:[![Release](https://jitpack.io/v/wushenggit/capsule.svg)](https://jitpack.io/#wushenggit/capsule)
+
+为RecyclerView提供视图适配以及加载、点击、手势等附加功能。
 
 ## 一、引用项目
 在 project 的 build.gradle 中添加：
@@ -17,12 +15,12 @@
 ```
 在 module 的 build.gradle 中添加：
 ```
-  compile 'com.github.wushenggit:capsule:1.0.0'
+  compile 'com.github.wushenggit:capsule:{version}' 
 
 ```
 
 
-## 二、adapter 的使用很简单
+## 二、适配 RecyclerView
 ### 1.定义 adapter
 ```
 //继承 Adapter 类，泛型T（Data）定义数据类型，ViewHolder类可被拓展
