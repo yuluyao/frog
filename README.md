@@ -1,5 +1,5 @@
 # capsule 
-latest version:[![Release](https://jitpack.io/v/wushenggit/capsule.svg)](https://jitpack.io/#wushenggit/capsule)
+[![Release](https://jitpack.io/v/wushenggit/capsule.svg)](https://jitpack.io/#wushenggit/capsule)
 
 为RecyclerView提供视图适配以及加载、点击、手势等附加功能。
 
