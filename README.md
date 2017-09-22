@@ -1,5 +1,5 @@
 # capsule 
-[![Release](https://jitpack.io/v/wushenggit/capsule.svg)](https://jitpack.io/wushenggit/capsule)
+[![Release](https://jitpack.io/v/wushenggit/capsule.svg)](https://jitpack.io/#wushenggit/capsule)
 高内聚，只有1个 Adapter 类。
 低耦合，Adapter 尽量精简，避免依赖，避免低效封装。低耦合意味着可扩展。
 使用官方提供的类。只继承抽象类。
