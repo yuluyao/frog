@@ -2,12 +2,16 @@ package com.capsule.recy;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.capsule.recy.click.RetryListener;
+import com.capsule.recy.diff.DiffCallback;
 import com.capsule.recy.load.BaseLoadDecor;
 import com.capsule.recy.load.DefaultLoadDecor;
 import com.capsule.recy.multi.MultiEntity;
@@ -30,6 +34,10 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     void onLoadMore();
   }
 
+  public interface OnRetryListener {
+    void onRetry();
+  }
+
   protected Context        mContext;
   protected RecyclerView   mRecyclerView;
   protected LayoutInflater mLayoutInflater;
@@ -37,10 +45,11 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   private SparseIntArray mTypeArray;// viewType and layoutId
 
   /* loadDecor more */
-  private OnLoadMoreListener onLoadMoreListener;
-  private BaseLoadDecor      loadDecor;
+  private BaseLoadDecor loadDecor;
+
   /* pending */
   private static final int PENDING_ON_LOAD_MORE_LISTENER = 1;
+  private static final int PENDING_RETRY_LOAD_LISTENER   = 2;
 
   private static SparseArray<Object> pendingConfig = new SparseArray<>();
 
@@ -62,7 +71,10 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
 
   private void executePending() {
     if (pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER) != null) {
-      setScrollListener((OnLoadMoreListener) pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER));
+      setupLoadMore((OnLoadMoreListener) pendingConfig.get(PENDING_ON_LOAD_MORE_LISTENER));
+    }
+    if (pendingConfig.get(PENDING_RETRY_LOAD_LISTENER) != null) {
+      setupRetry((OnRetryListener) pendingConfig.get(PENDING_RETRY_LOAD_LISTENER));
     }
     pendingConfig.clear();
   }
@@ -167,6 +179,14 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     convert(holder, getData(position));
   }
 
+  //@Override public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
+  //  if (payloads.isEmpty()) {
+  //    onBindViewHolder(holder, position);
+  //  } else {
+  //    Log.i("vegeta", payloads.size() + "");
+  //  }
+  //}
+
   protected abstract void convert(VH holder, T item);
 
   /* ************************* adapter ************************* */
@@ -223,12 +243,28 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
   }
 
   public void notifyRefreshCompleted(List<T> data) {
+    int oldSize = getItemCount();
     setData(data);
-    //notifyDataSetChanged();
-    notifyItemRangeInserted(0, data.size());
+    if (oldSize == 0) {
+      notifyItemRangeInserted(0, data.size());
+    } else {
+      notifyDataSetChanged();
+    }
+
+    //refreshWithDiffUtil(data);
+
     if (null != loadDecor) {
       loadDecor.setAble();//如果刷新之前有加载失败的情况，列表状态会变为不可加载，刷新以后，要使列表变为可加载状态
     }
+  }
+
+  private void refreshWithDiffUtil(List<T> data) {
+    List<T> oldData = new ArrayList<>();
+    List<T> newData = new ArrayList<>();
+    oldData.addAll(getData());
+    newData.addAll(data);
+    setData(data);
+    DiffUtil.calculateDiff(new DiffCallback<>(oldData, newData), true).dispatchUpdatesTo(this);
   }
 
   /* ************************** loadmore ************************** */
@@ -241,12 +277,21 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
       putPending(PENDING_ON_LOAD_MORE_LISTENER, listener);
       return;
     }
-    setScrollListener(listener);
+    setupLoadMore(listener);
   }
 
-  private void setScrollListener(OnLoadMoreListener listener) {
-    loadDecor = new DefaultLoadDecor(mRecyclerView);
-    onLoadMoreListener = listener;
+  public void setOnRetryListener(OnRetryListener listener) {
+    if (mRecyclerView == null) {
+      putPending(PENDING_RETRY_LOAD_LISTENER, listener);
+      return;
+    }
+    setupRetry(listener);
+  }
+
+  private void setupLoadMore(final OnLoadMoreListener listener) {
+    if (loadDecor == null) {
+      loadDecor = new DefaultLoadDecor(mRecyclerView);
+    }
     mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         if (loadDecor.isEnd()) {
@@ -264,29 +309,49 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
             //  loadDecor.setBegin();
             //} else {
             loadDecor.setLoading();
-            onLoadMoreListener.onLoadMore();
+            listener.onLoadMore();
             //}
           }
         }
       }
     });
-    //loadDecor.setAble();
+  }
+
+  private void setupRetry(final OnRetryListener listener) {
+    if (loadDecor == null) {
+      loadDecor = new DefaultLoadDecor(mRecyclerView);
+    }
+    mRecyclerView.addOnItemTouchListener(new RetryListener() {
+      @Override public void onRetryLoad() {
+        if (loadDecor.isFailed()) {
+          loadDecor.setLoading();
+          listener.onRetry();
+        }
+      }
+    });
   }
 
   public void notifyLoadMoreCompleted(List<T> data) {
-    if (null == data) {
+    if (null == data) {//加载失败
       loadDecor.setFailed();
-      return;
-    }
-    if (data.size() == 0) {
+    } else if (data.size() == 0) {//加载为空
       loadDecor.setEnd();
-      notifyDataSetChanged();
-      return;
+    } else {//正常加载
+      loadDecor.setAble();
     }
-    loadDecor.setAble();
     addData(data);
-    //notifyDataSetChanged();
-    //notifyItemChanged(getLastDataPosition());
-    notifyItemRangeInserted(getLastDataPosition()+1,data.size());
+    notifyDataSetChanged();
+
+    //loadmoreWithDiffUtil(data);
+  }
+
+  private void loadmoreWithDiffUtil(List<T> data) {
+    List<T> oldData = new ArrayList<>();
+    List<T> newData = new ArrayList<>();
+    oldData.addAll(getData());
+    newData.addAll(getData());
+    newData.addAll(data);
+    addData(data);
+    DiffUtil.calculateDiff(new DiffCallback<>(oldData, newData), true).dispatchUpdatesTo(this);
   }
 }

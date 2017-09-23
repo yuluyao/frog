@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import com.capsule.recy.Adapter;
+import java.util.List;
 
 /**
  * 描 述：
@@ -42,12 +44,12 @@ public class SwipeCallback extends ItemTouchHelper.Callback {
   @Override
   public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
       float dX, float dY, int actionState, boolean isCurrentlyActive) {
-    if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-      if (Math.abs(dX) <= recyclerView.getWidth()) {
-        viewHolder.itemView.scrollTo(-(int) dX, 0);
-      }
-    }
-    //super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+    //if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+    //  if (Math.abs(dX) <= recyclerView.getWidth()) {
+    //    viewHolder.itemView.scrollTo(-(int) dX, 0);
+    //  }
+    //}
+    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
   }
 

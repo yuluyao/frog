@@ -26,9 +26,10 @@
 //继承 Adapter 类，泛型T（Data）定义数据类型，ViewHolder类可被拓展
 public class MyAdapter extends Adapter<Data,ViewHolder> {
   //定义item的布局
-  @Override protected int onGetItemLayoutId() {
-    return R.layout.layout_item;
+  @Override protected void onSetItemLayout() {
+      setItemLayout(R.layout.item_data_vertical);
   }
+  
   //更新UI
   @Override protected void convert(ViewHolder holder, Data item) {
     holder.setText(R.id.tv_title, item.getTitle());

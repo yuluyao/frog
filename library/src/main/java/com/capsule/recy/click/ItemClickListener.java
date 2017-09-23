@@ -47,7 +47,7 @@ public abstract class ItemClickListener extends RecyclerView.SimpleOnItemTouchLi
         return false;
       }
       ViewHolder holder = (ViewHolder) recyclerView.getChildViewHolder(itemView);
-      int position = recyclerView.getChildLayoutPosition(itemView);
+      int position = recyclerView.getChildAdapterPosition(itemView);
 
       float x_offset = itemView.getX();
       float y_offset = itemView.getY();

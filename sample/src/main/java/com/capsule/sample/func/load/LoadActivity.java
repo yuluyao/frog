@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
 import com.capsule.recy.Adapter;
+import com.capsule.recy.anim.impl.SlideInLeftAnimator;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
 import com.capsule.sample.repo.Data;
@@ -91,6 +92,7 @@ public class LoadActivity extends BaseActivity {
     RecyclerView.LayoutManager manager =
         new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
     recyclerView.setLayoutManager(manager);
+    recyclerView.setItemAnimator(new SlideInLeftAnimator());
     //recyclerView.addItemDecoration(new FootDecor(R.layout.layout_foot));
 
     //recyclerView.addItemDecoration(new EmptyDecor(R.layout.layout_empty));
@@ -113,34 +115,19 @@ public class LoadActivity extends BaseActivity {
                 adapter.notifyLoadMoreCompleted(datas);
               }
             });
+      }
+    });
 
-        //  Observable.create(new ObservableOnSubscribe<List<Data>>() {
-        //    @Override public void subscribe(@NonNull ObservableEmitter<List<Data>> e)
-        //        throws Exception {
-        //      List<Data> data = repo.loadMore(adapter.getLastData().getId());
-        //      e.onNext(data);
-        //    }
-        //  })
-        //      .subscribeOn(Schedulers.io())
-        //      .delay(500, TimeUnit.MILLISECONDS)
-        //      .observeOn(AndroidSchedulers.mainThread())
-        //      .subscribe(new Observer<List<Data>>() {
-        //        @Override public void onSubscribe(@NonNull Disposable d) {
-        //
-        //        }
-        //
-        //        @Override public void onNext(@NonNull List<Data> list) {
-        //          adapter.notifyLoadMoreCompleted(list);
-        //        }
-        //
-        //        @Override public void onError(@NonNull Throwable e) {
-        //
-        //        }
-        //
-        //        @Override public void onComplete() {
-        //
-        //        }
-        //      });
+    adapter.setOnRetryListener(new Adapter.OnRetryListener() {
+      @Override public void onRetry() {
+        repo.load(adapter.getLastData().getId())
+            .delay(300, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Consumer<List<Data>>() {
+              @Override public void accept(@NonNull List<Data> datas) throws Exception {
+                adapter.notifyLoadMoreCompleted(datas);
+              }
+            });
       }
     });
   }
