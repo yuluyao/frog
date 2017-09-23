@@ -55,34 +55,6 @@ public class LoadActivity extends BaseActivity {
                 adapter.notifyRefreshCompleted(datas);
               }
             });
-        //  Observable.create(new ObservableOnSubscribe<List<Data>>() {
-        //    @Override public void subscribe(@NonNull ObservableEmitter<List<Data>> e)
-        //        throws Exception {
-        //      List<Data> data = repo.refreshList();
-        //      e.onNext(data);
-        //    }
-        //  })
-        //      .subscribeOn(Schedulers.io())
-        //      .delay(500, TimeUnit.MILLISECONDS)
-        //      .observeOn(AndroidSchedulers.mainThread())
-        //      .subscribe(new Observer<List<Data>>() {
-        //        @Override public void onSubscribe(@NonNull Disposable d) {
-        //
-        //        }
-        //
-        //        @Override public void onNext(@NonNull List<Data> list) {
-        //          refreshLayout.setRefreshing(false);
-        //          adapter.notifyRefreshCompleted(list);
-        //        }
-        //
-        //        @Override public void onError(@NonNull Throwable e) {
-        //
-        //        }
-        //
-        //        @Override public void onComplete() {
-        //
-        //        }
-        //      });
       }
     });
   }
@@ -118,18 +90,18 @@ public class LoadActivity extends BaseActivity {
       }
     });
 
-    adapter.setOnRetryListener(new Adapter.OnRetryListener() {
-      @Override public void onRetry() {
-        repo.load(adapter.getLastData().getId())
-            .delay(300, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Consumer<List<Data>>() {
-              @Override public void accept(@NonNull List<Data> datas) throws Exception {
-                adapter.notifyLoadMoreCompleted(datas);
-              }
-            });
-      }
-    });
+    //adapter.setOnRetryListener(new Adapter.OnRetryListener() {
+    //  @Override public void onRetry() {
+    //    repo.load(adapter.getLastData().getId())
+    //        .delay(300, TimeUnit.MILLISECONDS)
+    //        .observeOn(AndroidSchedulers.mainThread())
+    //        .subscribe(new Consumer<List<Data>>() {
+    //          @Override public void accept(@NonNull List<Data> datas) throws Exception {
+    //            adapter.notifyLoadMoreCompleted(datas);
+    //          }
+    //        });
+    //  }
+    //});
   }
 
   private void initData() {
