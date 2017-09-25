@@ -1,9 +1,7 @@
 package com.capsule.sample.func.multi;
 
-import com.capsule.recy.multi.MultiEntity;
-import java.sql.Array;
+import com.capsule.trunk.multi.MultiEntity;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

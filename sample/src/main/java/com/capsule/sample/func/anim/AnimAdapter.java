@@ -1,8 +1,7 @@
 package com.capsule.sample.func.anim;
 
-import android.view.View;
-import com.capsule.recy.Adapter;
-import com.capsule.recy.ViewHolder;
+import com.capsule.trunk.Adapter;
+import com.capsule.trunk.ViewHolder;
 import com.capsule.sample.R;
 import com.capsule.sample.repo.Data;
 

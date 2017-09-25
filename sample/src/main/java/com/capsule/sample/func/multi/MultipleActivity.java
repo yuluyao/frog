@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import com.capsule.recy.anim.impl.SlideInLeftAnimator;
+import com.capsule.trunk.anim.impl.SlideInLeftAnimator;
 import com.capsule.sample.R;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

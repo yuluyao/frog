@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.capsule.recy.decor.Divider;
+import com.capsule.trunk.decor.Divider;
 import com.capsule.sample.R;
 import com.capsule.sample.repo.Data;
 import com.capsule.sample.repo.Repo;

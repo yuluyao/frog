@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
-import com.capsule.recy.click.ItemClickListener;
+import com.capsule.trunk.click.ItemClickListener;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
 import com.capsule.sample.repo.Data;

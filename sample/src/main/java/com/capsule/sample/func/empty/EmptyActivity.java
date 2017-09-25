@@ -5,8 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
-import com.capsule.recy.click.EmptyClickListener;
-import com.capsule.recy.decor.EmptyDecor;
+import com.capsule.trunk.click.EmptyClickListener;
+import com.capsule.trunk.decor.EmptyDecor;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
 

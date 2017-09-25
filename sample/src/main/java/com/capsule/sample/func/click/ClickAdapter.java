@@ -1,7 +1,7 @@
 package com.capsule.sample.func.click;
 
-import com.capsule.recy.Adapter;
-import com.capsule.recy.ViewHolder;
+import com.capsule.trunk.Adapter;
+import com.capsule.trunk.ViewHolder;
 import com.capsule.sample.R;
 import com.capsule.sample.repo.Data;
 

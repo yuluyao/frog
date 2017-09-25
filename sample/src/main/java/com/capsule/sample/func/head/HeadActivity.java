@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.capsule.recy.decor.HeadDecor;
+import com.capsule.trunk.decor.HeadDecor;
 import com.capsule.sample.R;
 import com.capsule.sample.base.BaseActivity;
 import com.capsule.sample.repo.Data;

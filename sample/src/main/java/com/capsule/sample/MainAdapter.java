@@ -1,8 +1,7 @@
 package com.capsule.sample;
 
-import android.widget.TextView;
-import com.capsule.recy.ViewHolder;
-import com.capsule.recy.Adapter;
+import com.capsule.trunk.ViewHolder;
+import com.capsule.trunk.Adapter;
 
 /**
  * 描 述：

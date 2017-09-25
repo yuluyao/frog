@@ -1,6 +1,6 @@
 package com.capsule.sample.func.expand;
 
-import com.capsule.recy.expand.Expandable;
+import com.capsule.trunk.expand.Expandable;
 import com.capsule.sample.repo.Data;
 
 /**

@@ -2,8 +2,8 @@ package com.capsule.sample.func.multi;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.capsule.recy.ViewHolder;
-import com.capsule.recy.deprecate.MultiAdapter;
+import com.capsule.trunk.ViewHolder;
+import com.capsule.trunk.deprecate.MultiAdapter;
 import com.capsule.sample.R;
 
 /**
