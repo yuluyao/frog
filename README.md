@@ -1,5 +1,5 @@
-# capsule 
-[![Release](https://jitpack.io/v/wushenggit/capsule.svg)](https://jitpack.io/#wushenggit/capsule)
+# trunk
+[![Release](https://jitpack.io/v/vegetayu/trunk.svg)](https://jitpack.io/#vegetayu/trunk)
 
 为RecyclerView提供视图适配以及加载、点击、手势等附加功能。
 
@@ -15,7 +15,7 @@
 ```
 在 module 的 build.gradle 中添加：
 ```
-  compile 'com.github.wushenggit:capsule:{version}' 
+  compile 'com.github.vegetayu:trunk:{version}' 
 
 ```
 
