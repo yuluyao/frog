@@ -2,8 +2,8 @@ package com.capsule.trunk.func.multi;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import capsule.trunk.Adapter;
 import capsule.trunk.ViewHolder;
-import capsule.trunk.deprecate.MultiAdapter;
 import com.capsule.trunk.R;
 
 /**
@@ -11,8 +11,7 @@ import com.capsule.trunk.R;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/31 15:49
  */
-public class MultipleAdapter extends MultiAdapter<ArticleBean, ViewHolder> {
-
+public class MultipleAdapter extends Adapter<ArticleBean, ViewHolder> {
 
   @Override protected void convert(ViewHolder holder, ArticleBean item) {
     switch (item.getItemType()) {

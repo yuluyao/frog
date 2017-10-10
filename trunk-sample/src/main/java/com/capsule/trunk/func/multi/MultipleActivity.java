@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import capsule.trunk.Adapter;
 import capsule.trunk.anim.impl.SlideInLeftAnimator;
 import com.capsule.trunk.R;
 import io.reactivex.Observable;
@@ -23,8 +24,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class MultipleActivity extends AppCompatActivity {
 
-  private RecyclerView    recyclerView;
-  private MultipleAdapter adapter;
+  private RecyclerView recyclerView;
+  private Adapter      adapter;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
