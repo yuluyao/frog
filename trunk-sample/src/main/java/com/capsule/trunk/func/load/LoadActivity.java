@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class LoadActivity extends BaseActivity {
 
   private LoadAdapter        adapter;
-  private SwipeRefreshLayout refreshLayout;
+  private RefreshLayout refreshLayout;
   private RecyclerView       recyclerView;
 
   private Repo repo;
@@ -43,8 +43,8 @@ public class LoadActivity extends BaseActivity {
   }
 
   private void initRefresh() {
-    refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
-    refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    refreshLayout = (RefreshLayout) findViewById(R.id.refresh);
+    refreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
         repo.refresh()
             .delay(300, TimeUnit.MILLISECONDS)
