@@ -106,7 +106,7 @@ public class LoadActivity extends BaseActivity {
 
   private void initData() {
     repo = Repo.getInstance(this);
-    repo.refresh().observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<Data>>() {
+    repo.refresh(5).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<Data>>() {
       @Override public void accept(@NonNull List<Data> datas) throws Exception {
         adapter.notifyRefreshCompleted(datas);
       }

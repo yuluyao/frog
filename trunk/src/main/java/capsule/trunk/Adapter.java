@@ -293,6 +293,11 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     }
     mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
       @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        if (!isChildViewFull()) {
+          loadDecor.setAble();
+          return;
+        }
+
         if (loadDecor.isEnd()) {
           return;
         }
@@ -314,6 +319,19 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
         }
       }
     });
+  }
+
+  private boolean isChildViewFull() {
+    View lastVisibleView = mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 1);
+    if (lastVisibleView == null) {
+      return false;
+    }
+    float offset = mContext.getResources().getDisplayMetrics().density * 40;
+    if (lastVisibleView.getY() + lastVisibleView.getHeight() + offset
+        < mRecyclerView.getY() + mRecyclerView.getHeight()) {
+      return false;
+    }
+    return true;
   }
 
   private void setupRetry(final OnRetryListener listener) {
