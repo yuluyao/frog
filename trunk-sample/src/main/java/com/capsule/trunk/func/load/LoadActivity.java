@@ -31,6 +31,7 @@ public class LoadActivity extends BaseActivity {
     initRefresh();
     initRecyclerView();
     initAdapter();
+    repo = Repo.getInstance(this);
     initData();
     adapter.notifyDataSetChanged();
 
@@ -105,7 +106,6 @@ public class LoadActivity extends BaseActivity {
   }
 
   private void initData() {
-    repo = Repo.getInstance(this);
     repo.refresh(5).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<List<Data>>() {
       @Override public void accept(@NonNull List<Data> datas) throws Exception {
         adapter.notifyRefreshCompleted(datas);
