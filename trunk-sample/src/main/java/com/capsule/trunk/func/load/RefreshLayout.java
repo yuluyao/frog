@@ -83,12 +83,13 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent,
 
   // Default background for the progress spinner
   private static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
-  // Default offset in dips from the top of the view to where the progress spinner should stop
+  // 刷新中，默认的图标偏移量
   private static final int DEFAULT_CIRCLE_TARGET = 64;
 
   private View mTarget; // the target of the gesture
   OnRefreshListener mListener;
   boolean mRefreshing = false;
+  //触发滑动的最小距离
   private int mTouchSlop;
   private float mTotalDragDistance = -1;
 
@@ -122,6 +123,8 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent,
 
   CircleImageView mCircleView;
   private int mCircleViewIndex = -1;
+  IRefreshHead mHead;
+  private int mHeadIndex = -1;
 
   protected int mFrom;
 
@@ -129,6 +132,7 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent,
 
   protected int mOriginalOffsetTop;
 
+  //刷新时，图标的偏移量
   int mSpinnerOffsetEnd;
 
   MaterialProgressDrawable mProgress;
@@ -145,6 +149,7 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent,
 
   boolean mNotify;
 
+  //圆的直径
   private int mCircleDiameter;
 
   // Whether the client has set a custom starting position;
@@ -318,7 +323,7 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent,
 
     mMediumAnimationDuration = getResources().getInteger(
         android.R.integer.config_mediumAnimTime);
-
+    //允许绘制自身
     setWillNotDraw(false);
     mDecelerateInterpolator = new DecelerateInterpolator(DECELERATE_INTERPOLATION_FACTOR);
 
@@ -326,6 +331,7 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent,
     mCircleDiameter = (int) (CIRCLE_DIAMETER * metrics.density);
 
     createProgressView();
+    //按照自定义的顺序画 child view
     ViewCompat.setChildrenDrawingOrderEnabled(this, true);
     // the absolute offset has to take into account that the circle starts at an offset
     mSpinnerOffsetEnd = (int) (DEFAULT_CIRCLE_TARGET * metrics.density);
@@ -598,6 +604,7 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent,
     int circleHeight = mCircleView.getMeasuredHeight();
     mCircleView.layout((width / 2 - circleWidth / 2), mCurrentTargetOffsetTop,
         (width / 2 + circleWidth / 2), mCurrentTargetOffsetTop + circleHeight);
+
   }
 
   @Override
