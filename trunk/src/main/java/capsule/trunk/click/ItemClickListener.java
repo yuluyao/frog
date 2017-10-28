@@ -1,0 +1,90 @@
+package capsule.trunk.click;
+
+import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import capsule.trunk.ViewHolder;
+
+/**
+ * 描 述：
+ * 作 者：Vegeta Yu
+ * 时 间：2017/8/29 17:24
+ */
+public abstract class ItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
+
+  private RecyclerView          recyclerView;
+  private GestureDetectorCompat mGestureDetector;
+
+  @Override public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    mGestureDetector.onTouchEvent(e);
+  }
+
+  @Override public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+    if (recyclerView == null) {
+      recyclerView = rv;
+      mGestureDetector =
+          new GestureDetectorCompat(recyclerView.getContext(), new GestureListener());
+    }
+    //mGestureDetector.onTouchEvent(e);
+    return mGestureDetector.onTouchEvent(e);
+  }
+
+  @Override public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+  }
+
+  public abstract void onItemClick(RecyclerView.ViewHolder vh, int position, View childView);
+
+  private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+    @Override public boolean onSingleTapUp(MotionEvent e) {
+      ViewGroup itemView = (ViewGroup) recyclerView.findChildViewUnder(e.getX(), e.getY());
+      if (itemView == null) {
+        return false;
+      }
+      ViewHolder holder = (ViewHolder) recyclerView.getChildViewHolder(itemView);
+      int position = recyclerView.getChildAdapterPosition(itemView);
+
+      float x_offset = itemView.getX();
+      float y_offset = itemView.getY();
+      View child = findChildViewUnder(itemView, e.getX() - x_offset, e.getY() - y_offset, holder);
+      //if (child != null) {
+      //  onItemClick(holder, position, child);
+      //  return true;
+      //} else {
+      //  onItemClick(holder, position, null);
+      //  return false;
+      //}
+      onItemClick(holder, position, child);
+      return true;
+    }
+
+    private View findChildViewUnder(ViewGroup itemView, float x, float y, ViewHolder holder) {
+      for (int i = 0; i < itemView.getChildCount(); i++) {
+        View child = itemView.getChildAt(i);
+        if ((child instanceof ViewGroup)) {
+          float x_offset = child.getX();
+          float y_offset = child.getY();
+          return findChildViewUnder((ViewGroup) child, x - x_offset, y - y_offset, holder);
+        } else {
+          final float translationX = ViewCompat.getTranslationX(child);
+          final float translationY = ViewCompat.getTranslationY(child);
+          float left = child.getLeft() + translationX;
+          float right = child.getRight() + translationX;
+          float top = child.getTop() + translationY;
+          float bottom = child.getBottom() + translationY;
+          if (x >= left && x <= right && y >= top && y <= bottom) {
+            if (holder.getClickableId().contains(child.getId())) {
+              return child;
+            }
+          }
+        }
+      }
+      return null;
+    }
+  }
+}

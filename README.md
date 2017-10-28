@@ -1,5 +1,5 @@
-# capsule 
-[![Release](https://jitpack.io/v/wushenggit/capsule.svg)](https://jitpack.io/#wushenggit/capsule)
+# trunk
+[![Release](https://jitpack.io/v/vegetayu/trunk.svg)](https://jitpack.io/#vegetayu/trunk)
 
 为RecyclerView提供视图适配以及加载、点击、手势等附加功能。
 
@@ -15,7 +15,7 @@
 ```
 在 module 的 build.gradle 中添加：
 ```
-  compile 'com.github.wushenggit:capsule:{version}' 
+  compile 'com.github.vegetayu:trunk:{version}' 
 
 ```
 
@@ -26,9 +26,10 @@
 //继承 Adapter 类，泛型T（Data）定义数据类型，ViewHolder类可被拓展
 public class MyAdapter extends Adapter<Data,ViewHolder> {
   //定义item的布局
-  @Override protected int onGetItemLayoutId() {
-    return R.layout.layout_item;
+  @Override protected void onSetItemLayout() {
+      setItemLayout(R.layout.item_data_vertical);
   }
+  
   //更新UI
   @Override protected void convert(ViewHolder holder, Data item) {
     holder.setText(R.id.tv_title, item.getTitle());
@@ -66,7 +67,22 @@ adapter.setOnLoadMoreListener(new Adapter.OnLoadMoreListener() {
 
 2.加载完成调用`adapter.notifyLoadMoreCompleted()`更新ui，在方法中已对传入参数做了处理，自动处理底部的加载视图
 
-3.自定义加载提示的UI，调用`adapter.setLoadDecor()`方法。需要继承 BaseLoadDecor 或 SimpleLoadDecor 类。
+3.加载失败点击重试。
+```
+adapter.setOnRetryListener(new Adapter.OnRetryListener() {
+      @Override public void onRetry() {
+        repo.load(adapter.getLastData().getId())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Consumer<List<Data>>() {
+              @Override public void accept(@NonNull List<Data> datas) throws Exception {
+                adapter.notifyLoadMoreCompleted(datas);//调用此方法更新视图
+              }
+            });
+      }
+    });
+```
+
+4.自定义加载提示的UI，调用`adapter.setLoadDecor()`方法。需要继承 BaseLoadDecor 或 SimpleLoadDecor 类。
 
 ## 四、点击事件和长按事件
 ### 1.点击监听

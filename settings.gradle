@@ -1,1 +1,3 @@
-include ':sample', ':library'
+include ':trunk', ':trunk-sample'
+
+rootProject.name = 'trunk-parent'
