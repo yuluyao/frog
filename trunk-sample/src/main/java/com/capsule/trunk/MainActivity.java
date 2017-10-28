@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity {
   }
 
   private void initView() {
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
+    RecyclerView recyclerView = findViewById(R.id.recycler);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.addOnItemTouchListener(new ItemClickListener() {
       @Override public void onItemClick(RecyclerView.ViewHolder vh, int position, View childView) {
@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity {
   }
 
   private void startByPosition(int position) {
-    Intent intent;
+    Intent intent = null;
     switch (position) {
       case 0:
         intent = new Intent(this, AnimActivity.class);
@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity {
         intent = new Intent(this, HeadActivity.class);
         break;
       case 7:
-        intent = new Intent(this, LevelActivity.class);
+        //intent = new Intent(this, LevelActivity.class);
         break;
       case 8:
         intent = new Intent(this, LoadActivity.class);
