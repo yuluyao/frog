@@ -27,6 +27,7 @@
     <activity android:name=".func.foot.FootActivity" />
     <activity android:name=".func.anim.AnimActivity" />
     <activity android:name=".func.expand.ExpandActivity" />
+    <activity android:name=".func.level.LevelActivity" />
   </application>
 
 </manifest>

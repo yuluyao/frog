@@ -15,6 +15,7 @@ import com.capsule.sample.func.empty.EmptyActivity;
 import com.capsule.sample.func.expand.ExpandActivity;
 import com.capsule.sample.func.foot.FootActivity;
 import com.capsule.sample.func.head.HeadActivity;
+import com.capsule.sample.func.level.LevelActivity;
 import com.capsule.sample.func.load.LoadActivity;
 import com.capsule.sample.func.multi.MultipleActivity;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class MainActivity extends BaseActivity {
     list.add("Expand");
     list.add("Footer");
     list.add("Header");
+    list.add("Level");
     list.add("LoadMore");
     list.add("MultipleItemType");
     list.add("...");
@@ -93,9 +95,12 @@ public class MainActivity extends BaseActivity {
         intent = new Intent(this, HeadActivity.class);
         break;
       case 7:
-        intent = new Intent(this, LoadActivity.class);
+        intent = new Intent(this, LevelActivity.class);
         break;
       case 8:
+        intent = new Intent(this, LoadActivity.class);
+        break;
+      case 9:
         intent = new Intent(this, MultipleActivity.class);
         break;
 
