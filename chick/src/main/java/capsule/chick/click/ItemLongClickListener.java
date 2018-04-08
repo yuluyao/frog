@@ -7,7 +7,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import capsule.chick.ViewHolder;
+
+import capsule.chick.ChickViewHolder;
 
 /**
  * 描 述：
@@ -46,7 +47,7 @@ public abstract class ItemLongClickListener extends RecyclerView.SimpleOnItemTou
       if (itemView == null) {
         return;
       }
-      ViewHolder holder = (ViewHolder) recyclerView.getChildViewHolder(itemView);
+      ChickViewHolder holder = (ChickViewHolder) recyclerView.getChildViewHolder(itemView);
       int position = recyclerView.getChildLayoutPosition(itemView);
 
       View child = findChildViewUnder(holder, itemView, e.getX(), e.getY());
@@ -58,7 +59,7 @@ public abstract class ItemLongClickListener extends RecyclerView.SimpleOnItemTou
       onItemLongClick(holder, position, child);
     }
 
-    private View findChildViewUnder(ViewHolder holder, ViewGroup itemView, float x, float y) {
+    private View findChildViewUnder(ChickViewHolder holder, ViewGroup itemView, float x, float y) {
       for (int i = 0; i < itemView.getChildCount(); i++) {
         float topOffset = itemView.getTop() + ViewCompat.getTranslationY(itemView);
 

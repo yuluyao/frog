@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import capsule.chick.ViewHolder;
+
+import capsule.chick.ChickViewHolder;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
@@ -29,7 +31,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 14:50
  */
-public abstract class TrAdapter<T, VH extends ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class TrAdapter<T, VH extends ChickViewHolder> extends RecyclerView.Adapter<VH> {
 
   public interface OnLoadMoreListener {
     void onLoadMore();
@@ -193,11 +195,11 @@ public abstract class TrAdapter<T, VH extends ViewHolder> extends RecyclerView.A
     VH VH;
     // 泛型擦除会导致z为null
     if (z == null) {
-      VH = (VH) new ViewHolder(view);
+      VH = (VH) new ChickViewHolder(view);
     } else {
       VH = createGenericKInstance(z, view);
     }
-    return VH != null ? VH : (VH) new ViewHolder(view);
+    return VH != null ? VH : (VH) new ChickViewHolder(view);
   }
 
   //private VH buildLoadMoreHolder(ViewGroup parent) {
@@ -225,7 +227,7 @@ public abstract class TrAdapter<T, VH extends ViewHolder> extends RecyclerView.A
       for (Type temp : types) {
         if (temp instanceof Class) {
           Class tempClass = (Class) temp;
-          if (ViewHolder.class.isAssignableFrom(tempClass)) {
+          if (ChickViewHolder.class.isAssignableFrom(tempClass)) {
             return tempClass;
           }
         }

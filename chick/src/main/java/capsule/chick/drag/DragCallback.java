@@ -3,7 +3,8 @@ package capsule.chick.drag;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import capsule.chick.Adapter;
+import capsule.chick.ChickAdapter;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class DragCallback extends ItemTouchHelper.Callback {
       RecyclerView.ViewHolder target) {
     int fromPosition = viewHolder.getAdapterPosition();//得到拖动ViewHolder的position
     int toPosition = target.getAdapterPosition();//得到目标ViewHolder的position
-    List list = ((Adapter) recyclerView.getAdapter()).getData();
+    List list = ((ChickAdapter) recyclerView.getAdapter()).getData();
     if (fromPosition < toPosition) {
       for (int i = fromPosition; i < toPosition; i++) {
         if (list != null) {

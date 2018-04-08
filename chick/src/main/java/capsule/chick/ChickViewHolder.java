@@ -13,16 +13,16 @@ import java.util.List;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 14:49
  */
-public class ViewHolder extends RecyclerView.ViewHolder {
+public class ChickViewHolder extends RecyclerView.ViewHolder {
 
   private List<Integer> clickableId = new ArrayList<>();
 
-  public ViewHolder(View itemView) {
+  public ChickViewHolder(View itemView) {
     super(itemView);
   }
 
   /* child click */
-  public ViewHolder setClickableId(int... id) {
+  public ChickViewHolder setClickableId(int... id) {
     for (int i : id) {
       if (!clickableId.contains(i)) {
         clickableId.add(i);
@@ -37,7 +37,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
   /* View */
 
-  public ViewHolder setVisibility(int id, int visibility) {
+  public ChickViewHolder setVisibility(int id, int visibility) {
     itemView.findViewById(id).setVisibility(visibility);
     return this;
   }
@@ -48,17 +48,17 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     return (TextView) itemView.findViewById(id);
   }
 
-  public ViewHolder setText(int id, String text) {
+  public ChickViewHolder setText(int id, String text) {
     ((TextView) itemView.findViewById(id)).setText(text);
     return this;
   }
 
-  public ViewHolder setTextColor(int id, int color) {
+  public ChickViewHolder setTextColor(int id, int color) {
     ((TextView) itemView.findViewById(id)).setTextColor(color);
     return this;
   }
 
-  public ViewHolder setTextSize(int id, int size) {
+  public ChickViewHolder setTextSize(int id, int size) {
     ((TextView) itemView.findViewById(id)).setTextSize(size);
     return this;
   }
@@ -69,17 +69,17 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     return (ImageView) itemView.findViewById(id);
   }
 
-  public ViewHolder setImageResource(int id, int res) {
+  public ChickViewHolder setImageResource(int id, int res) {
     ((ImageView) itemView.findViewById(id)).setImageResource(res);
     return this;
   }
 
-  public ViewHolder setImageUrl(int id, String url) {
+  public ChickViewHolder setImageUrl(int id, String url) {
     ((ImageView) itemView.findViewById(id)).setImageURI(Uri.parse(url));
     return this;
   }
 
-  public ViewHolder setScaleType(int id, ImageView.ScaleType ScaleType) {
+  public ChickViewHolder setScaleType(int id, ImageView.ScaleType ScaleType) {
     ((ImageView) itemView.findViewById(id)).setScaleType(ScaleType);
     return this;
   }

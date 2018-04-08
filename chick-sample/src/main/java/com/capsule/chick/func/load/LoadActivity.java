@@ -1,11 +1,10 @@
 package com.capsule.chick.func.load;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
-import capsule.chick.Adapter;
+import capsule.chick.ChickAdapter;
 import capsule.chick.anim.impl.SlideInLeftAnimator;
 import com.capsule.chick.R;
 import com.capsule.chick.base.BaseActivity;
@@ -78,7 +77,7 @@ public class LoadActivity extends BaseActivity {
     //adapter.setLoadMoreView(new SimpleLoadMoreView());
     recyclerView.setAdapter(adapter);
 
-    adapter.setOnLoadMoreListener(new Adapter.OnLoadMoreListener() {
+    adapter.setOnLoadMoreListener(new ChickAdapter.OnLoadMoreListener() {
       @Override public void onLoadMore() {
         repo.load(adapter.getLastData().getId())
             .delay(300, TimeUnit.MILLISECONDS)
@@ -91,7 +90,7 @@ public class LoadActivity extends BaseActivity {
       }
     });
 
-    //adapter.setOnRetryListener(new Adapter.OnRetryListener() {
+    //adapter.setOnRetryListener(new ChickAdapter.OnRetryListener() {
     //  @Override public void onRetry() {
     //    repo.load(adapter.getLastData().getId())
     //        .delay(300, TimeUnit.MILLISECONDS)

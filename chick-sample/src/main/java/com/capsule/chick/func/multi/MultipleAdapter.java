@@ -2,8 +2,8 @@ package com.capsule.chick.func.multi;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import capsule.chick.Adapter;
-import capsule.chick.ViewHolder;
+import capsule.chick.ChickAdapter;
+import capsule.chick.ChickViewHolder;
 import com.capsule.chick.R;
 
 /**
@@ -11,9 +11,9 @@ import com.capsule.chick.R;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/31 15:49
  */
-public class MultipleAdapter extends Adapter<ArticleBean, ViewHolder> {
+public class MultipleAdapter extends ChickAdapter<ArticleBean, ChickViewHolder> {
 
-  @Override protected void convert(ViewHolder holder, ArticleBean item) {
+  @Override protected void convert(ChickViewHolder holder, ArticleBean item) {
     switch (item.getItemType()) {
       case ArticleBean.TYPE_NORMAL:
         ((TextView) holder.itemView.findViewById(R.id.title)).setText(item.getTitle());

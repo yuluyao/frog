@@ -3,7 +3,8 @@ package capsule.chick.deprecate;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.view.View;
-import capsule.chick.ViewHolder;
+
+import capsule.chick.ChickViewHolder;
 
 /**
  * Created by BlingBling on 2016/11/11.
@@ -22,7 +23,7 @@ public abstract class LoadMoreView {
 
   private int mStatus = IDLE;
 
-  public void convert(ViewHolder holder) {
+  public void convert(ChickViewHolder holder) {
     view_loading = holder.itemView.findViewById(getLoadingViewId());
     view_failed = holder.itemView.findViewById(getLoadFailViewId());
     view_end = holder.itemView.findViewById(getLoadEndViewId());

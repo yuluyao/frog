@@ -27,7 +27,7 @@ import java.util.List;
  * 作 者：Vegeta Yu
  * 时 间：2017/8/9 14:50
  */
-public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class ChickAdapter<T, VH extends ChickViewHolder> extends RecyclerView.Adapter<VH> {
 
   public interface OnLoadMoreListener {
     void onLoadMore();
@@ -126,11 +126,11 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
     VH VH;
     // 泛型擦除会导致z为null
     if (z == null) {
-      VH = (VH) new ViewHolder(view);
+      VH = (VH) new ChickViewHolder(view);
     } else {
       VH = createGenericKInstance(z, view);
     }
-    return VH != null ? VH : (VH) new ViewHolder(view);
+    return VH != null ? VH : (VH) new ChickViewHolder(view);
   }
 
   private Class getInstancedGenericKClass(Class z) {
@@ -140,7 +140,7 @@ public abstract class Adapter<T, VH extends ViewHolder> extends RecyclerView.Ada
       for (Type temp : types) {
         if (temp instanceof Class) {
           Class tempClass = (Class) temp;
-          if (ViewHolder.class.isAssignableFrom(tempClass)) {
+          if (ChickViewHolder.class.isAssignableFrom(tempClass)) {
             return tempClass;
           }
         }

@@ -4,8 +4,8 @@
 //import android.util.SparseIntArray;
 //import android.view.View;
 //import android.view.ViewGroup;
-//import capsule.trunk.Adapter;
-//import capsule.trunk.ViewHolder;
+//import capsule.trunk.ChickAdapter;
+//import capsule.trunk.ChickViewHolder;
 //import capsule.trunk.multi.MultiEntity;
 //
 ///**
@@ -13,8 +13,8 @@
 // * 作 者：Vegeta Yu
 // * 时 间：2017/8/29 15:47
 // */
-//public abstract class MultiAdapter<T extends MultiEntity, H extends ViewHolder>
-//    extends Adapter<T, H> {
+//public abstract class MultiAdapter<T extends MultiEntity, H extends ChickViewHolder>
+//    extends ChickAdapter<T, H> {
 //
 //  private SparseIntArray typeArray;// viewType and layoutId
 //
