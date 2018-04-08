@@ -1,7 +1,8 @@
-# trunk
-[![Release](https://jitpack.io/v/vegetayu/trunk.svg)](https://jitpack.io/#vegetayu/trunk)
+# Chick
+[![Release](https://jitpack.io/v/vegetayu/chick.svg)](https://jitpack.io/#vegetayu/chick)
 
-为RecyclerView提供视图适配以及加载、点击、手势等附加功能。
+目标：
+用最佳的方式提供的RecyclerView的使用实践。
 
 ## 一、引用项目
 在 project 的 build.gradle 中添加：
@@ -15,7 +16,7 @@
 ```
 在 module 的 build.gradle 中添加：
 ```
-  compile 'com.github.vegetayu:trunk:{version}' 
+  compile 'com.github.vegetayu:chick:{version}'
 
 ```
 

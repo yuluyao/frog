@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.capsule.trunk.func.load.LoadActivity"
+    tools:context="com.capsule.chick.func.load.LoadActivity"
     >
 
   <include layout="@layout/layout_toolbar" />
-  <com.capsule.trunk.func.load.RefreshLayout
+  <com.capsule.chick.func.load.RefreshLayout
       android:id="@+id/refresh"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -20,6 +20,6 @@
         android:layout_height="match_parent"
         />
 
-  </com.capsule.trunk.func.load.RefreshLayout>
+  </com.capsule.chick.func.load.RefreshLayout>
 
 </LinearLayout>
