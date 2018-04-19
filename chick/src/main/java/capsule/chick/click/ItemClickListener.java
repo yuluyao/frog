@@ -53,15 +53,12 @@ public abstract class ItemClickListener extends RecyclerView.SimpleOnItemTouchLi
       float x_offset = itemView.getX();
       float y_offset = itemView.getY();
       View child = findChildViewUnder(itemView, e.getX() - x_offset, e.getY() - y_offset, holder);
-      //if (child != null) {
-      //  onItemClick(holder, position, child);
-      //  return true;
-      //} else {
-      //  onItemClick(holder, position, null);
-      //  return false;
-      //}
       onItemClick(holder, position, child);
-      return true;
+        if (child != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private View findChildViewUnder(ViewGroup itemView, float x, float y, ChickViewHolder holder) {
