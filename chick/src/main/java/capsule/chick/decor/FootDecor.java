@@ -102,8 +102,8 @@ public class FootDecor extends BaseItemDecoration {
 
   private View footer;
 
-  private void measureFoot(View recyclerView) {
-    footer = LayoutInflater.from(recyclerView.getContext()).inflate(layoutRes, null, false);
+  private void measureFoot(RecyclerView recyclerView) {
+    footer = LayoutInflater.from(recyclerView.getContext()).inflate(layoutRes, recyclerView, false);
     if (footer.getLayoutParams() == null) {
       footer.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
           ViewGroup.LayoutParams.MATCH_PARENT));

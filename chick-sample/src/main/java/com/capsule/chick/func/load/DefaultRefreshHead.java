@@ -17,7 +17,7 @@ public class DefaultRefreshHead implements IRefreshHead {
 
   @Override public View getRefreshHead(Context context) {
     View view = LayoutInflater.from(context).inflate(R.layout.layout_default_refresh_head, null);
-    tvTip = view.findViewById(R.id.tvTip);
+//    tvTip = view.findViewById(R.id.tvTip);
     return view;
   }
 }

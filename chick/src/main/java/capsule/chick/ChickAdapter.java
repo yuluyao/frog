@@ -307,8 +307,8 @@ public abstract class ChickAdapter<T, VH extends ChickViewHolder> extends Recycl
             && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
             && !(loadDecor.isLoading())) {//没有正在加载
 
-          boolean isBottom = recyclerView.canScrollVertically(-1);
-          if (isBottom) {
+          boolean isBottom = recyclerView.canScrollVertically(1);
+          if (!isBottom) {
             loadDecor.setLoading();
             listener.onLoadMore();
           }

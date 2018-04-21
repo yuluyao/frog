@@ -1,5 +1,6 @@
 package capsule.chick.load;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import static android.support.v7.widget.RecyclerView.ItemDecoration;
@@ -77,6 +78,21 @@ public abstract class BaseLoadDecor {
     state = LOAD_STATE_LOADING;
     removeItemDecorations();
     recyclerView.addItemDecoration(loadingDecor);
+    scrollEnd();
+  }
+
+  private void scrollEnd() {
+    RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+    float density = recyclerView.getContext().getResources().getDisplayMetrics().density;
+    if (layoutManager instanceof LinearLayoutManager) {
+      if (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.VERTICAL) {
+        ((LinearLayoutManager) layoutManager)
+                .scrollToPositionWithOffset(recyclerView.getAdapter().getItemCount() - 1, (int) (40 * density));
+      } else {
+
+      }
+    }
+
   }
 
   public void setFailed() {
