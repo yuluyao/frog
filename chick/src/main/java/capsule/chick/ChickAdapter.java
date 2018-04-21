@@ -306,16 +306,23 @@ public abstract class ChickAdapter<T, VH extends ChickViewHolder> extends Recycl
         if (mData.size() > 0//有item
             && newState == RecyclerView.SCROLL_STATE_IDLE//没有在滑动
             && !(loadDecor.isLoading())) {//没有正在加载
-          View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
-          int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
-          if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
-            //if (loadDecor.isAble()) {
-            //  loadDecor.setBegin();
-            //} else {
+
+          boolean isBottom = recyclerView.canScrollVertically(-1);
+          if (isBottom) {
             loadDecor.setLoading();
             listener.onLoadMore();
-            //}
           }
+
+//          View lastVisibleView = recyclerView.getChildAt(recyclerView.getChildCount() - 1);
+//          int lastVisiblePosition = recyclerView.getChildLayoutPosition(lastVisibleView);
+//          if (lastVisiblePosition >= layoutManager.getItemCount() - 1) {//到了最底部
+//            //if (loadDecor.isAble()) {
+//            //  loadDecor.setBegin();
+//            //} else {
+//            loadDecor.setLoading();
+//            listener.onLoadMore();
+//            //}
+//          }
         }
       }
     });
