@@ -17,6 +17,9 @@ import com.capsule.chick.func.foot.FootActivity;
 import com.capsule.chick.func.head.HeadActivity;
 import com.capsule.chick.func.load.LoadActivity;
 import com.capsule.chick.func.multi.MultipleActivity;
+import com.capsule.chick.repo2.Repository;
+import com.facebook.stetho.Stetho;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +29,8 @@ public class MainActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setTitle("主页");
     initView();
+    Repository.init();
+    Stetho.initializeWithDefaults(getApplicationContext());
   }
 
   @Override protected int onGetLayoutId() {

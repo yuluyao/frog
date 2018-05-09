@@ -12,7 +12,6 @@ import android.support.v4.view.NestedScrollingChildHelper;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.ListViewCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -396,6 +395,7 @@ public class RefreshLayout extends ViewGroup implements NestedScrollingParent,
       if (!mUsingCustomStart) {
         endTarget = mSpinnerOffsetEnd + mOriginalOffsetTop;
       } else {
+
         endTarget = mSpinnerOffsetEnd;
       }
       setTargetOffsetTopAndBottom(endTarget - mCurrentTargetOffsetTop);

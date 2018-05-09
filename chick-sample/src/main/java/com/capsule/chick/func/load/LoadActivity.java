@@ -3,6 +3,7 @@ package com.capsule.chick.func.load;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.LinearLayout;
 import capsule.chick.ChickAdapter;
 import capsule.chick.anim.impl.SlideInLeftAnimator;
@@ -10,9 +11,16 @@ import com.capsule.chick.R;
 import com.capsule.chick.base.BaseActivity;
 import com.capsule.chick.repo.Data;
 import com.capsule.chick.repo.Repo;
+import com.capsule.chick.repo2.Bean;
+import com.capsule.chick.repo2.Repository;
+
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -36,6 +44,28 @@ public class LoadActivity extends BaseActivity {
 
     //addHeader();
     //addFooter();
+
+    Repository.getEvents().subscribe(new Observer<ArrayList<Bean>>() {
+      @Override
+      public void onSubscribe(Disposable d) {
+
+      }
+
+      @Override
+      public void onNext(ArrayList<Bean> bean) {
+        Log.d("vegeta", "next");
+      }
+
+      @Override
+      public void onError(Throwable e) {
+        Log.d("vegeta", e.toString());
+      }
+
+      @Override
+      public void onComplete() {
+
+      }
+    });
   }
 
   @Override protected int onGetLayoutId() {
