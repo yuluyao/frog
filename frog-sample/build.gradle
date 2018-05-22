@@ -4,7 +4,7 @@ android {
   compileSdkVersion 27
   //  buildToolsVersion "25.0.3"
   defaultConfig {
-    applicationId "com.capsule.chick"
+    applicationId "com.yuluyao.frog"
     minSdkVersion 19
     targetSdkVersion 27
     versionCode 1

@@ -1,16 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.vegetayu'
-
-//repositories {
-//  maven {
-//    url 'https://maven.google.com'
-//  }
-//}
+group = 'com.github.yuluyao'
 
 android {
   compileSdkVersion 27
-//  buildToolsVersion "26.0.2"
 
   defaultConfig {
     minSdkVersion 15
