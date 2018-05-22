@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-  implementation project(':chick')
+  implementation project(':frog')
   implementation fileTree(include: ['*.jar'], dir: 'libs')
   implementation "com.android.support:appcompat-v7:$versions.supportLib"
   implementation "com.android.support.constraint:constraint-layout:1.1.0"
