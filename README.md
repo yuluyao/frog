@@ -1,8 +1,9 @@
-# Chick
+# Frog
 [![Release](https://jitpack.io/v/vegetayu/chick.svg)](https://jitpack.io/#vegetayu/chick)
 
-目标：
-用最佳的方式提供的RecyclerView的使用实践。
+> 一只生活在井底的青蛙，一直非常的快乐。可是自从有一天，它爬到井口，看了一眼外面的世界。然后又跌入了井底，从此便陷入了痛苦之中。
+
+本来使用RecyclerView是件很简单的事件，你非要去研究它的细节，最后在这里苦逼地撸这个library。
 
 ## 一、引用项目
 在 project 的 build.gradle 中添加：

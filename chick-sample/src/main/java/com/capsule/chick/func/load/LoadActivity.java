@@ -45,27 +45,6 @@ public class LoadActivity extends BaseActivity {
     //addHeader();
     //addFooter();
 
-    Repository.getEvents().subscribe(new Observer<ArrayList<Bean>>() {
-      @Override
-      public void onSubscribe(Disposable d) {
-
-      }
-
-      @Override
-      public void onNext(ArrayList<Bean> bean) {
-        Log.d("vegeta", "next");
-      }
-
-      @Override
-      public void onError(Throwable e) {
-        Log.d("vegeta", e.toString());
-      }
-
-      @Override
-      public void onComplete() {
-
-      }
-    });
   }
 
   @Override protected int onGetLayoutId() {
