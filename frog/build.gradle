@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.yuluyao'
 
@@ -24,6 +25,7 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 //  provided "com.android.support:appcompat-v7:$versions.supportLib"
   compileOnly "com.android.support:recyclerview-v7:$versions.supportLib"
+  compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 // build a jar with source files
@@ -48,4 +50,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
   archives sourcesJar
   archives javadocJar
+}
+repositories {
+  mavenCentral()
 }
