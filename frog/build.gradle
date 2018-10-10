@@ -23,7 +23,7 @@ android {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 //  provided "com.android.support:appcompat-v7:$versions.supportLib"
-  provided "com.android.support:recyclerview-v7:$versions.supportLib"
+  compileOnly "com.android.support:recyclerview-v7:$versions.supportLib"
 }
 
 // build a jar with source files
