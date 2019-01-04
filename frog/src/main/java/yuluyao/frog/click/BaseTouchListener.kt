@@ -11,13 +11,12 @@ abstract class BaseTouchListener : RecyclerView.SimpleOnItemTouchListener() {
   protected var recyclerView: RecyclerView? = null
   private var detector: GestureDetectorCompat? = null
 
-  override fun onInterceptTouchEvent(rv: RecyclerView?, e: MotionEvent?): Boolean {
+  override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
     if (recyclerView == null || detector == null) {
       recyclerView = rv
-      detector = GestureDetectorCompat(rv?.context, gestureListener)
+      detector = GestureDetectorCompat(rv.context, gestureListener)
     }
     return detector!!.onTouchEvent(e)
   }
-
 
 }

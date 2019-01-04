@@ -4,11 +4,11 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.yuluyao'
 
 android {
-  compileSdkVersion 27
+  compileSdkVersion 28
 
   defaultConfig {
     minSdkVersion 15
-    targetSdkVersion 27
+    targetSdkVersion 28
     versionCode 1
     versionName "1.0"
 
@@ -23,9 +23,9 @@ android {
 
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
-//  provided "com.android.support:appcompat-v7:$versions.supportLib"
-  compileOnly "com.android.support:recyclerview-v7:$versions.supportLib"
   compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+  compileOnly "com.android.support:recyclerview-v7:$versions.supportLib"
 }
 
 // build a jar with source files
