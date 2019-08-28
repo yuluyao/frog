@@ -2,7 +2,7 @@
 //
 //import android.widget.ImageView;
 //import android.widget.TextView;
-//import yuluyao.frog.FrogAdapter;
+//import yuluyao.frog.FrogBindingAdapter;
 //import yuluyao.frog.FrogHolder;
 //
 //import com.yuluyao.frog.R;
@@ -12,7 +12,7 @@
 // * 作 者：Vegeta Yu
 // * 时 间：2017/8/31 15:49
 // */
-//public class MultipleAdapter extends FrogAdapter<ArticleBean, FrogHolder> {
+//public class MultipleAdapter extends FrogBindingAdapter<ArticleBean, FrogHolder> {
 //
 //  @Override protected void convert(FrogHolder holder, ArticleBean item) {
 //    switch (item.getItemType()) {

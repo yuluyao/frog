@@ -8,7 +8,10 @@ import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.activity_click.*
+import kotlinx.android.synthetic.main.item_data_common.view.*
 import yuluyao.frog.FrogAdapter
+import yuluyao.frog.FrogBindingAdapter
+import yuluyao.frog.FrogHolder
 import yuluyao.frog.click.FrogClickListener
 
 /**
@@ -18,6 +21,9 @@ import yuluyao.frog.click.FrogClickListener
 class ClickActivity : BaseActivity() {
 
   private var adapter = object : FrogAdapter<Data>(R.layout.item_data_common) {
+    override fun convert(holder: FrogHolder, item: Data) {
+      holder.itemView.title.text = item.title
+    }
 
   }
 
