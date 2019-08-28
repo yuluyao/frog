@@ -1,4 +1,4 @@
-package com.yuluyao.frog.func.click
+package com.yuluyao.frog.func.touch
 
 import android.os.Bundle
 import android.view.Menu
@@ -10,7 +10,7 @@ import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.activity_touch.*
-import kotlinx.android.synthetic.main.item_data_common.view.*
+import kotlinx.android.synthetic.main.item_touch.view.*
 import yuluyao.frog.FrogAdapter
 import yuluyao.frog.FrogHolder
 import yuluyao.frog.click.*
