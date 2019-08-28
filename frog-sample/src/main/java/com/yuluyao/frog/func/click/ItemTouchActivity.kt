@@ -29,7 +29,6 @@ class ItemTouchActivity : BaseActivity() {
     }
   }
 
-
   override fun onGetLayoutId(): Int = R.layout.activity_touch
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +36,6 @@ class ItemTouchActivity : BaseActivity() {
     title = "Item Touch"
 
     recyclerView.layoutManager = LinearLayoutManager(this)
-
     recyclerView.adapter = adapter
     Repo.refresh().subscribe {
       adapter.data = it

@@ -30,6 +30,7 @@
     <activity android:name="com.yuluyao.frog.func.anim.AnimActivity" />
     <activity android:name="com.yuluyao.frog.func.expand.ExpandActivity" />
       <activity android:name=".func.click.ItemTouchActivity" />
+    <activity android:name=".func.adapter.AdapterActivity" />
   </application>
 
 </manifest>

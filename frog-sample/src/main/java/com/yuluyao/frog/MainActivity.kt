@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.stetho.Stetho
 import com.yuluyao.frog.base.BaseActivity
+import com.yuluyao.frog.func.adapter.AdapterActivity
 import com.yuluyao.frog.func.click.ItemTouchActivity
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.activity_main.*
 import yuluyao.frog.click.FrogClickListener
-
-import java.util.ArrayList
+import java.util.*
 
 class MainActivity : BaseActivity() {
 
@@ -49,7 +49,7 @@ class MainActivity : BaseActivity() {
 
   private fun mockData(): ArrayList<MenuItem> {
     val list = ArrayList<MenuItem>()
-    list.add(MenuItem("Animator",0))
+    list.add(MenuItem("Adapter",0))
     list.add(MenuItem("Item Touch",0))
     list.add(MenuItem("Divider",0))
     list.add(MenuItem("EmptyView",0))
@@ -70,7 +70,7 @@ class MainActivity : BaseActivity() {
   private fun startByPosition(position: Int) {
     var intent: Intent? = null
     when (position) {
-//      0 -> intent = Intent(this, AnimActivity::class.java)
+      0 -> intent = Intent(this, AdapterActivity::class.java)
       1 -> intent = Intent(this, ItemTouchActivity::class.java)
 //      2 -> intent = Intent(this, DividerActivity::class.java)
 //      3 -> intent = Intent(this, EmptyActivity::class.java)
