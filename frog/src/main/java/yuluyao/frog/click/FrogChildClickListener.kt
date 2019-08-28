@@ -17,18 +17,23 @@ abstract class FrogChildClickListener : BaseTouchListener() {
     get() = Listener()
 
   inner class Listener : GestureDetector.SimpleOnGestureListener() {
+    private var itemView: ViewGroup? = null
 
     override fun onDown(e: MotionEvent?): Boolean {
       e ?: return false
-      val itemView = recyclerView?.findChildViewUnder(e.x, e.y)
+      try {
+        itemView = recyclerView?.findChildViewUnder(e.x, e.y) as ViewGroup?
+      } catch (e: Exception) {
+        throw Exception("item view is not a ViewGroup!")
+      }
       itemView ?: return false
 
       // 监听的 View 设为 可点击
-      if (listenedChildrenIds.contains(itemView.id)) {
-        itemView.isClickable = true
+      if (listenedChildrenIds.contains(itemView!!.id)) {
+        itemView!!.isClickable = true
       }
       for (id in listenedChildrenIds.indices) {
-        val v = itemView.findViewById<View>(id)
+        val v = itemView!!.findViewById<View>(id)
         v?.isClickable = true
       }
 
@@ -37,17 +42,17 @@ abstract class FrogChildClickListener : BaseTouchListener() {
 
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
       e ?: return false
-      val itemView = recyclerView?.findChildViewUnder(e.x, e.y) as ViewGroup?
       itemView ?: return false
 
+      // 查找被点击的 View
       target = null
-      val clickView = findTarget(itemView, e.rawX.toInt(), e.rawY.toInt())
+      val clickView = findTarget(itemView!!, e.rawX.toInt(), e.rawY.toInt())
       clickView ?: return false
 
-      val position = recyclerView?.getChildAdapterPosition(itemView)
+      val position = recyclerView?.getChildAdapterPosition(itemView!!)
       position ?: return false
 
-      itemView.dispatchTouchEvent(getTransformedMotionEvent(e, itemView))
+      itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
       onChildClicked(position, clickView.id)
       return true
     }
