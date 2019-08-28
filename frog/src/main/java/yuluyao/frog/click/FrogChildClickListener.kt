@@ -2,6 +2,7 @@ package yuluyao.frog.click
 
 import android.graphics.Rect
 import android.graphics.Region
+import android.util.SparseIntArray
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -16,19 +17,37 @@ abstract class FrogChildClickListener : BaseTouchListener() {
     get() = Listener()
 
   inner class Listener : GestureDetector.SimpleOnGestureListener() {
+
+    override fun onDown(e: MotionEvent?): Boolean {
+      e ?: return false
+      val itemView = recyclerView?.findChildViewUnder(e.x, e.y)
+      itemView ?: return false
+
+      // 监听的 View 设为 可点击
+      if (listenedChildrenIds.contains(itemView.id)) {
+        itemView.isClickable = true
+      }
+      for (id in listenedChildrenIds.indices) {
+        val v = itemView.findViewById<View>(id)
+        v?.isClickable = true
+      }
+
+      return super.onDown(e)
+    }
+
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
       e ?: return false
-      val child = recyclerView?.findChildViewUnder(e.x, e.y) as ViewGroup?
-      child ?: return false
+      val itemView = recyclerView?.findChildViewUnder(e.x, e.y) as ViewGroup?
+      itemView ?: return false
 
       target = null
-      val clickView = findTarget(child, e.rawX.toInt(), e.rawY.toInt())
+      val clickView = findTarget(itemView, e.rawX.toInt(), e.rawY.toInt())
       clickView ?: return false
 
-      val position = recyclerView?.getChildAdapterPosition(child)
+      val position = recyclerView?.getChildAdapterPosition(itemView)
       position ?: return false
 
-      child.dispatchTouchEvent(getTransformedMotionEvent(e,child))
+      itemView.dispatchTouchEvent(getTransformedMotionEvent(e, itemView))
       onChildClicked(position, clickView.id)
       return true
     }
@@ -61,6 +80,6 @@ abstract class FrogChildClickListener : BaseTouchListener() {
       return region.contains(rawX, rawY)
     }
   }
-  
-  
+
+
 }

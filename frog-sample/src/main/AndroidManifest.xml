@@ -29,6 +29,7 @@
     <activity android:name="com.yuluyao.frog.func.foot.FootActivity" />
     <activity android:name="com.yuluyao.frog.func.anim.AnimActivity" />
     <activity android:name="com.yuluyao.frog.func.expand.ExpandActivity" />
+      <activity android:name=".func.click.ChildClickActivity" />
   </application>
 
 </manifest>

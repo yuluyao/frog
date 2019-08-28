@@ -9,12 +9,17 @@
 
   <item
       android:id="@+id/longclick"
-      android:title="longclick"
+      android:title="longClick"
       app:showAsAction="never" />
 
   <item
       android:id="@+id/singleclick"
-      android:title="singleclick"
+      android:title="singleClick"
       app:showAsAction="never" />
+
+  <item
+    android:id="@+id/childclick"
+    android:title="childClick"
+    app:showAsAction="never" />
 
 </menu>

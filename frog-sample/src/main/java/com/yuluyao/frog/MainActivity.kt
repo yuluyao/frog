@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.stetho.Stetho
 import com.yuluyao.frog.base.BaseActivity
+import com.yuluyao.frog.func.click.ChildClickActivity
 import com.yuluyao.frog.func.click.ClickActivity
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.activity_main.*
@@ -71,7 +72,7 @@ class MainActivity : BaseActivity() {
     var intent: Intent? = null
     when (position) {
 //      0 -> intent = Intent(this, AnimActivity::class.java)
-      1 -> intent = Intent(this, ClickActivity::class.java)
+      1 -> intent = Intent(this, ChildClickActivity::class.java)
 //      2 -> intent = Intent(this, DividerActivity::class.java)
 //      3 -> intent = Intent(this, EmptyActivity::class.java)
 //      4 -> intent = Intent(this, ExpandActivity::class.java)
