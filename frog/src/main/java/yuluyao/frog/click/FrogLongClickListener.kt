@@ -12,6 +12,14 @@ abstract class FrogLongClickListener : BaseTouchListener() {
 
   inner class SingleTapUpListener : GestureDetector.SimpleOnGestureListener() {
 
+    override fun onDown(e: MotionEvent?): Boolean {
+      e ?: return false
+      val child = recyclerView?.findChildViewUnder(e.x, e.y)
+      child ?: return false
+      child.isClickable = true
+      return super.onDown(e)
+    }
+
     override fun onLongPress(e: MotionEvent?) {
       super.onLongPress(e)
       e ?: return
@@ -19,19 +27,11 @@ abstract class FrogLongClickListener : BaseTouchListener() {
       child ?: return
       val position = recyclerView?.getChildAdapterPosition(child)
       position ?: return
-      child.onTouchEvent(getTransformedMotionEvent(e,child))
+
       onItemClicked(position)
       return
     }
 
-    override fun onShowPress(e: MotionEvent?) {
-      e ?: return
-      val child = recyclerView?.findChildViewUnder(e.x, e.y)
-      child ?: return
-      val position = recyclerView?.getChildAdapterPosition(child)
-      position ?: return
-      child.onTouchEvent(getTransformedMotionEvent(e,child))
-    }
 
 
   }

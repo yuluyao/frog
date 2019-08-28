@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <item
+      android:id="@+id/click"
+      android:title="click"
+      app:showAsAction="never" />
+
+  <item
+      android:id="@+id/longclick"
+      android:title="longclick"
+      app:showAsAction="never" />
+
+  <item
+      android:id="@+id/singleclick"
+      android:title="singleclick"
+      app:showAsAction="never" />
+
+</menu>
