@@ -8,18 +8,24 @@
       app:showAsAction="never" />
 
   <item
-      android:id="@+id/longclick"
-      android:title="longClick"
+      android:id="@+id/long_click"
+      android:title="long_click"
       app:showAsAction="never" />
 
   <item
-      android:id="@+id/singleclick"
-      android:title="singleClick"
+      android:id="@+id/single_click"
+      android:title="single_click"
       app:showAsAction="never" />
 
   <item
-    android:id="@+id/childclick"
-    android:title="childClick"
+    android:id="@+id/intercept_click"
+    android:title="intercept_click"
+    app:showAsAction="never" />
+
+
+  <item
+    android:id="@+id/child_click"
+    android:title="child_click"
     app:showAsAction="never" />
 
 </menu>

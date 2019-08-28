@@ -17,7 +17,7 @@ abstract class FrogClickListener : BaseTouchListener() {
     override fun onDown(e: MotionEvent?): Boolean {
       e ?: return false
       itemView = recyclerView?.findChildViewUnder(e.x, e.y)
-//      itemView ?: return false
+      // 设置 item view 为可点击
       itemView?.isClickable = true
       return super.onDown(e)
     }

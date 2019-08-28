@@ -12,6 +12,7 @@ abstract class FrogSingleClickListener(val timeGap: Long = 500L) : BaseTouchList
 
   abstract fun onItemClicked(position: Int)
 
+  // 上次点击的时刻
   private var lastClickTimeMills = 0L
 
   override val gestureListener: GestureDetector.SimpleOnGestureListener
@@ -23,7 +24,7 @@ abstract class FrogSingleClickListener(val timeGap: Long = 500L) : BaseTouchList
     override fun onDown(e: MotionEvent?): Boolean {
       e ?: return false
       itemView = recyclerView?.findChildViewUnder(e.x, e.y)
-//      itemView ?: return false
+      // 设置 item view 为可点击
       itemView?.isClickable = true
       return super.onDown(e)
     }
