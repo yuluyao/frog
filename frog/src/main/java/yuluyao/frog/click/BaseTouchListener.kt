@@ -1,9 +1,10 @@
 package yuluyao.frog.click
 
-import android.support.v4.view.GestureDetectorCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.view.GestureDetectorCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.View
 
 abstract class BaseTouchListener : RecyclerView.SimpleOnItemTouchListener() {
 
@@ -18,5 +19,24 @@ abstract class BaseTouchListener : RecyclerView.SimpleOnItemTouchListener() {
     }
     return detector!!.onTouchEvent(e)
   }
+
+  override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+    super.onTouchEvent(rv, e)
+  }
+
+  override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+    super.onRequestDisallowInterceptTouchEvent(disallowIntercept)
+  }
+
+
+  internal fun getTransformedMotionEvent(event: MotionEvent, child: View): MotionEvent? {
+    recyclerView ?: return null
+    val offsetX = recyclerView!!.scrollX - child.left
+    val offsetY = recyclerView!!.scrollY - child.top
+    val transformedEvent = MotionEvent.obtain(event)
+    transformedEvent.offsetLocation(offsetX.toFloat(), offsetY.toFloat())
+    return transformedEvent
+  }
+
 
 }

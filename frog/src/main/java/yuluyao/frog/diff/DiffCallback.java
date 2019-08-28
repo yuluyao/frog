@@ -1,8 +1,9 @@
 package yuluyao.frog.diff;
 
-import android.support.annotation.Nullable;
-import android.support.v7.util.DiffUtil;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
 
 /**
  * 描 述：
@@ -42,7 +43,8 @@ public class DiffCallback<T> extends DiffUtil.Callback {
     return true;
   }
 
-  @Nullable @Override public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+  @Nullable
+  @Override public Object getChangePayload(int oldItemPosition, int newItemPosition) {
 
     return super.getChangePayload(oldItemPosition, newItemPosition);
   }

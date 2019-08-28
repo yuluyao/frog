@@ -4,12 +4,13 @@ import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.annotation.ColorRes;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+
+import androidx.annotation.ColorRes;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
  * 描 述：
@@ -18,7 +19,7 @@ import android.view.View;
  */
 public class Divider extends BaseItemDecoration {
 
-  private int   colorRes;
+  private int colorRes;
   private float dividerWidthDp;
   private float dividerWidthPixel;
   private Paint paint;
@@ -33,7 +34,8 @@ public class Divider extends BaseItemDecoration {
     paint = new Paint();
   }
 
-  @Override public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+  @Override
+  public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
     super.onDraw(c, parent, state);
     switch (layout_type) {
       case LAYOUT_VERTICAL:
@@ -110,9 +112,10 @@ public class Divider extends BaseItemDecoration {
     canvas.restore();
   }
 
-  @SuppressLint("NewApi") private void drawGrid(Canvas canvas, RecyclerView parent) {
+  @SuppressLint("NewApi")
+  private void drawGrid(Canvas canvas, RecyclerView parent) {
     drawGridVertical(canvas, parent);
-    drawGridHorizontal(canvas, parent);
+//    drawGridHorizontal(canvas, parent);
   }
 
   private void drawGridVertical(Canvas canvas, RecyclerView parent) {
@@ -121,10 +124,11 @@ public class Divider extends BaseItemDecoration {
       final View child = parent.getChildAt(i);
       Rect mBounds = new Rect();
       parent.getLayoutManager().getDecoratedBoundsWithMargins(child, mBounds);
-      float top = child.getY();
-      float bottom = mBounds.bottom + Math.round(ViewCompat.getTranslationY(child));
-      float right = mBounds.right + Math.round(ViewCompat.getTranslationX(child));
-      float left = right - dividerWidthPixel;
+
+      float top = mBounds.top + Math.round(child.getTranslationY());
+      float bottom = mBounds.bottom + Math.round(child.getTranslationY());
+      float right = mBounds.right + Math.round(child.getTranslationX());
+      float left = mBounds.left + Math.round(child.getTranslationX());
       canvas.drawRect(left, top, right, bottom, paint);
     }
   }
@@ -137,14 +141,15 @@ public class Divider extends BaseItemDecoration {
       parent.getLayoutManager().getDecoratedBoundsWithMargins(child, mBounds);
 
       float left = child.getX();
-      float right = left + child.getWidth();
-      float bottom = mBounds.bottom + Math.round(ViewCompat.getTranslationY(child));
-      float top = bottom - dividerWidthPixel;
+      float right = mBounds.right + Math.round(child.getTranslationX());
+      float bottom = mBounds.bottom + Math.round(child.getTranslationY());
+      float top = child.getY();
       canvas.drawRect(left, top, right, bottom, paint);
     }
   }
 
-  @Override public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
+  @Override
+  public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
       RecyclerView.State state) {
     super.getItemOffsets(outRect, view, parent, state);
     if (layout_type != LAYOUT_INVALID) {
@@ -172,26 +177,56 @@ public class Divider extends BaseItemDecoration {
         break;
     }
 
-    float l = 0;
-    float t = 0;
-    float r = dividerWidthPixel;
-    float b = dividerWidthPixel;
+    float l = dividerWidthPixel / 2;
+    float t = dividerWidthPixel / 2;
+    float r = dividerWidthPixel / 2;
+    float b = dividerWidthPixel / 2;
     int childCount = parent.getAdapter().getItemCount();
     int itemPosition = parent.getChildAdapterPosition(view);
-    if (isLastRaw(itemPosition, spanCount, childCount)) {
-      // 如果是最后一行，则不需要绘制底部
-      b = 0;
+    if (isFirstRaw2(itemPosition, spanCount, childCount)) {
+      // 如果是第一行，则不需要绘制上边
+      t = 0;
     }
-    if (isLastColumn(itemPosition, spanCount, childCount)) {
+//    if (isLastRaw2(itemPosition, spanCount, childCount)) {
+//      // 如果是最后一行，则不需要绘制底部
+//      b = 0;
+//    }
+    if (isFirstColumn2(itemPosition, spanCount, childCount)) {
+      // 如果是第一列，则不需要绘制左边
+      l = 0;
+    }
+    if (isLastColumn2(itemPosition, spanCount, childCount)) {
       // 如果是最后一列，则不需要绘制右边
       r = 0;
     }
     outRect.set(((int) l), ((int) t), ((int) r), ((int) b));
   }
 
-  /**
-   * 判断是否是最后一列
-   */
+
+  private boolean isFirstColumn(int pos, int spanCount, int childCount) {
+    switch (layout_type) {
+      case LAYOUT_GRID:
+        if ((pos) % spanCount == 0) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_VERTICAL:
+        if ((pos) % spanCount == 0) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_HORIZONTAL:
+        int result =
+            childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
+        if (pos >= result) {
+          return true;
+        }
+        break;
+    }
+
+    return false;
+  }
+
   private boolean isLastColumn(int pos, int spanCount, int childCount) {
     switch (layout_type) {
       case LAYOUT_GRID:// 如果是最后一列，则不需要绘制右边
@@ -205,9 +240,9 @@ public class Divider extends BaseItemDecoration {
         }
         break;
       case LAYOUT_STAGGERED_GRID_HORIZONTAL:// 如果是最后一列，则不需要绘制右边
-        childCount =
+        int result =
             childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
-        if (pos >= childCount) {
+        if (pos >= result) {
           return true;
         }
         break;
@@ -216,22 +251,44 @@ public class Divider extends BaseItemDecoration {
     return false;
   }
 
-  /**
-   * 是否是最后一行
-   */
+
+  private boolean isFirstRaw(int pos, int spanCount, int childCount) {
+    switch (layout_type) {
+      case LAYOUT_GRID:
+        if (pos < spanCount) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_VERTICAL:
+        int result2 =
+            childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
+        if (pos >= result2) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_HORIZONTAL:
+        if ((pos + 1) % spanCount == 0) {
+          return true;
+        }
+        break;
+    }
+    return false;
+  }
+
+
   private boolean isLastRaw(int pos, int spanCount, int childCount) {
     switch (layout_type) {
       case LAYOUT_GRID: // 如果是最后一行，则不需要绘制底部
-        childCount =
+        int result =
             childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
-        if (pos >= childCount) {
+        if (pos >= result) {
           return true;
         }
         break;
       case LAYOUT_STAGGERED_GRID_VERTICAL: // 如果是最后一行，则不需要绘制底部
-        childCount =
+        int result2 =
             childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
-        if (pos >= childCount) {
+        if (pos >= result2) {
           return true;
         }
         break;
@@ -243,4 +300,133 @@ public class Divider extends BaseItemDecoration {
     }
     return false;
   }
+
+
+  private boolean isFirstRaw2(int pos, int spanCount, int childCount) {
+    switch (layout_type) {
+      case LAYOUT_GRID:
+        GridLayoutManager.SpanSizeLookup sizeLookup = ((GridLayoutManager) recyclerView
+            .getLayoutManager()).getSpanSizeLookup();
+        int spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount);
+        int spanIndex = sizeLookup.getSpanIndex(pos, spanCount);
+        int spanSize = sizeLookup.getSpanSize(pos);
+
+        if (spanGroupIndex == 0) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_VERTICAL:
+        int result2 =
+            childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
+        if (pos >= result2) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_HORIZONTAL:
+        if ((pos + 1) % spanCount == 0) {
+          return true;
+        }
+        break;
+    }
+    return false;
+  }
+
+
+  private boolean isFirstColumn2(int pos, int spanCount, int childCount) {
+    switch (layout_type) {
+      case LAYOUT_GRID:
+        GridLayoutManager.SpanSizeLookup sizeLookup = ((GridLayoutManager) recyclerView
+            .getLayoutManager()).getSpanSizeLookup();
+        int spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount);
+        int spanIndex = sizeLookup.getSpanIndex(pos, spanCount);
+        int spanSize = sizeLookup.getSpanSize(pos);
+
+        if (spanIndex == 0) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_VERTICAL:
+        if ((pos) % spanCount == 0) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_HORIZONTAL:
+        int result =
+            childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
+        if (pos >= result) {
+          return true;
+        }
+        break;
+    }
+
+    return false;
+  }
+
+  private boolean isLastRaw2(int pos, int spanCount, int childCount) {
+    switch (layout_type) {
+      case LAYOUT_GRID: // 如果是最后一行，则不需要绘制底部
+        GridLayoutManager.SpanSizeLookup sizeLookup = ((GridLayoutManager) recyclerView
+            .getLayoutManager()).getSpanSizeLookup();
+        int spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount);
+        int spanIndex = sizeLookup.getSpanIndex(pos, spanCount);
+        int spanSize = sizeLookup.getSpanSize(pos);
+
+        int result =
+            childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
+        if (pos >= result) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_VERTICAL: // 如果是最后一行，则不需要绘制底部
+        int result2 =
+            childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
+        if (pos >= result2) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_HORIZONTAL:// 如果是最后一行，则不需要绘制底部
+        if ((pos + 1) % spanCount == 0) {
+          return true;
+        }
+        break;
+    }
+    return false;
+  }
+
+
+  private boolean isLastColumn2(int pos, int spanCount, int childCount) {
+    switch (layout_type) {
+      case LAYOUT_GRID:// 如果是最后一列，则不需要绘制右边
+        GridLayoutManager.SpanSizeLookup sizeLookup = ((GridLayoutManager) recyclerView
+            .getLayoutManager()).getSpanSizeLookup();
+        int spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount);
+        int spanIndex = sizeLookup.getSpanIndex(pos, spanCount);
+        int spanSize = sizeLookup.getSpanSize(pos);
+
+       if (spanIndex + spanSize -1 == spanCount-1){
+         return true;
+       }
+
+//        if ((pos + 1) % spanCount == 0) {
+//          return true;
+//        }
+        break;
+      case LAYOUT_STAGGERED_GRID_VERTICAL:// 如果是最后一列，则不需要绘制右边
+        if ((pos + 1) % spanCount == 0) {
+          return true;
+        }
+        break;
+      case LAYOUT_STAGGERED_GRID_HORIZONTAL:// 如果是最后一列，则不需要绘制右边
+        int result =
+            childCount - (childCount % spanCount == 0 ? spanCount : childCount % spanCount);
+        if (pos >= result) {
+          return true;
+        }
+        break;
+    }
+
+    return false;
+  }
+
+
 }

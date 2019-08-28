@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.yuluyao'
 
@@ -19,13 +20,18 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+
+  dataBinding {
+    enabled = true
+  }
 }
 
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
-  compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-  compileOnly "com.android.support:recyclerview-v7:$versions.supportLib"
+  compileOnly "androidx.appcompat:appcompat:$androidx_version"
+  compileOnly "com.google.android.material:material:$material_version"
 }
 
 // build a jar with source files
