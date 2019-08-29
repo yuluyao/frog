@@ -12,6 +12,7 @@ import com.facebook.stetho.Stetho
 import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.func.adapter.AdapterActivity
 import com.yuluyao.frog.func.databinding.DataBindingActivity
+import com.yuluyao.frog.func.divider.DividerActivity
 import com.yuluyao.frog.func.touch.ItemTouchActivity
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.activity_main.*
@@ -75,7 +76,7 @@ class MainActivity : BaseActivity() {
       0 -> intent = Intent(this, AdapterActivity::class.java)
       1 -> intent = Intent(this, DataBindingActivity::class.java)
       2 -> intent = Intent(this, ItemTouchActivity::class.java)
-//      2 -> intent = Intent(this, DividerActivity::class.java)
+      3 -> intent = Intent(this, DividerActivity::class.java)
 //      3 -> intent = Intent(this, EmptyActivity::class.java)
 //      4 -> intent = Intent(this, ExpandActivity::class.java)
 //      5 -> intent = Intent(this, FootActivity::class.java)
