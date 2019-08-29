@@ -30,8 +30,9 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
   compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-  api "com.android.support:appcompat-v7:$versions.supportLib"
-  api "com.android.support:design:$versions.supportLib"
+  api "com.android.support:recyclerview-v7:$versions.supportLib"
+//  compileOnly "com.android.support:appcompat-v7:$versions.supportLib"
+//  compileOnly "com.android.support:support-v4:$versions.supportLib"
 }
 
 task sourcesJar(type: Jar) {
@@ -57,11 +58,4 @@ artifacts {
   archives classesJar
   archives javadocJar
   archives sourcesJar
-}
-
-repositories {
-  mavenCentral()
-  jcenter()
-  google()
-  maven { url "https://jitpack.io" }
 }

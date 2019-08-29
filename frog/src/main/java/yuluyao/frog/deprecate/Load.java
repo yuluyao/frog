@@ -1,7 +1,7 @@
 //package yuluyao.frog.deprecate;
 //
-//import androidx.recyclerview.widget.RecyclerView;
-//import androidx.recyclerview.widget.RecyclerView.ItemDecoration;
+//import android.support.v7.widget.RecyclerView;
+//import android.support.v7.widget.RecyclerView.ItemDecoration;
 //import yuluyao.frog.R;
 //import yuluyao.frog.decor.FootDecor;
 //

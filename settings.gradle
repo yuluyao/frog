@@ -1,3 +1,6 @@
-include ':frog', ':frogx', ':frogx-sample'
+include ':frog',
+        ':frog-sample',
+//        ':frogx',
+//        ':frogx-sample'
 
 rootProject.name = 'frog-parent'

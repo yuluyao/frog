@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <item
+      android:id="@+id/click"
+      android:title="click"
+      app:showAsAction="never" />
+
+  <item
+      android:id="@+id/long_click"
+      android:title="long_click"
+      app:showAsAction="never" />
+
+  <item
+      android:id="@+id/single_click"
+      android:title="single_click"
+      app:showAsAction="never" />
+
+  <item
+    android:id="@+id/intercept_click"
+    android:title="intercept_click"
+    app:showAsAction="never" />
+
+
+  <item
+    android:id="@+id/child_click"
+    android:title="child_click"
+    app:showAsAction="never" />
+
+</menu>
