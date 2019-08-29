@@ -7,7 +7,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
-import kotlin.math.roundToInt
 
 /**
  * 描 述：
@@ -188,25 +187,28 @@ class FrogDivider(private val width: Float = 2F,
     for (i in 0 until childCount) {
       val itemView = parent.getChildAt(i)
       parent.getDecoratedBoundsWithMargins(itemView, bounds)
-//      canvas.drawRect(bounds, paint!!)
+
+      val left_f = bounds.left.toFloat()
+      val top_f = bounds.top.toFloat()
+      val right_f = bounds.right.toFloat()
+      val bottom_f = bounds.bottom.toFloat()
+
+      val right_inner = bounds.left + widthPixels
+      val bottom_inner = bounds.top + widthPixels
+      val left_inner = bounds.right - widthPixels
+      val top_inner = bounds.bottom - widthPixels
       when (layout_type) {
         LAYOUT_VERTICAL -> {
-          canvas.drawRect(bounds.left.toFloat(), bounds.bottom - widthPixels,
-            bounds.right.toFloat(), bounds.bottom.toFloat(), paint!!)
+          canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint!!)
         }
         LAYOUT_HORIZONTAL -> {
-          canvas.drawRect(bounds.right - widthPixels, bounds.top.toFloat(), bounds.right.toFloat(),
-            bounds.bottom.toFloat(), paint!!)
+          canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint!!)
         }
         LAYOUT_GRID, LAYOUT_STAGGERED_GRID_VERTICAL, LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
-          canvas.drawRect(bounds.left.toFloat(), bounds.top.toFloat(), bounds.right.toFloat(),
-            bounds.top + widthPixels, paint!!)
-          canvas.drawRect(bounds.left.toFloat(), bounds.top.toFloat(), bounds.left + widthPixels,
-            bounds.bottom.toFloat(), paint!!)
-          canvas.drawRect(bounds.right - widthPixels, bounds.top.toFloat(), bounds.right.toFloat(),
-            bounds.bottom.toFloat(), paint!!)
-          canvas.drawRect(bounds.left.toFloat(), bounds.bottom - widthPixels,
-            bounds.right.toFloat(), bounds.bottom.toFloat(), paint!!)
+          canvas.drawRect(left_f, top_f, right_inner, bottom_f, paint!!)
+          canvas.drawRect(left_f, top_f, right_f, bottom_inner, paint!!)
+          canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint!!)
+          canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint!!)
         }
       }
     }
