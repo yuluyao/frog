@@ -42,7 +42,7 @@ class DividerStaggeredVerticalFragment : Fragment() {
 
     recycler.adapter = adapter
 
-    Repo.refresh(30).subscribe { it ->
+    Repo.refresh(50).subscribe { it ->
       adapter.data = it
       adapter.notifyDataSetChanged()
     }
