@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data>
+<variable
+  name="item"
+  type="com.yuluyao.frog.repo.Data"
+  />
+  </data>
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/item_background"
@@ -8,11 +17,13 @@
     android:padding="4dp"
     >
 
-  <ImageView
+    <ImageView
       android:id="@+id/icon"
       android:layout_width="56dp"
+      src="@{item.iconRes}"
       android:layout_height="56dp"
       android:layout_margin="4dp"
       />
 
-</LinearLayout>
+  </LinearLayout>
+</layout>
