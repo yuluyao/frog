@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_touch.*
 import kotlinx.android.synthetic.main.item_touch.view.*
 import yuluyao.frog.FrogAdapter
 import yuluyao.frog.FrogHolder
-import yuluyao.frog.click.*
+import yuluyao.frog.touch.*
 
 /**
  * Created by wusheng on 2017/9/2.

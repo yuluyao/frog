@@ -1,19 +1,12 @@
-package yuluyao.frog.click
+package yuluyao.frog.touch
 
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-/**
- * 单击监听，在连续点击中，只有第一次生效,
- * timeGap: 点击最小间隔，小于此间隔的点击不被响应
- */
-abstract class FrogSingleClickListener(val timeGap: Long = 500L) : BaseTouchListener() {
+abstract class FrogClickListener : BaseTouchListener() {
 
   abstract fun onItemClicked(position: Int)
-
-  // 上次点击的时刻
-  private var lastClickTimeMills = 0L
 
   override val gestureListener: GestureDetector.SimpleOnGestureListener
     get() = SingleTapUpListener()
@@ -36,19 +29,19 @@ abstract class FrogSingleClickListener(val timeGap: Long = 500L) : BaseTouchList
       val position = recyclerView?.getChildAdapterPosition(itemView!!)
       position ?: return false
 
-      // 丢弃多余的点击
-      val clickTimeMills = System.currentTimeMillis()
-      if (clickTimeMills - lastClickTimeMills < timeGap) {
-        lastClickTimeMills = clickTimeMills
-        return false
-      }
-      lastClickTimeMills = clickTimeMills
-
       itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
       onItemClicked(position)
       return true
     }
 
+//    override fun onShowPress(e: MotionEvent?) {
+//      e ?: return
+//      val itemView = recyclerView?.findChildViewUnder(e.x, e.y)
+//      itemView ?: return
+//      val position = recyclerView?.getChildAdapterPosition(itemView)
+//      position ?: return
+//      itemView.dispatchTouchEvent(getTransformedMotionEvent(e,itemView))
+//    }
 
   }
 

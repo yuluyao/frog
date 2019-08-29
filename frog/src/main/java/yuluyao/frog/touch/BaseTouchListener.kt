@@ -1,4 +1,4 @@
-package yuluyao.frog.click
+package yuluyao.frog.touch
 
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.RecyclerView

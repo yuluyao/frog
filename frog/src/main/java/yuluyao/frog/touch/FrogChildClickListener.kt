@@ -1,8 +1,7 @@
-package yuluyao.frog.click
+package yuluyao.frog.touch
 
 import android.graphics.Rect
 import android.graphics.Region
-import android.util.SparseIntArray
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View

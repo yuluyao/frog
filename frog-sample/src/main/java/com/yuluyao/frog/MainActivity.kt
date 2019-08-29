@@ -15,7 +15,7 @@ import com.yuluyao.frog.func.databinding.DataBindingActivity
 import com.yuluyao.frog.func.touch.ItemTouchActivity
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.activity_main.*
-import yuluyao.frog.click.FrogClickListener
+import yuluyao.frog.touch.FrogClickListener
 import java.util.*
 
 class MainActivity : BaseActivity() {

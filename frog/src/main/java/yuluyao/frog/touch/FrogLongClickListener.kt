@@ -1,12 +1,12 @@
-package yuluyao.frog.click
+package yuluyao.frog.touch
 
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-abstract class FrogInterceptClickListener : BaseTouchListener() {
+abstract class FrogLongClickListener : BaseTouchListener() {
 
-  abstract fun onItemClicked(position: Int): Boolean
+  abstract fun onItemClicked(position: Int)
 
   override val gestureListener: GestureDetector.SimpleOnGestureListener
     get() = SingleTapUpListener()
@@ -17,21 +17,21 @@ abstract class FrogInterceptClickListener : BaseTouchListener() {
     override fun onDown(e: MotionEvent?): Boolean {
       e ?: return false
       itemView = recyclerView?.findChildViewUnder(e.x, e.y)
+      // 设置 item view 为可点击
+      itemView?.isClickable = true
       return super.onDown(e)
     }
 
-    override fun onSingleTapUp(e: MotionEvent?): Boolean {
-      e ?: return false
-      itemView ?: return false
+    override fun onLongPress(e: MotionEvent?) {
+      super.onLongPress(e)
+      e ?: return
+      itemView ?: return
 
       val position = recyclerView?.getChildAdapterPosition(itemView!!)
-      position ?: return false
+      position ?: return
 
-      val consumed = onItemClicked(position)
-      if (consumed) {
-        itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
-      }
-      return consumed
+      onItemClicked(position)
+      return
     }
 
 
