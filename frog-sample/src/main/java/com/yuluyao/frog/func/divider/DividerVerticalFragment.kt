@@ -48,14 +48,5 @@ class DividerVerticalFragment : Fragment() {
     helper.attachToRecyclerView(recyclerView)
   }
 
-//  companion object {
-//
-//    fun newInstance(): DividerVerticalFragment {
-//      val args = Bundle()
-//      val fragment = DividerVerticalFragment()
-//      fragment.arguments = args
-//      return fragment
-//    }
-//  }
 
 }

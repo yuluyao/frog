@@ -3,13 +3,10 @@ package yuluyao.frog.decor
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import android.util.Log
 import android.view.View
-
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import kotlin.math.roundToInt
 
 /**
  * 描 述：
@@ -161,17 +158,10 @@ class FrogDivider(private val width: Float = 2F,
 
   override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
     super.onDraw(c, parent, state)
-//    when (layout_type) {
-//      LAYOUT_VERTICAL -> drawGrid(c, parent)
-//      LAYOUT_HORIZONTAL -> drawGrid(c, parent)
-//      LAYOUT_GRID -> drawGrid(c, parent)
-//      LAYOUT_STAGGERED_GRID_VERTICAL -> drawGrid(c, parent)
-//      LAYOUT_STAGGERED_GRID_HORIZONTAL -> drawGrid(c, parent)
-//    }
-    drawGrid(c, parent)
+    drawDecoration(c, parent)
   }
 
-  private fun drawGrid(canvas: Canvas, parent: RecyclerView) {
+  private fun drawDecoration(canvas: Canvas, parent: RecyclerView) {
     val top: Int
     val bottom: Int
     val left: Int
@@ -196,156 +186,6 @@ class FrogDivider(private val width: Float = 2F,
       parent.getDecoratedBoundsWithMargins(itemView, bounds)
       canvas.drawRect(bounds, paint!!)
     }
-
   }
-
-  /*
-  private fun isFirstColumn(pos: Int, spanCount: Int, childCount: Int): Boolean {
-    when (layout_type) {
-      LAYOUT_GRID -> if (pos % spanCount == 0) {
-        return true
-      }
-      LAYOUT_STAGGERED_GRID_VERTICAL -> if (pos % spanCount == 0) {
-        return true
-      }
-      LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
-        val result = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
-        if (pos >= result) {
-          return true
-        }
-      }
-    }
-
-    return false
-  }
-
-  private fun isLastColumn(pos: Int, spanCount: Int, childCount: Int): Boolean {
-    when (layout_type) {
-      LAYOUT_GRID// 如果是最后一列，则不需要绘制右边
-      -> if ((pos + 1) % spanCount == 0) {
-        return true
-      }
-      LAYOUT_STAGGERED_GRID_VERTICAL// 如果是最后一列，则不需要绘制右边
-      -> if ((pos + 1) % spanCount == 0) {
-        return true
-      }
-      LAYOUT_STAGGERED_GRID_HORIZONTAL// 如果是最后一列，则不需要绘制右边
-      -> {
-        val result = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
-        if (pos >= result) {
-          return true
-        }
-      }
-    }
-
-    return false
-  }
-
-
-  private fun isFirstRaw(pos: Int, spanCount: Int, childCount: Int): Boolean {
-    when (layout_type) {
-      LAYOUT_GRID -> if (pos < spanCount) {
-        return true
-      }
-      LAYOUT_STAGGERED_GRID_VERTICAL -> {
-        val result2 = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
-        if (pos >= result2) {
-          return true
-        }
-      }
-      LAYOUT_STAGGERED_GRID_HORIZONTAL -> if ((pos + 1) % spanCount == 0) {
-        return true
-      }
-    }
-    return false
-  }
-
-
-  private fun isLastRaw(pos: Int, spanCount: Int, childCount: Int): Boolean {
-    when (layout_type) {
-      LAYOUT_GRID // 如果是最后一行，则不需要绘制底部
-      -> {
-        val result = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
-        if (pos >= result) {
-          return true
-        }
-      }
-      LAYOUT_STAGGERED_GRID_VERTICAL // 如果是最后一行，则不需要绘制底部
-      -> {
-        val result2 = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
-        if (pos >= result2) {
-          return true
-        }
-      }
-      LAYOUT_STAGGERED_GRID_HORIZONTAL// 如果是最后一行，则不需要绘制底部
-      -> if ((pos + 1) % spanCount == 0) {
-        return true
-      }
-    }
-    return false
-  }
-*/
-
-
-//  private fun drawVertical(canvas: Canvas, parent: RecyclerView) {
-//    canvas.save()
-//    val left = parent.paddingLeft
-//    val right = (parent.width - parent.paddingRight)
-//    val top = if (parent.clipToPadding) {
-//      parent.top + parent.paddingTop
-//    } else {
-//      parent.top
-//    }
-//    val bottom = if (parent.clipToPadding) {
-//      parent.bottom - parent.paddingBottom
-//    } else {
-//      parent.bottom
-//    }
-//    canvas.clipRect(left, top, right, bottom)
-//
-//    val childCount = parent.childCount
-//    for (i in 0 until childCount) {
-//      val itemView = parent.getChildAt(i)
-//      val bounds = Rect()
-//      parent.getDecoratedBoundsWithMargins(itemView, bounds)
-//      canvas.drawRect(bounds, paint!!)
-//
-////      val itemBottom = (bounds.bottom + itemView.translationY.roundToInt()).toFloat()
-////      val itemTop = itemBottom - widthPixels
-////      canvas.drawRect(left.toFloat(), itemTop, right.toFloat(), itemBottom, paint!!)
-//    }
-//    canvas.restore()
-//  }
-
-//  private fun drawHorizontal(canvas: Canvas, parent: RecyclerView) {
-//    canvas.save()
-//    val top = parent.paddingTop
-//    val bottom = (parent.height - parent.paddingBottom)
-//    val left = if (parent.clipToPadding) {
-//      parent.left + parent.paddingLeft
-//    } else {
-//      parent.left
-//    }
-//    val right = if (parent.clipToPadding) {
-//      parent.right - parent.paddingRight
-//    } else {
-//      parent.right
-//    }
-//    canvas.clipRect(left, top, right, bottom)
-//
-//    val childCount = parent.childCount
-//    for (i in 0 until childCount) {
-//      val itemView = parent.getChildAt(i)
-//      val bounds = Rect()
-//      parent.getDecoratedBoundsWithMargins(itemView, bounds)
-//      canvas.drawRect(bounds, paint!!)
-//
-////      val itemRight = (bounds.right + itemView.translationY.roundToInt()).toFloat()
-////      val itemLeft = itemRight - widthPixels
-////      canvas.drawRect(itemLeft, top.toFloat(), itemRight, bottom.toFloat(), paint!!)
-//    }
-//    canvas.restore()
-//  }
-
 
 }

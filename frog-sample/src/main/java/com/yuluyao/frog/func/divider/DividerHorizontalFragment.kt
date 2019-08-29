@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import yuluyao.frog.decor.FrogDivider
 import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.fragment_divider_horizontal.*
 import yuluyao.frog.FrogAdapter
+import yuluyao.frog.drag.DragCallback
 
 /**
  * 描 述：
@@ -30,9 +33,9 @@ class DividerHorizontalFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     recycler.addItemDecoration(FrogDivider(4f, R.color.item_decoration))
+    setDrag(recycler)
 
     recycler.adapter = adapter
-
     Repo.refresh().subscribe {it->
       adapter.data = it
       adapter.notifyDataSetChanged()
@@ -40,14 +43,10 @@ class DividerHorizontalFragment : Fragment() {
 
   }
 
-//  companion object {
-//
-//    fun newInstance(): DividerHorizontalFragment {
-//      val args = Bundle()
-//      val fragment = DividerHorizontalFragment()
-//      fragment.arguments = args
-//      return fragment
-//    }
-//  }
+  private fun setDrag(recyclerView: RecyclerView) {
+    val helper = ItemTouchHelper(DragCallback())
+    helper.attachToRecyclerView(recyclerView)
+  }
+
 
 }
