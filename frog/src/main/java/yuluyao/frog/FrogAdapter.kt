@@ -9,26 +9,35 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 
-open class FrogAdapter<T>(private val layoutId: Int) :
+open class FrogAdapter<T>(private val layoutId: Int = 0) :
     RecyclerView.Adapter<FrogHolder>() {
   var data: ArrayList<T> = arrayListOf()
 
   override fun getItemCount(): Int = data.size
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FrogHolder {
     val inflater = LayoutInflater.from(parent.context)
-    val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutId, parent, false)
+    val layout = types?.get(viewType) ?: layoutId
+    val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layout, parent, false)
     return if (binding != null) {
       FrogHolder(binding.root)
     } else {
-      FrogHolder(inflater.inflate(layoutId, parent, false))
+      FrogHolder(inflater.inflate(layout, parent, false))
     }
-
   }
 
   override fun onBindViewHolder(holder: FrogHolder, position: Int) {
     val item = data[position]
     holder.bind(item)
   }
+
+  private var types: HashMap<Int, Int>? = null
+  fun initItemViewType(typeArray: IntArray, layoutArray: IntArray) {
+    types = hashMapOf()
+    for (i in 0 until typeArray.size) {
+      types!![typeArray[i]] = layoutArray[i]
+    }
+  }
+
 }
 
 class FrogHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

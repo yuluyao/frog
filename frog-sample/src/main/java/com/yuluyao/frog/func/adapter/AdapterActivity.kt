@@ -2,6 +2,7 @@ package com.yuluyao.frog.func.adapter
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.ViewGroup
 import com.yuluyao.frog.R
 import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.repo.Data
@@ -19,6 +20,15 @@ class AdapterActivity : BaseActivity() {
       holder.itemView.icon.setImageResource(item.iconRes)
       holder.itemView.title.text = item.title
       holder.itemView.content.text = item.content
+    }
+
+    override fun getItemViewType(position: Int): Int {
+      return super.getItemViewType(position)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FrogHolder {
+      return super.onCreateViewHolder(parent, viewType)
+
     }
   }
 

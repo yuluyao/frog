@@ -1,5 +1,17 @@
 package com.yuluyao.frog.repo;
 
+
+import com.yuluyao.frog.R;
+import com.yuluyao.frog.func.multi.ArticleBean;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * 描 述：
  * 作 者：Vegeta Yu
@@ -17,6 +29,8 @@ public class Head {
     this.iconRes = iconRes;
     this.name = name;
     this.description = description;
+
+
   }
 
   public int getId() {
@@ -50,4 +64,6 @@ public class Head {
   public void setDescription(String description) {
     this.description = description;
   }
+
+
 }

@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
+import kotlin.math.roundToInt
 
 /**
  * 描 述：
@@ -161,31 +162,57 @@ class FrogDivider(private val width: Float = 2F,
     drawDecoration(c, parent)
   }
 
+
+  private var bounds = Rect()
   private fun drawDecoration(canvas: Canvas, parent: RecyclerView) {
+    canvas.save()
+
     val top: Int
     val bottom: Int
     val left: Int
     val right: Int
     if (parent.clipToPadding) {
-      top = parent.top + parent.paddingTop
-      bottom = parent.bottom - parent.paddingBottom
-      left = parent.left + parent.paddingLeft
-      right = parent.right - parent.paddingRight
+      top = parent.paddingTop
+      bottom = parent.height - parent.paddingBottom
+      left = parent.paddingLeft
+      right = parent.width - parent.paddingRight
     } else {
-      top = parent.top
-      bottom = parent.bottom
-      left = parent.left
-      right = parent.right
+      top = 0
+      bottom = parent.height
+      left = 0
+      right = parent.width
     }
     canvas.clipRect(left, top, right, bottom)
 
     val childCount = parent.childCount
     for (i in 0 until childCount) {
       val itemView = parent.getChildAt(i)
-      val bounds = Rect()
       parent.getDecoratedBoundsWithMargins(itemView, bounds)
-      canvas.drawRect(bounds, paint!!)
+//      canvas.drawRect(bounds, paint!!)
+      when (layout_type) {
+        LAYOUT_VERTICAL -> {
+          canvas.drawRect(bounds.left.toFloat(), bounds.bottom - widthPixels,
+            bounds.right.toFloat(), bounds.bottom.toFloat(), paint!!)
+        }
+        LAYOUT_HORIZONTAL -> {
+          canvas.drawRect(bounds.right - widthPixels, bounds.top.toFloat(), bounds.right.toFloat(),
+            bounds.bottom.toFloat(), paint!!)
+        }
+        LAYOUT_GRID, LAYOUT_STAGGERED_GRID_VERTICAL, LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
+          canvas.drawRect(bounds.left.toFloat(), bounds.top.toFloat(), bounds.right.toFloat(),
+            bounds.top + widthPixels, paint!!)
+          canvas.drawRect(bounds.left.toFloat(), bounds.top.toFloat(), bounds.left + widthPixels,
+            bounds.bottom.toFloat(), paint!!)
+          canvas.drawRect(bounds.right - widthPixels, bounds.top.toFloat(), bounds.right.toFloat(),
+            bounds.bottom.toFloat(), paint!!)
+          canvas.drawRect(bounds.left.toFloat(), bounds.bottom - widthPixels,
+            bounds.right.toFloat(), bounds.bottom.toFloat(), paint!!)
+        }
+      }
     }
+
+    canvas.restore()
   }
+
 
 }

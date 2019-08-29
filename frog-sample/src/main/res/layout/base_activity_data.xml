@@ -4,6 +4,7 @@
   android:layout_height="match_parent"
   android:orientation="vertical"
   >
+    <include layout="@layout/layout_toolbar" />
 
     <android.support.v7.widget.RecyclerView
       android:id="@+id/recyclerView"
@@ -11,6 +12,5 @@
       android:layout_height="match_parent"
       />
 
-    <include layout="@layout/layout_toolbar" />
 
 </LinearLayout>
