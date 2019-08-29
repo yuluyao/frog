@@ -52,17 +52,13 @@ class FrogDivider(private val width: Float = 2F,
     var l = widthPixels / 2
     var t = widthPixels / 2
     var r = widthPixels / 2
-    val b = widthPixels / 2
+    var b = widthPixels / 2
     val childCount = parent.adapter!!.itemCount
     val itemPosition = parent.getChildAdapterPosition(view)
     if (isTop(itemPosition, spanCount, childCount)) {
       // 如果是第一行，则不需要绘制上边
       t = 0f
     }
-    //    if (isBottom(itemPosition, spanCount, childCount)) {
-    //      // 如果是最后一行，则不需要绘制底部
-    //      b = 0;
-    //    }
     if (isLeft(itemPosition, spanCount, childCount)) {
       // 如果是第一列，则不需要绘制左边
       l = 0f
@@ -71,6 +67,10 @@ class FrogDivider(private val width: Float = 2F,
       // 如果是最后一列，则不需要绘制右边
       r = 0f
     }
+    /*if (isBottom(itemPosition, spanCount, childCount)) {
+      // 如果是最后一行，则不需要绘制底部
+      b = 0f;
+    }*/
     outRect.set(l.toInt(), t.toInt(), r.toInt(), b.toInt())
   }
 
