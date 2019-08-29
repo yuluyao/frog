@@ -38,7 +38,7 @@ class ItemTouchActivity : BaseActivity() {
 
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.adapter = adapter
-    Repo.refresh().subscribe {
+    Repo.refresh().subscribe {it->
       adapter.data = it
       adapter.notifyDataSetChanged()
     }

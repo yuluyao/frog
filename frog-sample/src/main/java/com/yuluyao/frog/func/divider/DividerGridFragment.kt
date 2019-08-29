@@ -33,16 +33,27 @@ class DividerGridFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    recycler.layoutManager = GridLayoutManager(context, 3)
+    val gridLayoutManager = GridLayoutManager(context, 4)
+    gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+      override fun getSpanSize(position: Int): Int {
+        return when (position) {
+          0,4,8,9 -> 2
+          else -> 1
+        }
+      }
+    }
+
+    recycler.layoutManager = gridLayoutManager
     recycler.addItemDecoration(Divider(4f, R.color.item_decoration))
-    setDrag(recycler);
+//    setDrag(recycler);
+
 
     recycler.adapter = adapter
+    Repo.refresh(30).subscribe { it->
+      adapter.data = it
+      adapter.notifyDataSetChanged()
+    }
 
-    Repo.refresh().subscribe {
-        adapter.data = it
-        adapter.notifyDataSetChanged()
-      }
   }
 
   private fun setDrag(recyclerView: RecyclerView) {

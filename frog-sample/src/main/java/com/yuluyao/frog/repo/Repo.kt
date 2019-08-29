@@ -2,7 +2,7 @@ package com.yuluyao.frog.repo
 
 import android.content.Context
 import com.yuluyao.frog.R
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -42,31 +42,31 @@ object Repo {
     }
   }
 
-  fun refresh(): Observable<ArrayList<Data>> {
-    return Observable.just(datas.slice(0..9) as ArrayList<Data>)
+  fun refresh(): Single<ArrayList<Data>> {
+    return Single.just(datas.slice(0 until 10) as ArrayList<Data>)
       .delay(300, TimeUnit.MILLISECONDS)
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
   }
 
-  fun refresh(count: Int): Observable<ArrayList<Data>> {
-    return Observable.just(datas.subList(0, count) as ArrayList<Data>)
+  fun refresh(count: Int): Single<ArrayList<Data>> {
+    return Single.just(datas.slice(0 until count) as ArrayList<Data>)
       .delay(300, TimeUnit.MILLISECONDS)
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
   }
 
-  fun initData(size: Int): Observable<ArrayList<Data>> {
-    var size = size
-    size = if (size < 0) 0 else size
-    size = if (size > datas.size) datas.size else size
-    return Observable.just(datas.subList(0, size) as ArrayList<Data>)
-      .subscribeOn(Schedulers.io())
-      .delay(300, TimeUnit.MILLISECONDS)
-      .observeOn(AndroidSchedulers.mainThread())
-  }
+//  fun initData(size: Int): Observable<ArrayList<Data>> {
+//    var size = size
+//    size = if (size < 0) 0 else size
+//    size = if (size > datas.size) datas.size else size
+//    return Observable.just(datas.subList(0, size) as ArrayList<Data>)
+//      .subscribeOn(Schedulers.io())
+//      .delay(300, TimeUnit.MILLISECONDS)
+//      .observeOn(AndroidSchedulers.mainThread())
+//  }
 
-  fun load(id: Int): Observable<ArrayList<Data>> {
+  fun load(id: Int): Single<ArrayList<Data>> {
     if (id <= 0) {
       return refresh()
     }
@@ -81,13 +81,13 @@ object Repo {
         if (leftCount <= 0) {//没有了
 
         } else if (leftCount <= 10) {//没有下一页了
-          list = datas.subList(startPosition, lastPosition + 1) as ArrayList<Data>
+          list = datas.slice(startPosition until lastPosition + 1) as ArrayList<Data>
         } else {//正常，下一页
-          list = datas.subList(startPosition, startPosition + 10) as ArrayList<Data>
+          list = datas.slice(startPosition until startPosition + 10) as ArrayList<Data>
         }
       }
     }
-    return Observable.just(list)
+    return Single.just(list)
       .subscribeOn(Schedulers.io())
       .delay(300, TimeUnit.MILLISECONDS)
       .observeOn(AndroidSchedulers.mainThread())

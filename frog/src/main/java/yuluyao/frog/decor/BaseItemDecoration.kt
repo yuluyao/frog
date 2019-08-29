@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 open class BaseItemDecoration : RecyclerView.ItemDecoration() {
 
   protected var layout_type = LAYOUT_UNSPECIFIED
-  protected var mRecyclerView: RecyclerView?=null
+  protected var mRecyclerView: RecyclerView? = null
 
   override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
                               state: RecyclerView.State) {
@@ -58,11 +58,11 @@ open class BaseItemDecoration : RecyclerView.ItemDecoration() {
 
   companion object {
 
-     val LAYOUT_UNSPECIFIED = -1//未初始化
-     val LAYOUT_VERTICAL = 0//竖向
-     val LAYOUT_HORIZONTAL = 1//横向
-     val LAYOUT_GRID = 2//表格
-     val LAYOUT_STAGGERED_GRID_VERTICAL = 3//瀑布--vertical
-     val LAYOUT_STAGGERED_GRID_HORIZONTAL = 4//瀑布--horizontal
+    const val LAYOUT_UNSPECIFIED = -1//未初始化
+    const val LAYOUT_VERTICAL = 0//竖向
+    const val LAYOUT_HORIZONTAL = 1//横向
+    const val LAYOUT_GRID = 2//表格
+    const val LAYOUT_STAGGERED_GRID_VERTICAL = 3//瀑布--vertical
+    const val LAYOUT_STAGGERED_GRID_HORIZONTAL = 4//瀑布--horizontal
   }
 }

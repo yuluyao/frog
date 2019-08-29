@@ -36,7 +36,7 @@ class DividerHorizontalFragment : Fragment() {
 
     recycler.adapter = adapter
 
-    Repo.refresh().subscribe {
+    Repo.refresh().subscribe {it->
       adapter.data = it
       adapter.notifyDataSetChanged()
     }
