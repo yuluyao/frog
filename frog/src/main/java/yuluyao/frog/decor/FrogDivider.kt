@@ -18,6 +18,9 @@ class FrogDivider(private val width: Float = 2F,
   private var widthPixels: Float = 0.toFloat()
   private var paint: Paint? = null
 
+  // 使用全局变量，避免在onDraw()方法中频繁创建对象
+  private var bounds = Rect()
+
   init {
     paint = Paint()
   }
@@ -162,7 +165,8 @@ class FrogDivider(private val width: Float = 2F,
   }
 
 
-  private var bounds = Rect()
+
+
   private fun drawDecoration(canvas: Canvas, parent: RecyclerView) {
     canvas.save()
 
