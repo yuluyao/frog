@@ -54,7 +54,7 @@ class MainActivity : BaseActivity() {
     list.add(MenuItem("Adapter",0))
     list.add(MenuItem("DataBinding",0))
     list.add(MenuItem("Item Touch",0))
-    list.add(MenuItem("Divider",0))
+    list.add(MenuItem("FrogDivider",0))
     list.add(MenuItem("EmptyView",0))
     list.add(MenuItem("Expand",0))
     list.add(MenuItem("Footer",0))

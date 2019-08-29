@@ -8,13 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import yuluyao.frog.decor.Divider
+import yuluyao.frog.decor.FrogDivider
 import yuluyao.frog.drag.DragCallback
 import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
-import io.reactivex.annotations.NonNull
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_divider_grid.*
 import yuluyao.frog.FrogAdapter
 
@@ -44,7 +42,7 @@ class DividerGridFragment : Fragment() {
     }
 
     recycler.layoutManager = gridLayoutManager
-    recycler.addItemDecoration(Divider(4f, R.color.item_decoration))
+    recycler.addItemDecoration(FrogDivider(4f, R.color.item_decoration))
 //    setDrag(recycler);
 
 

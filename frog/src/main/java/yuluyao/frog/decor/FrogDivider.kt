@@ -16,21 +16,14 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
  * 作 者：Vegeta Yu
  * 时 间：2017/9/5 10:10
  */
-class Divider(private val width: Float = 0F,
-              private val colorRes:Int ) : BaseItemDecoration() {
+class FrogDivider(private val width: Float = 2F,
+                  private val colorRes: Int = android.R.color.transparent) : BaseItemDecoration() {
   private var widthPixels: Float = 0.toFloat()
   private var paint: Paint? = null
 
-
-//  constructor(private val width:Float= 0F)
-
   init {
     paint = Paint()
-//    //init divider width and color
-//    widthPixels = (Resources.getSystem().displayMetrics.density * width)
-//    paint!!.color = Resources.getSystem().getColor(colorRes)
   }
-
 
   override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
                               state: RecyclerView.State) {
@@ -80,8 +73,6 @@ class Divider(private val width: Float = 0F,
     }
     outRect.set(l.toInt(), t.toInt(), r.toInt(), b.toInt())
   }
-
-
 
 
   private fun isFirstRaw2(pos: Int, spanCount: Int, childCount: Int): Boolean {

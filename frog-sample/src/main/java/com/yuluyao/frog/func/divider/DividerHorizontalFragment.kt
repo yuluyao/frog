@@ -6,13 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import yuluyao.frog.decor.Divider
+import yuluyao.frog.decor.FrogDivider
 import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
-import io.reactivex.annotations.NonNull
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_divider_horizontal.*
 import yuluyao.frog.FrogAdapter
 
@@ -32,7 +29,7 @@ class DividerHorizontalFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-    recycler.addItemDecoration(Divider(2f, R.color.item_decoration))
+    recycler.addItemDecoration(FrogDivider(2f, R.color.item_decoration))
 
     recycler.adapter = adapter
 

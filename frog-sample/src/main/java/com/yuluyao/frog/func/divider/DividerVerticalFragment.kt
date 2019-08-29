@@ -8,12 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import yuluyao.frog.decor.Divider
+import yuluyao.frog.decor.FrogDivider
 import yuluyao.frog.swipe.SwipeCallback
 import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.fragment_divider_vertical.*
 import yuluyao.frog.FrogAdapter
 
@@ -33,7 +32,7 @@ class DividerVerticalFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     recycler.layoutManager = LinearLayoutManager(context)
-    recycler.addItemDecoration(Divider(2f, R.color.item_decoration))
+    recycler.addItemDecoration(FrogDivider(2f, R.color.item_decoration))
     setSwipe(recycler)
 
     recycler.adapter = adapter

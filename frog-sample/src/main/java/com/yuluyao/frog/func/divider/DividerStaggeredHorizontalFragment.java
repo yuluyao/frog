@@ -8,7 +8,7 @@
 //import android.view.LayoutInflater;
 //import android.view.View;
 //import android.view.ViewGroup;
-//import yuluyao.frog.decor.Divider;
+//import yuluyao.frog.decor.FrogDivider;
 //import com.yuluyao.frog.R;
 //import com.yuluyao.frog.repo.Data;
 //import com.yuluyao.frog.repo.Repo;
@@ -41,7 +41,7 @@
 //    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
 //    recyclerView.setLayoutManager(
 //        new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.HORIZONTAL));
-//    recyclerView.addItemDecoration(new Divider(2, R.color.colorAccent));
+//    recyclerView.addItemDecoration(new FrogDivider(2, R.color.colorAccent));
 //
 //    final DividerStaggeredHorizontalAdapter adapter = new DividerStaggeredHorizontalAdapter();
 //    recyclerView.setAdapter(adapter);
