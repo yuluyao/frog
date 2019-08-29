@@ -67,10 +67,10 @@ class FrogDivider(private val width: Float = 2F,
       // 如果是最后一列，则不需要绘制右边
       r = 0f
     }
-    /*if (isBottom(itemPosition, spanCount, childCount,view)) {
+    if (isBottom(itemPosition, spanCount, childCount, view)) {
       // 如果是最后一行，则不需要绘制底部
       b = 0f;
-    }*/
+    }
     outRect.set(l.toInt(), t.toInt(), r.toInt(), b.toInt())
   }
 
@@ -82,14 +82,13 @@ class FrogDivider(private val width: Float = 2F,
         val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
         val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
         val spanSize = sizeLookup.getSpanSize(pos)
-
-        if (spanGroupIndex == 0 && spanIndex + spanSize <= spanCount) {
-          return true
-        }
+        return spanGroupIndex == 0
       }
       LAYOUT_STAGGERED_GRID_VERTICAL -> return pos < spanCount
-      LAYOUT_STAGGERED_GRID_HORIZONTAL -> if ((pos + 1) % spanCount == 0) {
-        return true
+      LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
+        val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
+        val spanIndex = layoutParams.spanIndex
+        return spanIndex == 0
       }
     }
     return false
@@ -103,23 +102,14 @@ class FrogDivider(private val width: Float = 2F,
         val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
         val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
         val spanSize = sizeLookup.getSpanSize(pos)
-
-        if (spanIndex == 0) {
-          return true
-        }
+        return spanIndex == 0
       }
       LAYOUT_STAGGERED_GRID_VERTICAL -> {
         val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
         val spanIndex = layoutParams.spanIndex
-//        Log.i("vegeta", "spanIndex = " + spanIndex)
         return spanIndex == 0
       }
-      LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
-        val result = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
-        if (pos >= result) {
-          return true
-        }
-      }
+      LAYOUT_STAGGERED_GRID_HORIZONTAL -> return pos < spanCount
     }
     return false
   }
@@ -132,10 +122,7 @@ class FrogDivider(private val width: Float = 2F,
         val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
         val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
         val spanSize = sizeLookup.getSpanSize(pos)
-
-        if (spanIndex + spanSize - 1 == spanCount - 1) {
-          return true
-        }
+        return spanIndex + spanSize - 1 == spanCount - 1
       }
       // 如果是最后一列，则不需要绘制右边
       LAYOUT_STAGGERED_GRID_VERTICAL -> {
@@ -145,10 +132,7 @@ class FrogDivider(private val width: Float = 2F,
       }
       // 如果是最后一列，则不需要绘制右边
       LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
-        val result = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
-        if (pos >= result) {
-          return true
-        }
+        // todo 暂未实现
       }
     }
     return false
@@ -156,26 +140,19 @@ class FrogDivider(private val width: Float = 2F,
 
   private fun isBottom(pos: Int, spanCount: Int, childCount: Int, itemView: View): Boolean {
     when (layout_type) {
-      LAYOUT_GRID // 如果是最后一行，则不需要绘制底部
-      -> {
-        val sizeLookup = (mRecyclerView!!.layoutManager as GridLayoutManager).spanSizeLookup
-        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
-        val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
-        val spanSize = sizeLookup.getSpanSize(pos)
-
-        // 暂未实现判断方法
-        return false
+      // 如果是最后一行，则不需要绘制底部
+      LAYOUT_GRID -> {
+        // todo 暂未实现
       }
-      LAYOUT_STAGGERED_GRID_VERTICAL // 如果是最后一行，则不需要绘制底部
-      -> {
-        val result2 = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
-        if (pos >= result2) {
-          return true
-        }
+      // 如果是最后一行，则不需要绘制底部
+      LAYOUT_STAGGERED_GRID_VERTICAL -> {
+        // todo 暂未实现
       }
-      LAYOUT_STAGGERED_GRID_HORIZONTAL// 如果是最后一行，则不需要绘制底部
-      -> if ((pos + 1) % spanCount == 0) {
-        return true
+      // 如果是最后一行，则不需要绘制底部
+      LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
+        val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
+        val spanIndex = layoutParams.spanIndex
+        return spanIndex == spanCount - 1
       }
     }
     return false
