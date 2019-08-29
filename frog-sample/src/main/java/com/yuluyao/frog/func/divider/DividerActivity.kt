@@ -48,12 +48,12 @@ class DividerActivity : BaseActivity() {
           .replace(R.id.container, fragment2, "grid")
           .commit()
       }
-//      R.id.staggered_vertical -> {
-//        val fragment3 = DividerStaggeredVerticalFragment.newInstance()
-//        supportFragmentManager.beginTransaction()
-//          .replace(R.id.container, fragment3, "stagger_v")
-//          .commit()
-//      }
+      R.id.staggered_vertical -> {
+        val fragment3 = DividerStaggeredVerticalFragment()
+        supportFragmentManager.beginTransaction()
+          .replace(R.id.container, fragment3, "stagger_v")
+          .commit()
+      }
 //      R.id.staggered_horizontal -> {
 //        val fragment4 = DividerStaggeredHorizontalFragment.newInstance()
 //        supportFragmentManager.beginTransaction()

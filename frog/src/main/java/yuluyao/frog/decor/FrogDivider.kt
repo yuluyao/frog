@@ -1,15 +1,15 @@
 package yuluyao.frog.decor
 
-import android.annotation.SuppressLint
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
+import android.util.Log
 import android.view.View
 
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import kotlin.math.roundToInt
 
 /**
  * 描 述：
@@ -55,19 +55,19 @@ class FrogDivider(private val width: Float = 2F,
     val b = widthPixels / 2
     val childCount = parent.adapter!!.itemCount
     val itemPosition = parent.getChildAdapterPosition(view)
-    if (isFirstRaw2(itemPosition, spanCount, childCount)) {
+    if (isTop(itemPosition, spanCount, childCount)) {
       // 如果是第一行，则不需要绘制上边
       t = 0f
     }
-    //    if (isLastRaw2(itemPosition, spanCount, childCount)) {
+    //    if (isBottom(itemPosition, spanCount, childCount)) {
     //      // 如果是最后一行，则不需要绘制底部
     //      b = 0;
     //    }
-    if (isFirstColumn2(itemPosition, spanCount, childCount)) {
+    if (isLeft(itemPosition, spanCount, childCount)) {
       // 如果是第一列，则不需要绘制左边
       l = 0f
     }
-    if (isLastColumn2(itemPosition, spanCount, childCount)) {
+    if (isRight(itemPosition, spanCount, childCount)) {
       // 如果是最后一列，则不需要绘制右边
       r = 0f
     }
@@ -75,7 +75,7 @@ class FrogDivider(private val width: Float = 2F,
   }
 
 
-  private fun isFirstRaw2(pos: Int, spanCount: Int, childCount: Int): Boolean {
+  private fun isTop(pos: Int, spanCount: Int, childCount: Int): Boolean {
     when (layout_type) {
       LAYOUT_GRID -> {
         val sizeLookup = (mRecyclerView!!.layoutManager as GridLayoutManager).spanSizeLookup
@@ -83,15 +83,17 @@ class FrogDivider(private val width: Float = 2F,
         val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
         val spanSize = sizeLookup.getSpanSize(pos)
 
-        if (spanGroupIndex == 0) {
+        if (spanGroupIndex == 0 && spanIndex + spanSize <= spanCount) {
           return true
         }
       }
       LAYOUT_STAGGERED_GRID_VERTICAL -> {
-        val result2 = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
-        if (pos >= result2) {
-          return true
-        }
+//        val result2 = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
+//        if (pos >= result2) {
+//          return true
+//        }
+
+        return pos < spanCount
       }
       LAYOUT_STAGGERED_GRID_HORIZONTAL -> if ((pos + 1) % spanCount == 0) {
         return true
@@ -101,7 +103,7 @@ class FrogDivider(private val width: Float = 2F,
   }
 
 
-  private fun isFirstColumn2(pos: Int, spanCount: Int, childCount: Int): Boolean {
+  private fun isLeft(pos: Int, spanCount: Int, childCount: Int): Boolean {
     when (layout_type) {
       LAYOUT_GRID -> {
         val sizeLookup = (mRecyclerView!!.layoutManager as GridLayoutManager).spanSizeLookup
@@ -113,8 +115,13 @@ class FrogDivider(private val width: Float = 2F,
           return true
         }
       }
-      LAYOUT_STAGGERED_GRID_VERTICAL -> if (pos % spanCount == 0) {
-        return true
+      LAYOUT_STAGGERED_GRID_VERTICAL -> {
+        val holder = mRecyclerView!!.findViewHolderForAdapterPosition(pos)
+        val itemView = holder?.itemView ?: return false
+        val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
+        val spanIndex = layoutParams.spanIndex
+        Log.i("vegeta", "spanIndex = " + spanIndex)
+        return spanIndex == 0
       }
       LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
         val result = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
@@ -127,35 +134,7 @@ class FrogDivider(private val width: Float = 2F,
     return false
   }
 
-  private fun isLastRaw2(pos: Int, spanCount: Int, childCount: Int): Boolean {
-    when (layout_type) {
-      LAYOUT_GRID // 如果是最后一行，则不需要绘制底部
-      -> {
-        val sizeLookup = (mRecyclerView!!.layoutManager as GridLayoutManager).spanSizeLookup
-        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
-        val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
-        val spanSize = sizeLookup.getSpanSize(pos)
-
-        // 暂未实现判断方法
-        return false
-      }
-      LAYOUT_STAGGERED_GRID_VERTICAL // 如果是最后一行，则不需要绘制底部
-      -> {
-        val result2 = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
-        if (pos >= result2) {
-          return true
-        }
-      }
-      LAYOUT_STAGGERED_GRID_HORIZONTAL// 如果是最后一行，则不需要绘制底部
-      -> if ((pos + 1) % spanCount == 0) {
-        return true
-      }
-    }
-    return false
-  }
-
-
-  private fun isLastColumn2(pos: Int, spanCount: Int, childCount: Int): Boolean {
+  private fun isRight(pos: Int, spanCount: Int, childCount: Int): Boolean {
     when (layout_type) {
       // 如果是最后一列，则不需要绘制右边
       LAYOUT_GRID -> {
@@ -183,6 +162,33 @@ class FrogDivider(private val width: Float = 2F,
     //          return true;
     //        }
 
+    return false
+  }
+
+  private fun isBottom(pos: Int, spanCount: Int, childCount: Int): Boolean {
+    when (layout_type) {
+      LAYOUT_GRID // 如果是最后一行，则不需要绘制底部
+      -> {
+        val sizeLookup = (mRecyclerView!!.layoutManager as GridLayoutManager).spanSizeLookup
+        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
+        val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
+        val spanSize = sizeLookup.getSpanSize(pos)
+
+        // 暂未实现判断方法
+        return false
+      }
+      LAYOUT_STAGGERED_GRID_VERTICAL // 如果是最后一行，则不需要绘制底部
+      -> {
+        val result2 = childCount - if (childCount % spanCount == 0) spanCount else childCount % spanCount
+        if (pos >= result2) {
+          return true
+        }
+      }
+      LAYOUT_STAGGERED_GRID_HORIZONTAL// 如果是最后一行，则不需要绘制底部
+      -> if ((pos + 1) % spanCount == 0) {
+        return true
+      }
+    }
     return false
   }
 
@@ -288,79 +294,107 @@ class FrogDivider(private val width: Float = 2F,
 
   private fun drawVertical(canvas: Canvas, parent: RecyclerView) {
     canvas.save()
-    val left: Float
-    val right: Float
-    //if (parent.getClipToPadding()) {
-    left = parent.paddingLeft.toFloat()
-    right = (parent.width - parent.paddingRight).toFloat()
-    canvas.clipRect(left, parent.paddingTop.toFloat(), right,
-      (parent.height - parent.paddingBottom).toFloat())
-    //} else {
-    //  left = 0;
-    //  right = parent.getWidth();
-    //}
+    val left = parent.paddingLeft
+    val right = (parent.width - parent.paddingRight)
+    val top = if (parent.clipToPadding) {
+      parent.top + parent.paddingTop
+    } else {
+      parent.top
+    }
+    val bottom = if (parent.clipToPadding) {
+      parent.bottom - parent.paddingBottom
+    } else {
+      parent.bottom
+    }
+    canvas.clipRect(left, top, right, bottom)
 
     val childCount = parent.childCount
     for (i in 0 until childCount) {
-      val child = parent.getChildAt(i)
-      val mBounds = Rect()
-      parent.getDecoratedBoundsWithMargins(child, mBounds)
-      val bottom = (mBounds.bottom + Math.round(ViewCompat.getTranslationY(child))).toFloat()
-      val top = bottom - widthPixels
-      //mDivider.setBounds(left, top, right, bottom);
-      //mDivider.draw(canvas);
-      canvas.drawRect(left, top, right, bottom, paint!!)
+      val itemView = parent.getChildAt(i)
+      val bounds = Rect()
+      parent.getDecoratedBoundsWithMargins(itemView, bounds)
+      canvas.drawRect(bounds, paint!!)
+
+//      val itemBottom = (bounds.bottom + itemView.translationY.roundToInt()).toFloat()
+//      val itemTop = itemBottom - widthPixels
+//      canvas.drawRect(left.toFloat(), itemTop, right.toFloat(), itemBottom, paint!!)
     }
     canvas.restore()
   }
 
   private fun drawHorizontal(canvas: Canvas, parent: RecyclerView) {
     canvas.save()
-    val top: Float
-    val bottom: Float
-    //if (parent.getClipToPadding()) {
-    top = parent.paddingTop.toFloat()
-    bottom = (parent.height - parent.paddingBottom).toFloat()
-    canvas.clipRect(parent.paddingLeft.toFloat(), top,
-      (parent.width - parent.paddingRight).toFloat(),
-      bottom)
-    //} else {
-    //  top = 0;
-    //  bottom = parent.getHeight();
-    //}
+    val top = parent.paddingTop
+    val bottom = (parent.height - parent.paddingBottom)
+    val left = if (parent.clipToPadding) {
+      parent.left + parent.paddingLeft
+    } else {
+      parent.left
+    }
+    val right = if (parent.clipToPadding) {
+      parent.right - parent.paddingRight
+    } else {
+      parent.right
+    }
+    canvas.clipRect(left, top, right, bottom)
 
     val childCount = parent.childCount
     for (i in 0 until childCount) {
-      val child = parent.getChildAt(i)
-      val mBounds = Rect()
-      parent.layoutManager!!.getDecoratedBoundsWithMargins(child, mBounds)
-      val right = (mBounds.right + Math.round(ViewCompat.getTranslationX(child))).toFloat()
-      val left = right - widthPixels
-      //mDivider.setBounds(left, top, right, bottom);
-      //mDivider.draw(canvas);
-      canvas.drawRect(left, top, right, bottom, paint!!)
+      val itemView = parent.getChildAt(i)
+      val bounds = Rect()
+      parent.getDecoratedBoundsWithMargins(itemView, bounds)
+      canvas.drawRect(bounds, paint!!)
+
+//      val itemRight = (bounds.right + itemView.translationY.roundToInt()).toFloat()
+//      val itemLeft = itemRight - widthPixels
+//      canvas.drawRect(itemLeft, top.toFloat(), itemRight, bottom.toFloat(), paint!!)
     }
     canvas.restore()
   }
 
-  @SuppressLint("NewApi")
   private fun drawGrid(canvas: Canvas, parent: RecyclerView) {
-    drawGridVertical(canvas, parent)
-    //    drawGridHorizontal(canvas, parent);
+    val top: Int
+    val bottom: Int
+    val left: Int
+    val right: Int
+    if (parent.clipToPadding) {
+      top = parent.top + parent.paddingTop
+      bottom = parent.bottom - parent.paddingBottom
+      left = parent.left + parent.paddingLeft
+      right = parent.right - parent.paddingRight
+    } else {
+      top = parent.top
+      bottom = parent.bottom
+      left = parent.left
+      right = parent.right
+    }
+    canvas.clipRect(left, top, right, bottom)
+
+    val childCount = parent.childCount
+    for (i in 0 until childCount) {
+      val itemView = parent.getChildAt(i)
+      val bounds = Rect()
+      parent.getDecoratedBoundsWithMargins(itemView, bounds)
+      canvas.drawRect(bounds, paint!!)
+    }
+
   }
 
   private fun drawGridVertical(canvas: Canvas, parent: RecyclerView) {
+
+
     val childCount = parent.childCount
     for (i in 0 until childCount) {
-      val child = parent.getChildAt(i)
-      val mBounds = Rect()
-      parent.layoutManager!!.getDecoratedBoundsWithMargins(child, mBounds)
+      val itemView = parent.getChildAt(i)
+      val bounds = Rect()
+      parent.getDecoratedBoundsWithMargins(itemView, bounds)
+      canvas.drawRect(bounds, paint!!)
 
-      val top = (mBounds.top + Math.round(child.translationY)).toFloat()
-      val bottom = (mBounds.bottom + Math.round(child.translationY)).toFloat()
-      val right = (mBounds.right + Math.round(child.translationX)).toFloat()
-      val left = (mBounds.left + Math.round(child.translationX)).toFloat()
-      canvas.drawRect(left, top, right, bottom, paint!!)
+//      val top = bounds.top + itemView.translationY
+//      val bottom = bounds.bottom + itemView.translationY
+//      val right = bounds.right + itemView.translationX
+//      val left = bounds.left + itemView.translationX
+//      canvas.drawRect(left, top, right, bottom, paint!!)
     }
   }
 

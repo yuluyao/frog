@@ -47,7 +47,7 @@ class DividerGridFragment : Fragment() {
 
 
     recycler.adapter = adapter
-    Repo.refresh(30).subscribe { it->
+    Repo.refresh(40).subscribe { it->
       adapter.data = it
       adapter.notifyDataSetChanged()
     }
