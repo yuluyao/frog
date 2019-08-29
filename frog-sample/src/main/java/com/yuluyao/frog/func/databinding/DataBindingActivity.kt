@@ -7,10 +7,10 @@ import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.base_activity_data.*
-import yuluyao.frog.FrogBindingAdapter
+import yuluyao.frog.FrogAdapter
 
 class DataBindingActivity : BaseActivity() {
-  private val adapter =  FrogBindingAdapter<Data>(R.layout.item_data_binding)
+  private val adapter =  FrogAdapter<Data>(R.layout.item_data_binding)
 
   override fun onGetLayoutId(): Int = R.layout.base_activity_data
   override fun onCreate(savedInstanceState: Bundle?) {

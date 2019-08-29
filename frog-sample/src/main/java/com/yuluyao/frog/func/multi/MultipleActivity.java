@@ -5,7 +5,7 @@
 //import android.support.v7.app.AppCompatActivity;
 //import android.support.v7.widget.LinearLayoutManager;
 //import android.support.v7.widget.RecyclerView;
-//import yuluyao.frog.FrogBindingAdapter;
+//import yuluyao.frog.FrogAdapter;
 //import yuluyao.frog.anim.impl.SlideInLeftAnimator;
 //import com.yuluyao.frog.R;
 //import io.reactivex.Observable;
@@ -25,7 +25,7 @@
 //public class MultipleActivity extends AppCompatActivity {
 //
 //  private RecyclerView recyclerView;
-//  private FrogBindingAdapter adapter;
+//  private FrogAdapter adapter;
 //
 //  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
 //    super.onCreate(savedInstanceState);

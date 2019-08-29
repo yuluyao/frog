@@ -1,6 +1,6 @@
 //package com.yuluyao.frog.func.divider;
 //
-//import yuluyao.frog.FrogBindingAdapter;
+//import yuluyao.frog.FrogAdapter;
 //import yuluyao.frog.FrogHolder;
 //import com.yuluyao.frog.R;
 //import com.yuluyao.frog.repo.Data;
@@ -10,7 +10,7 @@
 // * 作 者：Vegeta Yu
 // * 时 间：2017/9/5 20:13
 // */
-//public class DividerStaggeredHorizontalAdapter extends FrogBindingAdapter<Data,FrogHolder> {
+//public class DividerStaggeredHorizontalAdapter extends FrogAdapter<Data,FrogHolder> {
 //
 //
 //  @Override protected void onSetItemLayout() {

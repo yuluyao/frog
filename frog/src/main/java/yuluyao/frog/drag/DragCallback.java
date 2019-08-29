@@ -4,7 +4,7 @@ import android.os.Build;
 
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import yuluyao.frog.FrogBindingAdapter;
+import yuluyao.frog.FrogAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +30,7 @@ public class DragCallback extends ItemTouchHelper.Callback {
       RecyclerView.ViewHolder target) {
     int fromPosition = viewHolder.getAdapterPosition();//得到拖动ViewHolder的position
     int toPosition = target.getAdapterPosition();//得到目标ViewHolder的position
-    List list = ((FrogBindingAdapter) recyclerView.getAdapter()).getData();
+    List list = ((FrogAdapter) recyclerView.getAdapter()).getData();
     if (fromPosition < toPosition) {
       for (int i = fromPosition; i < toPosition; i++) {
         if (list != null) {
