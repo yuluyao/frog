@@ -11,8 +11,8 @@ import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.activity_touch.*
 import kotlinx.android.synthetic.main.item_touch.view.*
-import yuluyao.frog.FrogAdapter
-import yuluyao.frog.FrogHolder
+import yuluyao.frog.FrogBindingAdapter
+import yuluyao.frog.FrogBindingHolder
 import yuluyao.frog.click.*
 
 /**
@@ -21,8 +21,10 @@ import yuluyao.frog.click.*
 
 class ItemTouchActivity : BaseActivity() {
 
-  private var adapter = object : FrogAdapter<Data>(R.layout.item_touch) {
-    override fun convert(holder: FrogHolder, item: Data) {
+  private var adapter = object : FrogBindingAdapter<Data>(R.layout.item_touch) {
+    override fun onBindViewHolder(holder: FrogBindingHolder, position: Int) {
+      super.onBindViewHolder(holder, position)
+      val item = data[position]
       holder.itemView.title.text = item.title
       holder.itemView.content.text = item.content
       holder.itemView.icon.setImageResource(item.iconRes)
@@ -30,7 +32,6 @@ class ItemTouchActivity : BaseActivity() {
   }
 
   override fun onGetLayoutId(): Int = R.layout.activity_touch
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     title = "Item Touch"

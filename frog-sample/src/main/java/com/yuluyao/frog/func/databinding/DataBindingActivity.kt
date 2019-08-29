@@ -7,10 +7,7 @@ import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.base_activity_data.*
-import kotlinx.android.synthetic.main.base_item_data.view.*
-import yuluyao.frog.FrogAdapter
 import yuluyao.frog.FrogBindingAdapter
-import yuluyao.frog.FrogHolder
 
 class DataBindingActivity : BaseActivity() {
   private val adapter =  FrogBindingAdapter<Data>(R.layout.item_data_binding)

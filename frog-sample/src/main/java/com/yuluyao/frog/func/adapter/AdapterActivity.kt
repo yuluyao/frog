@@ -8,12 +8,14 @@ import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.base_activity_data.*
 import kotlinx.android.synthetic.main.base_item_data.view.*
-import yuluyao.frog.FrogAdapter
-import yuluyao.frog.FrogHolder
+import yuluyao.frog.FrogBindingAdapter
+import yuluyao.frog.FrogBindingHolder
 
 class AdapterActivity : BaseActivity() {
-  private val adapter =object :  FrogAdapter<Data>(R.layout.base_item_data){
-    override fun convert(holder: FrogHolder, item: Data) {
+  private val adapter = object : FrogBindingAdapter<Data>(R.layout.base_item_data) {
+    override fun onBindViewHolder(holder: FrogBindingHolder, position: Int) {
+      super.onBindViewHolder(holder, position)
+      val item = data[position]
       holder.itemView.icon.setImageResource(item.iconRes)
       holder.itemView.title.text = item.title
       holder.itemView.content.text = item.content
@@ -26,7 +28,7 @@ class AdapterActivity : BaseActivity() {
     title = "Adapter"
 
     recyclerView.layoutManager = LinearLayoutManager(this)
-    recyclerView.adapter=adapter
+    recyclerView.adapter = adapter
     Repo.refresh().subscribe {
       adapter.data = it
       adapter.notifyDataSetChanged()

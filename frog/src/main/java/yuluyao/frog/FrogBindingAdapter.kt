@@ -3,6 +3,8 @@ package yuluyao.frog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -14,15 +16,13 @@ open class FrogBindingAdapter<T>(private val layoutId: Int) :
   override fun getItemCount(): Int = data.size
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FrogBindingHolder {
     val inflater = LayoutInflater.from(parent.context)
-//    try {
-//      val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutId, parent, false)
-//      return FrogBindingHolder(binding.root)
-//    } catch (e: Exception) {
-//      val root = inflater.inflate(layoutId, parent, false)
-//      return FrogBindingHolder(root)
-//    }
     val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutId, parent, false)
-    return FrogBindingHolder(binding.root)
+    return if (binding != null) {
+      FrogBindingHolder(binding.root)
+    } else {
+      FrogBindingHolder(inflater.inflate(layoutId, parent, false))
+    }
+
   }
 
   override fun onBindViewHolder(holder: FrogBindingHolder, position: Int) {
@@ -38,3 +38,9 @@ class FrogBindingHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     binding?.executePendingBindings()
   }
 }
+
+@BindingAdapter("src")
+fun imageResource(v: ImageView, res: Int) {
+  v.setImageResource(res)
+}
+
