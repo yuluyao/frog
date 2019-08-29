@@ -32,9 +32,8 @@ class DividerVerticalFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-//    val recyclerView = view.findViewById<View>(R.id.recycler) as RecyclerView
     recycler.layoutManager = LinearLayoutManager(context)
-    recycler.addItemDecoration(Divider(1f, R.color.colorAccent))
+    recycler.addItemDecoration(Divider(2f, R.color.item_decoration))
     setSwipe(recycler)
 
     recycler.adapter = adapter
