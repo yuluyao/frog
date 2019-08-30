@@ -1,6 +1,6 @@
-include ':supportLib',
-        ':supportSample',
-//include ':xLib',
-//        ':xSample'
+//include ':supportLib',
+//        ':supportSample',
+include ':xLib',
+        ':xSample'
 
 rootProject.name = 'frog'
