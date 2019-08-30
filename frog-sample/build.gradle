@@ -7,7 +7,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.yuluyao.frog"
+        applicationId "com.yuluyao.frog.sample.support"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
