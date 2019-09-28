@@ -1,6 +1,1 @@
-include ':froglib',
-        ':frogsample'
-//include ':xLib',
-//        ':xSample'
-
-//rootProject.name = 'frog'
+include ':froglib', ':frogsample'
