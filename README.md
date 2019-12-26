@@ -1,6 +1,5 @@
 # Frog
-[![Release](https://jitpack.io/v/yuluyao/frog.svg)](https://jitpack.io/#yuluyao/frog)
-
+[![version](https://jitpack.io/v/yuluyao/frog.svg)](https://jitpack.io/#yuluyao/frog)
 
 使用RecyclerView是件很简单的事件
 
