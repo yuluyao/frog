@@ -20,13 +20,13 @@ abstract class BaseTouchListener : RecyclerView.SimpleOnItemTouchListener() {
     return detector!!.onTouchEvent(e)
   }
 
-  override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-    super.onTouchEvent(rv, e)
-  }
+//  override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+//    super.onTouchEvent(rv, e)
+//  }
 
-  override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-    super.onRequestDisallowInterceptTouchEvent(disallowIntercept)
-  }
+//  override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+//    super.onRequestDisallowInterceptTouchEvent(disallowIntercept)
+//  }
 
 
   internal fun getTransformedMotionEvent(event: MotionEvent, child: View): MotionEvent? {

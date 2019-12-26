@@ -37,15 +37,6 @@ abstract class FrogClickListener : BaseTouchListener() {
       return true
     }
 
-//    override fun onShowPress(e: MotionEvent?) {
-//      e ?: return
-//      val itemView = recyclerView?.findChildViewUnder(e.x, e.y)
-//      itemView ?: return
-//      val position = recyclerView?.getChildAdapterPosition(itemView)
-//      position ?: return
-//      itemView.dispatchTouchEvent(getTransformedMotionEvent(e,itemView))
-//    }
-
   }
 
 
