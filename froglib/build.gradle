@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-group = 'com.github.yuluyao'
 apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.yuluyao'
 
 android {
   compileSdkVersion 28
