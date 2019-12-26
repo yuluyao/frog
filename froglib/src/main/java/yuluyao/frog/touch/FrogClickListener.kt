@@ -25,9 +25,12 @@ abstract class FrogClickListener : BaseTouchListener() {
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
       e ?: return false
       itemView ?: return false
+      recyclerView ?: return false
 
-      val position = recyclerView?.getChildAdapterPosition(itemView!!)
-      position ?: return false
+      val position = recyclerView!!.getChildAdapterPosition(itemView!!)
+      if (position == -1) {
+        return false
+      }
 
       itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
       onItemClicked(position)

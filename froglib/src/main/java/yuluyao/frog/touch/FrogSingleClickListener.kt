@@ -32,10 +32,12 @@ abstract class FrogSingleClickListener(val timeGap: Long = 500L) : BaseTouchList
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
       e ?: return false
       itemView ?: return false
+      recyclerView ?: return false
 
-      val position = recyclerView?.getChildAdapterPosition(itemView!!)
-      position ?: return false
-
+      val position = recyclerView!!.getChildAdapterPosition(itemView!!)
+      if (position == -1) {
+        return false
+      }
       // 丢弃多余的点击
       val clickTimeMills = System.currentTimeMillis()
       if (clickTimeMills - lastClickTimeMills < timeGap) {

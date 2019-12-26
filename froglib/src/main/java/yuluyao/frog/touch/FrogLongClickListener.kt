@@ -26,9 +26,12 @@ abstract class FrogLongClickListener : BaseTouchListener() {
       super.onLongPress(e)
       e ?: return
       itemView ?: return
+      recyclerView ?: return
 
-      val position = recyclerView?.getChildAdapterPosition(itemView!!)
-      position ?: return
+      val position = recyclerView!!.getChildAdapterPosition(itemView!!)
+      if (position == -1) {
+        return
+      }
 
       onItemClicked(position)
       return

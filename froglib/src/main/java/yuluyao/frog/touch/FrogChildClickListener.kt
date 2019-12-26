@@ -42,14 +42,17 @@ abstract class FrogChildClickListener : BaseTouchListener() {
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
       e ?: return false
       itemView ?: return false
+      recyclerView ?: return false
 
       // 查找被点击的 View
       target = null
       val clickView = findTarget(itemView!!, e.rawX.toInt(), e.rawY.toInt())
       clickView ?: return false
 
-      val position = recyclerView?.getChildAdapterPosition(itemView!!)
-      position ?: return false
+      val position = recyclerView!!.getChildAdapterPosition(itemView!!)
+      if (position == -1) {
+        return false
+      }
 
       itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
       onChildClicked(position, clickView.id)
