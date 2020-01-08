@@ -5,7 +5,7 @@
 
 1. `RecyclerView`**适配器**；
 2. `RecyclerView`**分割线**；
-3. `RecyclerView`**点击事件**。
+3. `RecyclerView`**点击监听**。
 
 ## 一、install
 在 project 的 build.gradle 中添加：
@@ -25,9 +25,9 @@
 
 ## 二、使用
 
-### `RecyclerView`适配器
+### 1. `RecyclerView`适配器
 
-#### 使用DataBinding：
+如果使用DataBinding：
 ```Kotlin
     val adapter = FrogAdapter<FooBean>(R.layout.item_foo_list)
 
@@ -45,7 +45,7 @@
     </data>
 ```
 
-#### 不使用DataBinding则要在代码中处理数据绑定：
+如果不使用DataBinding，则要在代码中处理数据绑定：
 ```Kotlin
     val adapter =object : FrogAdapter<FooBean>(R.layout.item_foo_list){
       override fun onBindViewHolder(holder: FrogHolder, position: Int) {
@@ -55,7 +55,7 @@
     }
 ```
 
-### `RecyclerView`分割线
+### 2. `RecyclerView`分割线
 
 FrogDivider可以处理5种布局的分割线：LinearLayoutManager（vertical）、LinearLayoutManager（horizontal）、
 GridLayoutManager、StaggeredGridLayoutManager（vertical）、StaggeredGridLayoutManager（horizontal）。
@@ -63,7 +63,7 @@ GridLayoutManager、StaggeredGridLayoutManager（vertical）、StaggeredGridLayo
     recycler_view?.addItemDecoration(FrogDivider(5f))
 ```
 
-### `RecyclerView`点击事件
+### 3. `RecyclerView`点击监听
 
 点击事件：
 ```Kotlin
