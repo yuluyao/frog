@@ -3,9 +3,9 @@
 
 解决使用`RecyclerView`常见的3个问题：
 
-1. `RecyclerView`适配器；
-2. `RecyclerView`分割线；
-3. `RecyclerView`点击事件。
+1. `RecyclerView`**适配器**；
+2. `RecyclerView`**分割线**；
+3. `RecyclerView`**点击事件**。
 
 ## 一、install
 在 project 的 build.gradle 中添加：
@@ -28,7 +28,7 @@
 ### `RecyclerView`适配器
 
 #### 使用DataBinding：
-```Java
+```Kotlin
     val adapter = FrogAdapter<FooBean>(R.layout.item_foo_list)
 
     //...
@@ -46,7 +46,7 @@
 ```
 
 #### 不使用DataBinding则要在代码中处理数据绑定：
-```
+```Kotlin
     val adapter =object : FrogAdapter<FooBean>(R.layout.item_foo_list){
       override fun onBindViewHolder(holder: FrogHolder, position: Int) {
         super.onBindViewHolder(holder, position)
@@ -59,14 +59,14 @@
 
 FrogDivider可以处理5种布局的分割线：LinearLayoutManager（vertical）、LinearLayoutManager（horizontal）、
 GridLayoutManager、StaggeredGridLayoutManager（vertical）、StaggeredGridLayoutManager（horizontal）。
-```Java
+```Kotlin
     recycler_view?.addItemDecoration(FrogDivider(5f))
 ```
 
 ### `RecyclerView`点击事件
 
 点击事件：
-```Java
+```Kotlin
     recycler_view?.addOnItemTouchListener(object : FrogClickListener() {
       override fun onItemClicked(position: Int) {
         // ...
@@ -75,7 +75,8 @@ GridLayoutManager、StaggeredGridLayoutManager（vertical）、StaggeredGridLayo
 ```
 
 另外，还有：
-FrogSingleClickListener：严格单次点击监听。
-FrogLongClickListener：长按监听。
-FrogChildClickListener：item内部View点击监听。
-等等...
+
+1. FrogSingleClickListener：严格单次点击监听。
+2. FrogLongClickListener：长按监听。
+3. FrogChildClickListener：item内部View点击监听。
+4. 等等...
