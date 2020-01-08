@@ -33,7 +33,7 @@ open class FrogAdapter<T>(private val layoutId: Int = 0) :
   private var types: HashMap<Int, Int>? = null
   fun initItemViewType(typeArray: IntArray, layoutArray: IntArray) {
     types = hashMapOf()
-    for (i in 0 until typeArray.size) {
+    for (i in typeArray.indices) {
       types!![typeArray[i]] = layoutArray[i]
     }
   }

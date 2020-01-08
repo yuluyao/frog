@@ -1,11 +1,15 @@
 # Frog
 [![version](https://jitpack.io/v/yuluyao/frog.svg)](https://jitpack.io/#yuluyao/frog)
 
-使用RecyclerView是件很简单的事件
+解决使用`RecyclerView`常见的3个问题：
 
-## 一、引用项目
+1. `RecyclerView`适配器；
+2. `RecyclerView`分割线；
+3. `RecyclerView`点击事件。
+
+## 一、install
 在 project 的 build.gradle 中添加：
-```
+```Groovy
  allprojects {
    repositories {
      ...
@@ -14,9 +18,64 @@
  }
 ```
 在 module 的 build.gradle 中添加：
-```
-  compile 'com.github.yuluyao:frog:{version}'
+```Groovy
+  implementation 'com.github.yuluyao:frog:${version}'
 
 ```
 
+## 二、使用
 
+### `RecyclerView`适配器
+
+#### 使用DataBinding：
+```Java
+    val adapter = FrogAdapter<FooBean>(R.layout.item_foo_list)
+
+    //...
+    recycler_view?.adapter = adapter
+```
+
+```xml
+    <data>
+        <!--  这里的name只能是item -->
+        <variable
+          name="item"
+          type="com.a.b.c.FooBean"
+          />
+    </data>
+```
+
+#### 不使用DataBinding则要在代码中处理数据绑定：
+```
+    val adapter =object : FrogAdapter<FooBean>(R.layout.item_foo_list){
+      override fun onBindViewHolder(holder: FrogHolder, position: Int) {
+        super.onBindViewHolder(holder, position)
+        // ...
+      }
+    }
+```
+
+### `RecyclerView`分割线
+
+FrogDivider可以处理5种布局的分割线：LinearLayoutManager（vertical）、LinearLayoutManager（horizontal）、
+GridLayoutManager、StaggeredGridLayoutManager（vertical）、StaggeredGridLayoutManager（horizontal）。
+```Java
+    recycler_view?.addItemDecoration(FrogDivider(5f))
+```
+
+### `RecyclerView`点击事件
+
+点击事件：
+```Java
+    recycler_view?.addOnItemTouchListener(object : FrogClickListener() {
+      override fun onItemClicked(position: Int) {
+        // ...
+      }
+    })
+```
+
+另外，还有：
+FrogSingleClickListener：严格单次点击监听。
+FrogLongClickListener：长按监听。
+FrogChildClickListener：item内部View点击监听。
+等等...
