@@ -19,7 +19,7 @@
 ```
 在 module 的 build.gradle 中添加：
 ```Groovy
-  implementation 'com.github.yuluyao:frog:${version}'
+  implementation 'com.github.yuluyao:frog:0.2.6'
 
 ```
 
@@ -76,7 +76,7 @@ GridLayoutManager、StaggeredGridLayoutManager（vertical）、StaggeredGridLayo
 
 另外，还有：
 
-1. FrogSingleClickListener：严格单次点击监听。
-2. FrogLongClickListener：长按监听。
-3. FrogChildClickListener：item内部View点击监听。
+1. `FrogSingleClickListener`：严格单次点击监听。
+2. `FrogLongClickListener`：长按监听。
+3. `FrogChildClickListener`：item内部View点击监听。
 4. 等等...
