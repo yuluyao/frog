@@ -55,7 +55,7 @@ FrogAdapter是一个简洁的适配器，源码只有50几行代码。使用Frog
 
 如果不使用DataBinding，则要在代码中处理数据绑定：
 ```Kotlin
-    val adapter =object : FrogAdapter<FooBean>(R.layout.item_foo_list){
+    val adapter = object : FrogAdapter<FooBean>(R.layout.item_foo_list){
       override fun onBindViewHolder(holder: FrogHolder, position: Int) {
         super.onBindViewHolder(holder, position)
         // ...
