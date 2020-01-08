@@ -7,7 +7,7 @@
 2. `RecyclerView`**分割线**；
 3. `RecyclerView`**点击监听**。
 
-FrogAdapter是一个简洁的适配器，源码只有50几行代码。使用FrogAdapter，只需要**1行**代码（见下文）。
+FrogAdapter是一个简洁的适配器，源码只有50几行代码。使用FrogAdapter，只需要**1行代码**（见下文）。
 
 ## 一、install
 在 project 的 build.gradle 中添加：
@@ -59,13 +59,20 @@ FrogAdapter是一个简洁的适配器，源码只有50几行代码。使用Frog
 
 ### 2. `RecyclerView`分割线
 
-FrogDivider可以处理5种布局的分割线：LinearLayoutManager（vertical）、LinearLayoutManager（horizontal）、
-GridLayoutManager、StaggeredGridLayoutManager（vertical）、StaggeredGridLayoutManager（horizontal）。
+FrogDivider可以处理5种布局的分割线：
+
+- LinearLayoutManager（vertical）
+- LinearLayoutManager（horizontal）
+- GridLayoutManager
+- StaggeredGridLayoutManager（vertical）
+- StaggeredGridLayoutManager（horizontal）
+
 ```Kotlin
     recycler_view?.addItemDecoration(FrogDivider())
     // or
-    // recycler_view?.addItemDecoration(FrogDivider(4f))
-    // recycler_view?.addItemDecoration(FrogDivider(6f, R.color.transparent))
+    recycler_view?.addItemDecoration(FrogDivider(4f))
+    // or
+    recycler_view?.addItemDecoration(FrogDivider(6f, R.color.transparent))
 ```
 
 ### 3. `RecyclerView`点击监听
