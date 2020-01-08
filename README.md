@@ -31,10 +31,16 @@ FrogAdapter是一个简洁的适配器，源码只有50几行代码。使用Frog
 
 如果使用DataBinding：
 ```Kotlin
+    // 1行代码adapter，不必使用继承
     val adapter = FrogAdapter<FooBean>(R.layout.item_foo_list)
 
-    //...
+    // 设置adapter
     recycler_view?.adapter = adapter
+
+    // ...
+
+    // 更新数据
+    adapter.notifyDataSetChanged()
 ```
 
 ```xml
