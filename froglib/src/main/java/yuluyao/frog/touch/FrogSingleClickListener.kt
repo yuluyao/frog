@@ -9,7 +9,7 @@ import android.view.View
  * timeGap: 点击最小间隔，小于此间隔的点击不被响应
  */
 abstract class FrogSingleClickListener(val timeGap: Long = 500L) : BaseTouchListener() {
-
+  override val listenedChildrenIds: IntArray = intArrayOf() // 这里不用处理子View手势
   abstract fun onItemClicked(position: Int)
 
   // 上次点击的时刻
@@ -42,7 +42,7 @@ abstract class FrogSingleClickListener(val timeGap: Long = 500L) : BaseTouchList
       val clickTimeMills = System.currentTimeMillis()
       if (clickTimeMills - lastClickTimeMills < timeGap) {
         lastClickTimeMills = clickTimeMills
-        return false
+        return true
       }
       lastClickTimeMills = clickTimeMills
 

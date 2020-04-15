@@ -5,7 +5,7 @@ import android.view.MotionEvent
 import android.view.View
 
 abstract class FrogClickListener : BaseTouchListener() {
-
+  override val listenedChildrenIds: IntArray = intArrayOf() // 这里不用处理子View手势
   abstract fun onItemClicked(position: Int)
 
   override val gestureListener: GestureDetector.SimpleOnGestureListener

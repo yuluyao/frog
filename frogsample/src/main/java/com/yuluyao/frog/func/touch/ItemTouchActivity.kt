@@ -2,6 +2,7 @@ package com.yuluyao.frog.func.touch
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -38,7 +39,7 @@ class ItemTouchActivity : BaseActivity() {
 
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.adapter = adapter
-    Repo.refresh().subscribe {it->
+    Repo.refresh().subscribe { it ->
       adapter.data = it
       adapter.notifyDataSetChanged()
     }
@@ -57,12 +58,14 @@ class ItemTouchActivity : BaseActivity() {
     recyclerView.removeOnItemTouchListener(single_click_listener)
     recyclerView.removeOnItemTouchListener(intercept_click_listener)
     recyclerView.removeOnItemTouchListener(child_click_listener)
+    recyclerView.removeOnItemTouchListener(child_single_click_listener)
     when (item.itemId) {
       R.id.click -> recyclerView.addOnItemTouchListener(click_listener)
       R.id.long_click -> recyclerView.addOnItemTouchListener(long_click_listenr)
       R.id.single_click -> recyclerView.addOnItemTouchListener(single_click_listener)
       R.id.intercept_click -> recyclerView.addOnItemTouchListener(intercept_click_listener)
       R.id.child_click -> recyclerView.addOnItemTouchListener(child_click_listener)
+      R.id.child_single_click -> recyclerView.addOnItemTouchListener(child_single_click_listener)
     }
     return true
   }
@@ -71,18 +74,21 @@ class ItemTouchActivity : BaseActivity() {
   private val click_listener = object : FrogClickListener() {
     override fun onItemClicked(position: Int) {
       Toast.makeText(this@ItemTouchActivity, "点击 item$position", Toast.LENGTH_SHORT).show()
+      Log.i("vegeta", "点击 item$position")
     }
   }
 
   private val long_click_listenr = object : FrogLongClickListener() {
     override fun onItemClicked(position: Int) {
       Toast.makeText(this@ItemTouchActivity, "长按 item$position", Toast.LENGTH_SHORT).show()
+      Log.i("vegeta", "长按 item$position")
     }
   }
 
   private val single_click_listener = object : FrogSingleClickListener() {
     override fun onItemClicked(position: Int) {
       Toast.makeText(this@ItemTouchActivity, "单击 item$position", Toast.LENGTH_SHORT).show()
+      Log.i("vegeta", "单击 item$position")
     }
   }
 
@@ -90,9 +96,11 @@ class ItemTouchActivity : BaseActivity() {
     override fun onItemClicked(position: Int): Boolean {
       if (position < 3) {
         Toast.makeText(this@ItemTouchActivity, "不响应点击 $position", Toast.LENGTH_SHORT).show()
+        Log.i("vegeta", "不响应点击 $position")
         return false
       } else {
         Toast.makeText(this@ItemTouchActivity, "响应点击 $position", Toast.LENGTH_SHORT).show()
+        Log.i("vegeta", "响应点击 $position")
         return true
       }
     }
@@ -102,12 +110,37 @@ class ItemTouchActivity : BaseActivity() {
     override val listenedChildrenIds: IntArray = intArrayOf(R.id.icon, R.id.title, R.id.root)
     override fun onChildClicked(position: Int, viewId: Int) {
       when (viewId) {
-        R.id.icon ->
+        R.id.icon -> {
           Toast.makeText(this@ItemTouchActivity, "click icon", Toast.LENGTH_SHORT).show()
-        R.id.title ->
+          Log.i("vegeta", "click icon")
+        }
+        R.id.title -> {
           Toast.makeText(this@ItemTouchActivity, "click title", Toast.LENGTH_SHORT).show()
-        R.id.root ->
+          Log.i("vegeta", "click title")
+        }
+        R.id.root -> {
           Toast.makeText(this@ItemTouchActivity, "click root view", Toast.LENGTH_SHORT).show()
+          Log.i("vegeta", "click root view")
+        }
+      }
+    }
+  }
+
+  private val child_single_click_listener = object : FrogChildSingleClickListener() {
+    override val listenedChildrenIds: IntArray = intArrayOf(R.id.icon, R.id.title, R.id.root)
+    override fun onChildClicked(position: Int, viewId: Int) {
+      when (viewId) {
+        R.id.icon -> {
+          Toast.makeText(this@ItemTouchActivity, "single click icon", Toast.LENGTH_SHORT).show()
+          Log.i("vegeta", "single click icon")
+        }
+        R.id.title -> {
+          Toast.makeText(this@ItemTouchActivity, "single click title", Toast.LENGTH_SHORT).show()
+          Log.i("vegeta", "single click title")
+        }
+        R.id.root -> {
+          Log.i("vegeta", "single click root view")
+        }
       }
     }
   }

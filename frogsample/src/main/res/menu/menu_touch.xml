@@ -28,4 +28,9 @@
     android:title="child_click"
     app:showAsAction="never" />
 
+  <item
+    android:id="@+id/child_single_click"
+    android:title="child_single_click"
+    app:showAsAction="never" />
+
 </menu>
