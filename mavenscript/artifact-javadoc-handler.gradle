@@ -1,4 +1,3 @@
-//def gradlePluginVersion = project.hasProperty('mavPluginVersion') ? project.mavPluginVersion : 'master'
 apply from: "$rootDir/mavenscript/utils.gradle"
 
 if (isAndroidProject()) {

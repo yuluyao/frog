@@ -21,7 +21,7 @@ FrogAdapter是一个简洁的适配器，源码只有50几行代码。使用Frog
 ```
 在 module 的 build.gradle 中添加：
 ```Groovy
-  implementation 'com.github.yuluyao:frog:0.2.6'
+  implementation 'com.github.yuluyao:frog:0.2.9'
 
 ```
 

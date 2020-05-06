@@ -1,6 +1,5 @@
 apply plugin: 'maven-publish'
 
-//def gradlePluginVersion = project.hasProperty('mavPluginVersion') ? project.mavPluginVersion : 'master'
 apply from: "$rootDir/mavenscript/utils.gradle"
 apply from: "$rootDir/mavenscript/artifact-javadoc-handler.gradle"
 apply from: "$rootDir/mavenscript/artifact-pom-manager.gradle"
