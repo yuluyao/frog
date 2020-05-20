@@ -9,8 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 
-open class FrogAdapter<T>(private val layoutId: Int = 0) :
-    RecyclerView.Adapter<FrogHolder>() {
+open class FrogAdapter<T>(private val layoutId: Int = 0) : RecyclerView.Adapter<FrogHolder>() {
   var data: ArrayList<T> = arrayListOf()
 
   override fun getItemCount(): Int = data.size

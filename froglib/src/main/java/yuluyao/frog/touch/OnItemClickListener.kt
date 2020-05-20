@@ -4,9 +4,9 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-abstract class FrogInterceptClickListener : BaseTouchListener() {
+abstract class OnItemClickListener : BaseTouchListener() {
   override val listenedChildrenIds: IntArray = intArrayOf() // 这里不用处理子View手势
-  abstract fun onItemClicked(position: Int): Boolean
+  abstract fun onItemClicked(position: Int)
 
   override val gestureListener: GestureDetector.SimpleOnGestureListener
     get() = SingleTapUpListener()
@@ -17,6 +17,8 @@ abstract class FrogInterceptClickListener : BaseTouchListener() {
     override fun onDown(e: MotionEvent?): Boolean {
       e ?: return false
       itemView = recyclerView?.findChildViewUnder(e.x, e.y)
+      // 设置 item view 为可点击
+      itemView?.isClickable = true
       return super.onDown(e)
     }
 
@@ -30,13 +32,10 @@ abstract class FrogInterceptClickListener : BaseTouchListener() {
         return false
       }
 
-      val consumed = onItemClicked(position)
-      if (consumed) {
-        itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
-      }
-      return consumed
+      itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
+      onItemClicked(position)
+      return true
     }
-
 
   }
 

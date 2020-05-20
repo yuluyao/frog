@@ -13,11 +13,12 @@ import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.func.adapter.AdapterActivity
 import com.yuluyao.frog.func.databinding.DataBindingActivity
 import com.yuluyao.frog.func.divider.DividerActivity
+import com.yuluyao.frog.func.ff.FFAdapterActivity
 import com.yuluyao.frog.func.multi.MultiActivity
 import com.yuluyao.frog.func.touch.ItemTouchActivity
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.activity_main.*
-import yuluyao.frog.touch.FrogClickListener
+import yuluyao.frog.touch.OnItemClickListener
 import java.util.*
 
 class MainActivity : BaseActivity() {
@@ -35,7 +36,7 @@ class MainActivity : BaseActivity() {
 
   private fun initView() {
     recyclerView.layoutManager = LinearLayoutManager(this)
-    recyclerView.addOnItemTouchListener(object : FrogClickListener() {
+    recyclerView.addOnItemTouchListener(object : OnItemClickListener() {
       override fun onItemClicked(position: Int) {
         startByPosition(position)
 
@@ -57,6 +58,7 @@ class MainActivity : BaseActivity() {
     list.add(MenuItem("DataBinding",0))
     list.add(MenuItem("ItemTouch",0))
     list.add(MenuItem("Divider",0))
+    list.add(MenuItem("FFAdapter",0))
 
 //    list.add(MenuItem("Expand",0))
 //    list.add(MenuItem("Footer",0))
@@ -80,6 +82,7 @@ class MainActivity : BaseActivity() {
       2 -> intent = Intent(this, DataBindingActivity::class.java)
       3 -> intent = Intent(this, ItemTouchActivity::class.java)
       4 -> intent = Intent(this, DividerActivity::class.java)
+      5 -> intent = Intent(this, FFAdapterActivity::class.java)
 //      4 -> intent = Intent(this, ExpandActivity::class.java)
 //      5 -> intent = Intent(this, FootActivity::class.java)
 //      6 -> intent = Intent(this, HeadActivity::class.java)

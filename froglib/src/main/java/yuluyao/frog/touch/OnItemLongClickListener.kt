@@ -4,7 +4,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 
-abstract class FrogClickListener : BaseTouchListener() {
+abstract class OnItemLongClickListener : BaseTouchListener() {
   override val listenedChildrenIds: IntArray = intArrayOf() // 这里不用处理子View手势
   abstract fun onItemClicked(position: Int)
 
@@ -22,20 +22,21 @@ abstract class FrogClickListener : BaseTouchListener() {
       return super.onDown(e)
     }
 
-    override fun onSingleTapUp(e: MotionEvent?): Boolean {
-      e ?: return false
-      itemView ?: return false
-      recyclerView ?: return false
+    override fun onLongPress(e: MotionEvent?) {
+      super.onLongPress(e)
+      e ?: return
+      itemView ?: return
+      recyclerView ?: return
 
       val position = recyclerView!!.getChildAdapterPosition(itemView!!)
       if (position == -1) {
-        return false
+        return
       }
 
-      itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
       onItemClicked(position)
-      return true
+      return
     }
+
 
   }
 

@@ -3,6 +3,7 @@ package com.yuluyao.frog.func.divider
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
@@ -31,11 +32,11 @@ class DividerGridFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    val gridLayoutManager = GridLayoutManager(context, 4)
+    val gridLayoutManager = GridLayoutManager(context, 4,LinearLayoutManager.HORIZONTAL,false)
     gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
       override fun getSpanSize(position: Int): Int {
         return when (position) {
-          0,4,8,9 -> 2
+          4, 8, 12 -> 2
           else -> 1
         }
       }
@@ -46,7 +47,7 @@ class DividerGridFragment : Fragment() {
     setDrag(recycler);
 
     recycler.adapter = adapter
-    Repo.refresh(40).subscribe { it->
+    Repo.refresh(40).subscribe { it ->
       adapter.data = it
       adapter.notifyDataSetChanged()
     }

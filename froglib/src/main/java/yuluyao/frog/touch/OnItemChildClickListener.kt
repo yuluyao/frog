@@ -1,15 +1,14 @@
 package yuluyao.frog.touch
 
+import android.graphics.Rect
+import android.graphics.Region
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 
-abstract class FrogChildSingleClickListener(val timeGap: Long = 500L) : BaseTouchListener() {
+abstract class OnItemChildClickListener : BaseTouchListener() {
   abstract fun onChildClicked(position: Int, viewId: Int)
-
-  // 上次点击的时刻
-  private var lastClickTimeMills = 0L
 
   override val gestureListener: GestureDetector.SimpleOnGestureListener
     get() = Listener()
@@ -52,14 +51,6 @@ abstract class FrogChildSingleClickListener(val timeGap: Long = 500L) : BaseTouc
       if (position == -1) {
         return false
       }
-
-      // 丢弃多余的点击
-      val clickTimeMills = System.currentTimeMillis()
-      if (clickTimeMills - lastClickTimeMills < timeGap) {
-        lastClickTimeMills = clickTimeMills
-        return true
-      }
-      lastClickTimeMills = clickTimeMills
 
       itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
       onChildClicked(position, clickView.id)

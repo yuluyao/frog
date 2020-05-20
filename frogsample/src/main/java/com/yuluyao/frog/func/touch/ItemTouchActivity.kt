@@ -71,28 +71,28 @@ class ItemTouchActivity : BaseActivity() {
   }
 
 
-  private val click_listener = object : FrogClickListener() {
+  private val click_listener = object : OnItemClickListener() {
     override fun onItemClicked(position: Int) {
       Toast.makeText(this@ItemTouchActivity, "点击 item$position", Toast.LENGTH_SHORT).show()
       Log.i("vegeta", "点击 item$position")
     }
   }
 
-  private val long_click_listenr = object : FrogLongClickListener() {
+  private val long_click_listenr = object : OnItemLongClickListener() {
     override fun onItemClicked(position: Int) {
       Toast.makeText(this@ItemTouchActivity, "长按 item$position", Toast.LENGTH_SHORT).show()
       Log.i("vegeta", "长按 item$position")
     }
   }
 
-  private val single_click_listener = object : FrogSingleClickListener() {
+  private val single_click_listener = object : OnItemSingleClickListener() {
     override fun onItemClicked(position: Int) {
       Toast.makeText(this@ItemTouchActivity, "单击 item$position", Toast.LENGTH_SHORT).show()
       Log.i("vegeta", "单击 item$position")
     }
   }
 
-  private val intercept_click_listener = object : FrogInterceptClickListener() {
+  private val intercept_click_listener = object : OnItemInterceptClickListener() {
     override fun onItemClicked(position: Int): Boolean {
       if (position < 3) {
         Toast.makeText(this@ItemTouchActivity, "不响应点击 $position", Toast.LENGTH_SHORT).show()
@@ -106,7 +106,7 @@ class ItemTouchActivity : BaseActivity() {
     }
   }
 
-  private val child_click_listener = object : FrogChildClickListener() {
+  private val child_click_listener = object : OnItemChildClickListener() {
     override val listenedChildrenIds: IntArray = intArrayOf(R.id.icon, R.id.title, R.id.root)
     override fun onChildClicked(position: Int, viewId: Int) {
       when (viewId) {
@@ -126,7 +126,7 @@ class ItemTouchActivity : BaseActivity() {
     }
   }
 
-  private val child_single_click_listener = object : FrogChildSingleClickListener() {
+  private val child_single_click_listener = object : OnItemChildSingleClickListener() {
     override val listenedChildrenIds: IntArray = intArrayOf(R.id.icon, R.id.title, R.id.root)
     override fun onChildClicked(position: Int, viewId: Int) {
       when (viewId) {

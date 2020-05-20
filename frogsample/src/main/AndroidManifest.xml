@@ -33,6 +33,7 @@
     <activity android:name=".func.adapter.AdapterActivity" />
     <activity android:name=".func.databinding.DataBindingActivity" />
       <activity android:name=".func.multi.MultiActivity" />
+      <activity android:name=".func.ff.FFAdapterActivity" />
   </application>
 
 </manifest>

@@ -18,7 +18,7 @@ class FrogDivider(private val width: Float = 2F,
                   private val includePadding: Boolean = false,
                   private val includeLastItem: Boolean = true,
                   private val includeFirstItem: Boolean = false) : BaseItemDecoration() {
-  private var widthPixels: Float = 0.toFloat()
+  private var widthPixels: Float = 0f
   private var paint: Paint = Paint()
 
   // 使用全局变量，避免在onDraw()方法中频繁创建对象
