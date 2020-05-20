@@ -42,7 +42,7 @@ class DividerGridFragment : Fragment() {
     }
 
     recycler.layoutManager = gridLayoutManager
-    recycler.addItemDecoration(FrogDivider(4f, R.color.item_decoration))
+    recycler.addItemDecoration(FrogDivider(8f, R.color.item_decoration))
     setDrag(recycler);
 
     recycler.adapter = adapter

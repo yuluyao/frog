@@ -14,39 +14,37 @@ import android.view.View
  * 时 间：2017/9/5 10:10
  */
 class FrogDivider(private val width: Float = 2F,
-                  private val colorRes: Int = android.R.color.transparent) : BaseItemDecoration() {
+                  private val colorRes: Int = android.R.color.transparent,
+                  private val includePadding: Boolean = false,
+                  private val includeLastItem: Boolean = true,
+                  private val includeFirstItem: Boolean = false) : BaseItemDecoration() {
   private var widthPixels: Float = 0.toFloat()
-  private var paint: Paint? = null
+  private var paint: Paint = Paint()
 
   // 使用全局变量，避免在onDraw()方法中频繁创建对象
   private var bounds = Rect()
 
-  init {
-    paint = Paint()
-  }
-
-  override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
-                              state: RecyclerView.State) {
+  override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
     super.getItemOffsets(outRect, view, parent, state)
-    if (layout_type != LAYOUT_UNSPECIFIED) {
+    if (mLayoutType != UNSPECIFIED) {
       //init divider width and color
       widthPixels = parent.context.resources.displayMetrics.density * width
-      paint!!.color = parent.context.resources.getColor(colorRes)
+      paint.color = parent.context.resources.getColor(colorRes)
     }
 
     var spanCount = 0
-    when (layout_type) {
-      LAYOUT_VERTICAL -> {
+    when (mLayoutType) {
+      LINEAR_VERTICAL -> {
         outRect.set(0, 0, 0, widthPixels.toInt())
         return // 线性 manager 简单处理
       }
-      LAYOUT_HORIZONTAL -> {
+      LINEAR_HORIZONTAL -> {
         outRect.set(0, 0, widthPixels.toInt(), 0)
         return // 线性 manager 简单处理
       }
       /* ------------------ */
-      LAYOUT_GRID -> spanCount = (parent.layoutManager as GridLayoutManager).spanCount
-      LAYOUT_STAGGERED_GRID_VERTICAL, LAYOUT_STAGGERED_GRID_HORIZONTAL -> spanCount = (parent.layoutManager as StaggeredGridLayoutManager).spanCount
+      GRID -> spanCount = (parent.layoutManager as GridLayoutManager).spanCount
+      STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> spanCount = (parent.layoutManager as StaggeredGridLayoutManager).spanCount
     }
 
     var l = widthPixels / 2
@@ -76,16 +74,16 @@ class FrogDivider(private val width: Float = 2F,
 
 
   private fun isTop(pos: Int, spanCount: Int, childCount: Int, itemView: View): Boolean {
-    when (layout_type) {
-      LAYOUT_GRID -> {
-        val sizeLookup = (mRecyclerView!!.layoutManager as GridLayoutManager).spanSizeLookup
+    when (mLayoutType) {
+      GRID -> {
+        val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
         val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
         val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
         val spanSize = sizeLookup.getSpanSize(pos)
         return spanGroupIndex == 0
       }
-      LAYOUT_STAGGERED_GRID_VERTICAL -> return pos < spanCount
-      LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
+      STAGGERED_GRID_VERTICAL -> return pos < spanCount
+      STAGGERED_GRID_HORIZONTAL -> {
         val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
         val spanIndex = layoutParams.spanIndex
         return spanIndex == 0
@@ -96,42 +94,42 @@ class FrogDivider(private val width: Float = 2F,
 
 
   private fun isLeft(pos: Int, spanCount: Int, childCount: Int, itemView: View): Boolean {
-    when (layout_type) {
-      LAYOUT_GRID -> {
-        val sizeLookup = (mRecyclerView!!.layoutManager as GridLayoutManager).spanSizeLookup
+    when (mLayoutType) {
+      GRID -> {
+        val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
         val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
         val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
         val spanSize = sizeLookup.getSpanSize(pos)
         return spanIndex == 0
       }
-      LAYOUT_STAGGERED_GRID_VERTICAL -> {
+      STAGGERED_GRID_VERTICAL -> {
         val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
         val spanIndex = layoutParams.spanIndex
         return spanIndex == 0
       }
-      LAYOUT_STAGGERED_GRID_HORIZONTAL -> return pos < spanCount
+      STAGGERED_GRID_HORIZONTAL -> return pos < spanCount
     }
     return false
   }
 
   private fun isRight(pos: Int, spanCount: Int, childCount: Int, itemView: View): Boolean {
-    when (layout_type) {
+    when (mLayoutType) {
       // 如果是最后一列，则不需要绘制右边
-      LAYOUT_GRID -> {
-        val sizeLookup = (mRecyclerView!!.layoutManager as GridLayoutManager).spanSizeLookup
+      GRID -> {
+        val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
         val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
         val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
         val spanSize = sizeLookup.getSpanSize(pos)
         return spanIndex + spanSize - 1 == spanCount - 1
       }
       // 如果是最后一列，则不需要绘制右边
-      LAYOUT_STAGGERED_GRID_VERTICAL -> {
+      STAGGERED_GRID_VERTICAL -> {
         val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
         val spanIndex = layoutParams.spanIndex
         return spanIndex == spanCount - 1
       }
       // 如果是最后一列，则不需要绘制右边
-      LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
+      STAGGERED_GRID_HORIZONTAL -> {
         // todo 暂未实现
       }
     }
@@ -139,17 +137,17 @@ class FrogDivider(private val width: Float = 2F,
   }
 
   private fun isBottom(pos: Int, spanCount: Int, childCount: Int, itemView: View): Boolean {
-    when (layout_type) {
+    when (mLayoutType) {
       // 如果是最后一行，则不需要绘制底部
-      LAYOUT_GRID -> {
+      GRID -> {
         // todo 暂未实现
       }
       // 如果是最后一行，则不需要绘制底部
-      LAYOUT_STAGGERED_GRID_VERTICAL -> {
+      STAGGERED_GRID_VERTICAL -> {
         // todo 暂未实现
       }
       // 如果是最后一行，则不需要绘制底部
-      LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
+      STAGGERED_GRID_HORIZONTAL -> {
         val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
         val spanIndex = layoutParams.spanIndex
         return spanIndex == spanCount - 1
@@ -163,8 +161,6 @@ class FrogDivider(private val width: Float = 2F,
     super.onDraw(c, parent, state)
     drawDecoration(c, parent)
   }
-
-
 
 
   private fun drawDecoration(canvas: Canvas, parent: RecyclerView) {
@@ -201,18 +197,18 @@ class FrogDivider(private val width: Float = 2F,
       val bottom_inner = bounds.top + widthPixels
       val left_inner = bounds.right - widthPixels
       val top_inner = bounds.bottom - widthPixels
-      when (layout_type) {
-        LAYOUT_VERTICAL -> {
-          canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint!!)
+      when (mLayoutType) {
+        LINEAR_VERTICAL -> {
+          canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint)
         }
-        LAYOUT_HORIZONTAL -> {
-          canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint!!)
+        LINEAR_HORIZONTAL -> {
+          canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint)
         }
-        LAYOUT_GRID, LAYOUT_STAGGERED_GRID_VERTICAL, LAYOUT_STAGGERED_GRID_HORIZONTAL -> {
-          canvas.drawRect(left_f, top_f, right_inner, bottom_f, paint!!)
-          canvas.drawRect(left_f, top_f, right_f, bottom_inner, paint!!)
-          canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint!!)
-          canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint!!)
+        GRID, STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> {
+          canvas.drawRect(left_f, top_f, right_inner, bottom_f, paint)
+          canvas.drawRect(left_f, top_f, right_f, bottom_inner, paint)
+          canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint)
+          canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint)
         }
       }
     }

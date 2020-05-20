@@ -34,7 +34,7 @@ class DividerStaggeredVerticalFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     recycler.layoutManager = StaggeredGridLayoutManager(4,
       StaggeredGridLayoutManager.VERTICAL)
-    recycler.addItemDecoration(FrogDivider(4f, R.color.item_decoration))
+    recycler.addItemDecoration(FrogDivider(8f, R.color.item_decoration))
     setDrag(recycler)
 
     recycler.adapter = adapter

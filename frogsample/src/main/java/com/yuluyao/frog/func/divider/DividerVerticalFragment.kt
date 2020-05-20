@@ -32,7 +32,7 @@ class DividerVerticalFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     recycler.layoutManager = LinearLayoutManager(context)
-    recycler.addItemDecoration(FrogDivider(4f, R.color.item_decoration))
+    recycler.addItemDecoration(FrogDivider(8f, R.color.item_decoration))
     setDrag(recycler)
 
     recycler.adapter = adapter
