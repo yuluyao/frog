@@ -166,21 +166,22 @@ class FrogDivider(private val width: Float = 2F,
   private fun drawDecoration(canvas: Canvas, parent: RecyclerView) {
     canvas.save()
 
-    val top: Int
-    val bottom: Int
-    val left: Int
-    val right: Int
+    var top: Int = parent.top
+    var bottom: Int = parent.bottom
+    var left: Int = parent.left
+    var right: Int = parent.right
+
     if (parent.clipToPadding) {
-      top = parent.paddingTop
-      bottom = parent.height - parent.paddingBottom
-      left = parent.paddingLeft
-      right = parent.width - parent.paddingRight
-    } else {
+      top += parent.paddingTop
+      bottom -= parent.paddingBottom
+      left += parent.paddingLeft
+      right -= parent.paddingRight
+    } /*else {
       top = 0
       bottom = parent.height
       left = 0
       right = parent.width
-    }
+    }*/
     canvas.clipRect(left, top, right, bottom)
 
     val childCount = parent.childCount
@@ -199,15 +200,21 @@ class FrogDivider(private val width: Float = 2F,
       val top_inner = bounds.bottom - widthPixels
       when (mLayoutType) {
         LINEAR_VERTICAL -> {
+          // draw bottom
           canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint)
         }
         LINEAR_HORIZONTAL -> {
+          // draw right
           canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint)
         }
         GRID, STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> {
+          // draw left
           canvas.drawRect(left_f, top_f, right_inner, bottom_f, paint)
+          // draw top
           canvas.drawRect(left_f, top_f, right_f, bottom_inner, paint)
+          // draw right
           canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint)
+          // draw bottom
           canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint)
         }
       }
