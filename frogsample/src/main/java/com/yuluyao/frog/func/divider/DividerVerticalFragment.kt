@@ -14,6 +14,7 @@ import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.fragment_divider_vertical.*
 import yuluyao.frog.FrogAdapter
+import yuluyao.frog.drag.DragCallback
 
 /**
  * 描 述：
@@ -32,6 +33,7 @@ class DividerVerticalFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     recycler.layoutManager = LinearLayoutManager(context)
     recycler.addItemDecoration(FrogDivider(4f, R.color.item_decoration))
+    setDrag(recycler)
 
     recycler.adapter = adapter
 
@@ -41,6 +43,9 @@ class DividerVerticalFragment : Fragment() {
     }
   }
 
-
+  private fun setDrag(recyclerView: RecyclerView) {
+    val helper = ItemTouchHelper(DragCallback())
+    helper.attachToRecyclerView(recyclerView)
+  }
 
 }
