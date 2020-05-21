@@ -1,63 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@drawable/bg_item_click"
+  android:padding="8dp"
+  >
 
-    <RelativeLayout
-      android:layout_width="match_parent"
+    <ImageView
+      android:id="@+id/icon"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_centerVertical="true"
+      android:layout_margin="8dp"
+      />
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:background="@drawable/bg_item_click"
-      android:padding="8dp"
-      >
+      android:layout_toRightOf="@id/icon"
+      android:textColor="#333333"
+      android:textSize="16sp"
+      />
 
-        <ImageView
-          android:id="@+id/icon"
-          src="@{item.iconRes}"
-          android:layout_width="48dp"
-          android:layout_height="48dp"
-          android:layout_centerVertical="true"
-          android:layout_margin="8dp"
-          />
+    <TextView
+      android:id="@+id/content"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/title"
+      android:layout_alignLeft="@id/title"
+      android:maxLines="3"
+      android:textColor="#666666"
+      android:textSize="14dp"
+      />
 
-        <TextView
-          android:id="@+id/title"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_toRightOf="@id/icon"
-          android:text="@{item.title}"
-          android:textColor="#333333"
-          android:textSize="16sp"
-          />
+    <TextView
+      android:id="@+id/invi"
+      android:layout_width="wrap_content"
+      android:layout_height="40dp"
+      android:layout_below="@id/content"
+      android:layout_alignLeft="@id/content"
+      android:background="@color/colorAccent"
+      android:text="invisible area"
+      android:textColor="@android:color/black"
+      android:visibility="gone"
+      />
 
-        <TextView
-          android:id="@+id/content"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@id/title"
-          android:layout_alignLeft="@id/title"
-          android:maxLines="3"
-          android:text="@{item.content}"
-          android:textColor="#666666"
-          android:textSize="14dp"
-          />
-
-        <TextView
-          android:id="@+id/invi"
-          android:layout_width="wrap_content"
-          android:layout_height="40dp"
-          android:layout_below="@id/content"
-          android:layout_alignLeft="@id/content"
-          android:background="@color/colorAccent"
-          android:text="invisible area"
-          android:textColor="@android:color/black"
-          android:visibility="gone"
-          />
-
-    </RelativeLayout>
-
-    <data>
-
-        <variable
-          name="item"
-          type="com.yuluyao.frog.repo.Data"
-          />
-    </data>
-</layout>
+</RelativeLayout>
