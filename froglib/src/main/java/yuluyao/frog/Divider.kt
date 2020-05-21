@@ -1,4 +1,4 @@
-package yuluyao.frog.decor
+package yuluyao.frog
 
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -7,17 +7,18 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
+import yuluyao.frog.decor.BaseItemDecoration
 
 /**
  * 描 述：
  * 作 者：Vegeta Yu
  * 时 间：2017/9/5 10:10
  */
-class FrogDivider(private val width: Float = 2F,
-                  private val colorRes: Int = android.R.color.transparent,
-                  private val includePadding: Boolean = false,
-                  private val includeLastItem: Boolean = true,
-                  private val includeFirstItem: Boolean = false) : BaseItemDecoration() {
+class Divider(private val width: Float = 2F,
+              private val colorRes: Int = android.R.color.transparent,
+              private val includePadding: Boolean = false,
+              private val includeLastItem: Boolean = true,
+              private val includeFirstItem: Boolean = false) : BaseItemDecoration() {
   private var widthPixels: Float = 0f
   private var paint: Paint = Paint()
 

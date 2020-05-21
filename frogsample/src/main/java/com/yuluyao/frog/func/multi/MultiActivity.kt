@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_multi.*
 import kotlinx.android.synthetic.main.item_article_multi_jpg.view.*
 import kotlinx.android.synthetic.main.item_article_normal.view.*
 import yuluyao.frog.CleanAdapter
-import yuluyao.frog.decor.FrogDivider
+import yuluyao.frog.Divider
 import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.item_article_multi_jpg.view.title as title_multi
 import kotlinx.android.synthetic.main.item_article_single_jpg.view.iv as iv_single
@@ -63,7 +63,7 @@ class MultiActivity : BaseActivity() {
     title = "Multi Type Item"
 
     recyclerView.layoutManager = LinearLayoutManager(this)
-    recyclerView.addItemDecoration(FrogDivider(8f, R.color.item_decoration))
+    recyclerView.addItemDecoration(Divider(8f, R.color.item_decoration))
 //    recyclerView.addItemDecoration(DividerItemDecoration(this, 1))
     recyclerView.adapter = adapter
     mockArticles().subscribe { it ->

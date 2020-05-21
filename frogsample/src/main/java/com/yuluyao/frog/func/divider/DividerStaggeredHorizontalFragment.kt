@@ -14,7 +14,7 @@ import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.fragment_divider_staggered_horizontal.*
 import kotlinx.android.synthetic.main.item_data_binding.view.*
 import yuluyao.frog.CleanAdapter
-import yuluyao.frog.decor.FrogDivider
+import yuluyao.frog.Divider
 import yuluyao.frog.drag.DragCallback
 
 /**
@@ -38,7 +38,7 @@ class DividerStaggeredHorizontalFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     recycler.layoutManager = StaggeredGridLayoutManager(4,
       StaggeredGridLayoutManager.HORIZONTAL)
-    recycler.addItemDecoration(FrogDivider(8f, R.color.item_decoration))
+    recycler.addItemDecoration(Divider(8f, R.color.item_decoration))
     setDrag(recycler)
 
     recycler.adapter = adapter

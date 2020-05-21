@@ -8,7 +8,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import yuluyao.frog.decor.FrogDivider
+import yuluyao.frog.Divider
 import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
@@ -37,7 +37,7 @@ class DividerHorizontalFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-    recycler.addItemDecoration(FrogDivider(8f, R.color.item_decoration))
+    recycler.addItemDecoration(Divider(8f, R.color.item_decoration))
     setDrag(recycler)
 
     recycler.adapter = adapter

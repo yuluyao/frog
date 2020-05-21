@@ -9,7 +9,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import yuluyao.frog.decor.FrogDivider
+import yuluyao.frog.Divider
 import yuluyao.frog.drag.DragCallback
 import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
@@ -49,7 +49,7 @@ class DividerGridFragment : Fragment() {
     }
 
     recycler.layoutManager = gridLayoutManager
-    recycler.addItemDecoration(FrogDivider(8f, R.color.item_decoration))
+    recycler.addItemDecoration(Divider(8f, R.color.item_decoration))
     setDrag(recycler);
 
     recycler.adapter = adapter
