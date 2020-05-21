@@ -4,21 +4,40 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
-import yuluyao.frog.decor.BaseItemDecoration
 
 /**
  * 描 述：
  * 作 者：Vegeta Yu
  * 时 间：2017/9/5 10:10
  */
-class Divider(private val width: Float = 2F,
-              private val colorRes: Int = android.R.color.transparent,
-              private val includePadding: Boolean = false,
-              private val includeLastItem: Boolean = true,
-              private val includeFirstItem: Boolean = false) : BaseItemDecoration() {
+class Divider(
+  private val width: Float = 2F,
+  private val colorRes: Int = android.R.color.transparent
+) : RecyclerView.ItemDecoration() {
+
+  companion object {
+    const val UNSPECIFIED = 0
+    const val LINEAR_VERTICAL = 1
+    const val LINEAR_HORIZONTAL = 2
+    const val GRID_VERTICAL = 3
+    const val GRID_HORIZONTAL = 4
+    const val STAGGERED_GRID_VERTICAL = 5
+    const val STAGGERED_GRID_HORIZONTAL = 6
+  }
+
+  private var mLayoutType = UNSPECIFIED
+  private lateinit var mRecyclerView: RecyclerView
+
+
+//  private val includePadding: Boolean = false
+//  private val includeLastItem: Boolean = true
+//  private val includeFirstItem: Boolean = false
+
+
   private var widthPixels: Float = 0f
   private var paint: Paint = Paint()
 
@@ -27,9 +46,11 @@ class Divider(private val width: Float = 2F,
 
   override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
     super.getItemOffsets(outRect, view, parent, state)
-    if (mLayoutType != UNSPECIFIED) {
+    if (mLayoutType == UNSPECIFIED) {
+      mRecyclerView = parent
       widthPixels = parent.context.resources.displayMetrics.density * width
       paint.color = parent.context.resources.getColor(colorRes)
+      initLayoutManagerType(parent)
     }
 
     var spanCount = 0
@@ -70,6 +91,15 @@ class Divider(private val width: Float = 2F,
       b = 0f;
     }
     outRect.set(l.toInt(), t.toInt(), r.toInt(), b.toInt())
+  }
+
+  private fun initLayoutManagerType(recyclerView: RecyclerView) {
+    mLayoutType = when (val layoutManager = recyclerView.layoutManager) {
+      is GridLayoutManager -> if (layoutManager.orientation == LinearLayoutManager.VERTICAL) GRID_VERTICAL else GRID_HORIZONTAL
+      is LinearLayoutManager -> if (layoutManager.orientation == LinearLayoutManager.VERTICAL) LINEAR_VERTICAL else LINEAR_HORIZONTAL
+      is StaggeredGridLayoutManager -> if (layoutManager.orientation == StaggeredGridLayoutManager.VERTICAL) STAGGERED_GRID_VERTICAL else STAGGERED_GRID_HORIZONTAL
+      else -> throw RuntimeException("not supported LayoutManager type!")
+    }
   }
 
 

@@ -9,14 +9,14 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import yuluyao.frog.Divider
-import yuluyao.frog.drag.DragCallback
 import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.fragment_divider_grid.*
-import kotlinx.android.synthetic.main.item_data_binding.view.*
+import kotlinx.android.synthetic.main.item_data_grid.view.*
 import yuluyao.frog.CleanAdapter
+import yuluyao.frog.Divider
+import yuluyao.frog.drag.DragCallback
 
 /**
  * 描 述：
@@ -24,7 +24,7 @@ import yuluyao.frog.CleanAdapter
  * 时 间：2017/9/5 16:52
  */
 class DividerGridFragment : Fragment() {
-  val adapter = object : CleanAdapter<Data>(R.layout.item_data_grid){
+  val adapter = object : CleanAdapter<Data>(R.layout.item_data_grid) {
     override fun onBindViewHolder(holder: Holder, position: Int) {
       holder.itemView.icon.setImageResource(data[position].iconRes)
     }
@@ -37,8 +37,7 @@ class DividerGridFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-//    val gridLayoutManager = GridLayoutManager(context, 4,LinearLayoutManager.HORIZONTAL,false)
-    val gridLayoutManager = GridLayoutManager(context, 4,LinearLayoutManager.VERTICAL,false)
+    val gridLayoutManager = GridLayoutManager(context, 4, LinearLayoutManager.VERTICAL, false)
     gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
       override fun getSpanSize(position: Int): Int {
         return when (position) {
@@ -50,7 +49,7 @@ class DividerGridFragment : Fragment() {
 
     recycler.layoutManager = gridLayoutManager
     recycler.addItemDecoration(Divider(8f, R.color.item_decoration))
-    setDrag(recycler);
+    setDrag(recycler)
 
     recycler.adapter = adapter
     Repo.refresh(40).subscribe { it ->
