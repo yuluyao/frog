@@ -53,7 +53,6 @@ class Divider(
       initLayoutManagerType(parent)
     }
 
-    var spanCount = 0
     when (mLayoutType) {
       LINEAR_VERTICAL -> {
         outRect.set(0, 0, 0, widthPixels.toInt())
@@ -63,34 +62,51 @@ class Divider(
         outRect.set(0, 0, widthPixels.toInt(), 0)
         return
       }
-      /* ------------------ */
-      GRID_VERTICAL, GRID_HORIZONTAL -> spanCount = (parent.layoutManager as GridLayoutManager).spanCount
-      STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> spanCount = (parent.layoutManager as StaggeredGridLayoutManager).spanCount
     }
 
-    var l = widthPixels / 2
-    var t = widthPixels / 2
-    var r = widthPixels / 2
-    var b = widthPixels / 2
+    val spanCount = when (mLayoutType) {
+      GRID_VERTICAL, GRID_HORIZONTAL -> (parent.layoutManager as GridLayoutManager).spanCount
+      STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> (parent.layoutManager as StaggeredGridLayoutManager).spanCount
+      else -> 0
+    }
     val childCount = parent.adapter!!.itemCount
     val itemPosition = parent.getChildAdapterPosition(view)
+
+    var out_left = widthPixels / 2
+    var out_top = widthPixels / 2
+    var out_right = widthPixels / 2
+    var out_bottom = widthPixels / 2
+/*
+    when (mLayoutType) {
+      GRID_VERTICAL -> {
+      }
+      GRID_HORIZONTAL -> {
+      }
+      STAGGERED_GRID_VERTICAL -> {
+      }
+      STAGGERED_GRID_HORIZONTAL -> {
+      }
+    }
+*/
+
+
     if (isTop(itemPosition, spanCount, childCount, view)) {
       // 如果是第一行，则不需要绘制上边
-      t = 0f
+      out_top = 0f
     }
     if (isLeft(itemPosition, spanCount, childCount, view)) {
       // 如果是第一列，则不需要绘制左边
-      l = 0f
+      out_left = 0f
     }
     if (isRight(itemPosition, spanCount, childCount, view)) {
       // 如果是最后一列，则不需要绘制右边
-      r = 0f
+      out_right = 0f
     }
     if (isBottom(itemPosition, spanCount, childCount, view)) {
       // 如果是最后一行，则不需要绘制底部
-      b = 0f;
+      out_bottom = 0f
     }
-    outRect.set(l.toInt(), t.toInt(), r.toInt(), b.toInt())
+    outRect.set(out_left.toInt(), out_top.toInt(), out_right.toInt(), out_bottom.toInt())
   }
 
   private fun initLayoutManagerType(recyclerView: RecyclerView) {
