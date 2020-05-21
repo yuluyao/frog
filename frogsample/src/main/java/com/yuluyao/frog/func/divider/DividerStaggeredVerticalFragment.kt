@@ -25,6 +25,8 @@ import yuluyao.frog.drag.DragCallback
 class DividerStaggeredVerticalFragment : Fragment() {
   val adapter = object : CleanAdapter<Data>(R.layout.item_data_stagger_vertical) {
     override fun onBindViewHolder(holder: Holder, position: Int) {
+      val lp = holder.itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
+      lp.isFullSpan =data[position].title == "高级隐身"
       holder.itemView.title.text = data[position].title
     }
   }
@@ -37,8 +39,8 @@ class DividerStaggeredVerticalFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    recycler.layoutManager = StaggeredGridLayoutManager(4,
-      StaggeredGridLayoutManager.VERTICAL)
+    val layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
+    recycler.layoutManager = layoutManager
     recycler.addItemDecoration(Divider(8f, R.color.item_decoration))
     setDrag(recycler)
 

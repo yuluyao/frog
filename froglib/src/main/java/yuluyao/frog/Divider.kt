@@ -124,9 +124,16 @@ class Divider(
       GRID_VERTICAL -> {
         val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
         val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
-        /*val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)*/
-        /*val spanSize = sizeLookup.getSpanSize(pos)*/
+//        val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
+//        val spanSize = sizeLookup.getSpanSize(pos)
         return spanGroupIndex == 0
+      }
+      GRID_HORIZONTAL -> {
+        val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
+//        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
+        val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
+//        val spanSize = sizeLookup.getSpanSize(pos)
+        return spanIndex == 0
       }
       STAGGERED_GRID_VERTICAL -> return pos < spanCount
       STAGGERED_GRID_HORIZONTAL -> {
@@ -143,10 +150,17 @@ class Divider(
     when (mLayoutType) {
       GRID_VERTICAL -> {
         val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
-        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
+//        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
         val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
-        val spanSize = sizeLookup.getSpanSize(pos)
+//        val spanSize = sizeLookup.getSpanSize(pos)
         return spanIndex == 0
+      }
+      GRID_HORIZONTAL -> {
+        val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
+        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
+//        val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
+//        val spanSize = sizeLookup.getSpanSize(pos)
+        return spanGroupIndex == 0
       }
       STAGGERED_GRID_VERTICAL -> {
         val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
@@ -163,10 +177,13 @@ class Divider(
       // 如果是最后一列，则不需要绘制右边
       GRID_VERTICAL -> {
         val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
-        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
+//        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
         val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
         val spanSize = sizeLookup.getSpanSize(pos)
         return spanIndex + spanSize - 1 == spanCount - 1
+      }
+      GRID_HORIZONTAL -> {
+        // todo 暂未实现
       }
       // 如果是最后一列，则不需要绘制右边
       STAGGERED_GRID_VERTICAL -> {
@@ -191,6 +208,13 @@ class Divider(
 //        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
 //        val maxSpanGroupIndex = sizeLookup.getSpanGroupIndex(childCount-1, spanCount)
 //        return spanGroupIndex == maxSpanGroupIndex
+      }
+      GRID_HORIZONTAL -> {
+        val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
+//        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
+        val spanIndex = sizeLookup.getSpanIndex(pos, spanCount)
+        val spanSize = sizeLookup.getSpanSize(pos)
+        return spanIndex + spanSize - 1 == spanCount - 1
       }
       // 如果是最后一行，则不需要绘制底部
       STAGGERED_GRID_VERTICAL -> {
@@ -226,12 +250,7 @@ class Divider(
       bottom -= parent.paddingBottom
       left += parent.paddingLeft
       right -= parent.paddingRight
-    } /*else {
-      top = 0
-      bottom = parent.height
-      left = 0
-      right = parent.width
-    }*/
+    }
     canvas.clipRect(left, top, right, bottom)
 
     val childCount = parent.childCount
