@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/item_background"
+android:orientation="vertical"
+android:gravity="center"
+android:padding="4dp"
+  >
 
-  <data>
-<variable
-  name="item"
-  type="com.yuluyao.frog.repo.Data"
+<ImageView
+  android:id="@+id/icon"
+  android:layout_width="56dp"
+  android:layout_height="56dp"
+  android:layout_margin="4dp"
   />
-  </data>
 
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/item_background"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="4dp"
-    >
-
-    <ImageView
-      android:id="@+id/icon"
-      android:layout_width="56dp"
-      src="@{item.iconRes}"
-      android:layout_height="56dp"
-      android:layout_margin="4dp"
-      />
-
-  </LinearLayout>
-</layout>
+</LinearLayout>

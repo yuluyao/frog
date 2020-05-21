@@ -15,7 +15,8 @@ import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.fragment_divider_grid.*
-import yuluyao.frog.FrogAdapter
+import kotlinx.android.synthetic.main.item_data_binding.view.*
+import yuluyao.frog.CleanAdapter
 
 /**
  * 描 述：
@@ -23,7 +24,11 @@ import yuluyao.frog.FrogAdapter
  * 时 间：2017/9/5 16:52
  */
 class DividerGridFragment : Fragment() {
-  val adapter = FrogAdapter<Data>(R.layout.item_data_grid)
+  val adapter = object : CleanAdapter<Data>(R.layout.item_data_grid){
+    override fun onBindViewHolder(holder: Holder, position: Int) {
+      holder.itemView.icon.setImageResource(data[position].iconRes)
+    }
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
@@ -32,7 +37,8 @@ class DividerGridFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    val gridLayoutManager = GridLayoutManager(context, 4,LinearLayoutManager.HORIZONTAL,false)
+//    val gridLayoutManager = GridLayoutManager(context, 4,LinearLayoutManager.HORIZONTAL,false)
+    val gridLayoutManager = GridLayoutManager(context, 4,LinearLayoutManager.VERTICAL,false)
     gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
       override fun getSpanSize(position: Int): Int {
         return when (position) {

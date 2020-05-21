@@ -26,6 +26,6 @@ abstract class CleanAdapter<T>(private val layoutId: Int = 0) : RecyclerView.Ada
     return Holder(rootView)
   }
 
-  class Holder(override val containerView: View?) : RecyclerView.ViewHolder(containerView), LayoutContainer
+  class Holder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer
 }
 

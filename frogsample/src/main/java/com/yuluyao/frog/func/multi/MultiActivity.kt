@@ -1,23 +1,24 @@
 package com.yuluyao.frog.func.multi
 
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.ImageView
-import android.widget.TextView
 import com.yuluyao.frog.R
 import com.yuluyao.frog.base.BaseActivity
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_multi.*
-import yuluyao.frog.FrogAdapter
-import yuluyao.frog.FrogHolder
+import kotlinx.android.synthetic.main.item_article_multi_jpg.view.*
+import kotlinx.android.synthetic.main.item_article_normal.view.*
+import yuluyao.frog.CleanAdapter
 import yuluyao.frog.decor.FrogDivider
 import java.util.concurrent.TimeUnit
+import kotlinx.android.synthetic.main.item_article_multi_jpg.view.title as title_multi
+import kotlinx.android.synthetic.main.item_article_single_jpg.view.iv as iv_single
+import kotlinx.android.synthetic.main.item_article_single_jpg.view.title as title_single
 
 class MultiActivity : BaseActivity() {
-  private val adapter = object : FrogAdapter<ArticleBean>() {
+  private val adapter = object : CleanAdapter<ArticleBean>() {
     init {
       initItemViewType(
         intArrayOf(ArticleBean.TYPE_NORMAL,
@@ -32,24 +33,23 @@ class MultiActivity : BaseActivity() {
       return data[position].type
     }
 
-    override fun onBindViewHolder(holder: FrogHolder, position: Int) {
-      super.onBindViewHolder(holder, position)
+    override fun onBindViewHolder(holder: Holder, position: Int) {
       val item = data[position]
       when (getItemViewType(position)) {
         ArticleBean.TYPE_NORMAL -> {
-          holder.itemView.findViewById<TextView>(R.id.title).text = item.title
-          holder.itemView.findViewById<TextView>(R.id.content).text = item.content
-          holder.itemView.findViewById<ImageView>(R.id.iv).setImageResource(item.imgs[0])
+          holder.itemView.title.text = item.title
+          holder.itemView.content.text = item.content
+          holder.itemView.iv.setImageResource(item.imgs[0])
         }
         ArticleBean.TYPE_SINGLE_JPG -> {
-          holder.itemView.findViewById<TextView>(R.id.title).text = item.title
-          holder.itemView.findViewById<ImageView>(R.id.iv).setImageResource(item.imgs[0])
+          holder.itemView.title_single.text = item.title
+          holder.itemView.iv_single.setImageResource(item.imgs[0])
         }
         ArticleBean.TYPE_MULTI_JPG -> {
-          holder.itemView.findViewById<TextView>(R.id.title).text = item.title
-          holder.itemView.findViewById<ImageView>(R.id.iv1).setImageResource(item.imgs[0])
-          holder.itemView.findViewById<ImageView>(R.id.iv2).setImageResource(item.imgs[1])
-          holder.itemView.findViewById<ImageView>(R.id.iv3).setImageResource(item.imgs[2])
+          holder.itemView.title_multi.text = item.title
+          holder.itemView.iv1.setImageResource(item.imgs[0])
+          holder.itemView.iv2.setImageResource(item.imgs[1])
+          holder.itemView.iv3.setImageResource(item.imgs[2])
         }
       }
     }

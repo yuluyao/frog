@@ -9,13 +9,11 @@ import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.base_activity_data.*
 import kotlinx.android.synthetic.main.base_item_data.view.*
-import yuluyao.frog.FrogAdapter
-import yuluyao.frog.FrogHolder
+import yuluyao.frog.CleanAdapter
 
 class AdapterActivity : BaseActivity() {
-  private val adapter = object : FrogAdapter<Data>(R.layout.base_item_data) {
-    override fun onBindViewHolder(holder: FrogHolder, position: Int) {
-      super.onBindViewHolder(holder, position)
+  private val adapter = object : CleanAdapter<Data>(R.layout.base_item_data) {
+    override fun onBindViewHolder(holder: Holder, position: Int) {
       val item = data[position]
       holder.itemView.icon.setImageResource(item.iconRes)
       holder.itemView.title.text = item.title
@@ -26,7 +24,7 @@ class AdapterActivity : BaseActivity() {
       return super.getItemViewType(position)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FrogHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
       return super.onCreateViewHolder(parent, viewType)
 
     }

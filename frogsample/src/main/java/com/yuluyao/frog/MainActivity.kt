@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.facebook.stetho.Stetho
 import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.func.adapter.AdapterActivity
-import com.yuluyao.frog.func.databinding.DataBindingActivity
 import com.yuluyao.frog.func.divider.DividerActivity
 import com.yuluyao.frog.func.ff.FFAdapterActivity
 import com.yuluyao.frog.func.multi.MultiActivity
@@ -79,7 +78,7 @@ class MainActivity : BaseActivity() {
     when (position) {
       0 -> intent = Intent(this, AdapterActivity::class.java)
       1 -> intent = Intent(this, MultiActivity::class.java)
-      2 -> intent = Intent(this, DataBindingActivity::class.java)
+//      2 -> intent = Intent(this, DataBindingActivity::class.java)
       3 -> intent = Intent(this, ItemTouchActivity::class.java)
       4 -> intent = Intent(this, DividerActivity::class.java)
       5 -> intent = Intent(this, FFAdapterActivity::class.java)

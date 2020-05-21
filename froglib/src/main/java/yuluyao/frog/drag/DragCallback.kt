@@ -4,7 +4,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import yuluyao.frog.FrogAdapter
+import yuluyao.frog.CleanAdapter
 import java.util.*
 
 /**
@@ -27,7 +27,7 @@ class DragCallback : ItemTouchHelper.Callback() {
     val fromPosition = viewHolder.adapterPosition
     //得到目标ViewHolder的position
     val toPosition = target.adapterPosition
-    val list = (recyclerView.adapter as FrogAdapter<*>).data
+    val list = (recyclerView.adapter as CleanAdapter<*>).data
     if (fromPosition < toPosition) {
       for (i in fromPosition until toPosition) {
         Collections.swap(list, i, i + 1)

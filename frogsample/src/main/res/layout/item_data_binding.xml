@@ -10,11 +10,11 @@
 
         <ImageView
           android:id="@+id/icon"
+          src="@{item.iconRes}"
           android:layout_width="48dp"
           android:layout_height="48dp"
           android:layout_centerVertical="true"
           android:layout_margin="8dp"
-          src="@{item.iconRes}"
           />
 
         <TextView
