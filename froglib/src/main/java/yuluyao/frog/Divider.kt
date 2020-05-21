@@ -14,10 +14,7 @@ import android.view.View
  * 作 者：Vegeta Yu
  * 时 间：2017/9/5 10:10
  */
-class Divider(
-  private val width: Float = 2F,
-  private val colorRes: Int = android.R.color.transparent
-) : RecyclerView.ItemDecoration() {
+class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
 
   companion object {
     const val UNSPECIFIED = 0
@@ -27,6 +24,14 @@ class Divider(
     const val GRID_HORIZONTAL = 4
     const val STAGGERED_GRID_VERTICAL = 5
     const val STAGGERED_GRID_HORIZONTAL = 6
+  }
+
+  private var colorRes: Int = android.R.color.transparent
+  private var includeEdge: Boolean = false
+
+  constructor(width: Float = 2F, colorRes: Int = android.R.color.transparent, includeEdge: Boolean = false) : this(width) {
+    this.colorRes = colorRes
+    this.includeEdge = includeEdge
   }
 
   private var mLayoutType = UNSPECIFIED
@@ -53,22 +58,6 @@ class Divider(
       initLayoutManagerType(parent)
     }
 
-    when (mLayoutType) {
-      LINEAR_VERTICAL -> {
-        outRect.set(0, 0, 0, widthPixels.toInt())
-        return
-      }
-      LINEAR_HORIZONTAL -> {
-        outRect.set(0, 0, widthPixels.toInt(), 0)
-        return
-      }
-    }
-
-    val spanCount = when (mLayoutType) {
-      GRID_VERTICAL, GRID_HORIZONTAL -> (parent.layoutManager as GridLayoutManager).spanCount
-      STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> (parent.layoutManager as StaggeredGridLayoutManager).spanCount
-      else -> 0
-    }
     val childCount = parent.adapter!!.itemCount
     val itemPosition = parent.getChildAdapterPosition(view)
 
@@ -76,36 +65,65 @@ class Divider(
     var out_top = widthPixels / 2
     var out_right = widthPixels / 2
     var out_bottom = widthPixels / 2
-/*
+
     when (mLayoutType) {
-      GRID_VERTICAL -> {
+      LINEAR_VERTICAL -> {
+        if (isTop(itemPosition, 1, childCount, view)) {
+          out_top = if (includeEdge) widthPixels else 0f
+        }
+        if (isLeft(itemPosition, 1, childCount, view)) {
+          out_left = if (includeEdge) widthPixels else 0f
+        }
+        if (isRight(itemPosition, 1, childCount, view)) {
+          out_right = if (includeEdge) widthPixels else 0f
+        }
+        if (isBottom(itemPosition, 1, childCount, view)) {
+          out_bottom = if (includeEdge) widthPixels else 0f
+        }
       }
-      GRID_HORIZONTAL -> {
-      }
-      STAGGERED_GRID_VERTICAL -> {
-      }
-      STAGGERED_GRID_HORIZONTAL -> {
+      LINEAR_HORIZONTAL -> {
+        if (isTop(itemPosition, 1, childCount, view)) {
+          out_top = if (includeEdge) widthPixels else 0f
+        }
+        if (isLeft(itemPosition, 1, childCount, view)) {
+          out_left = if (includeEdge) widthPixels else 0f
+        }
+        if (isRight(itemPosition, 1, childCount, view)) {
+          out_right = if (includeEdge) widthPixels else 0f
+        }
+        if (isBottom(itemPosition, 1, childCount, view)) {
+          out_bottom = if (includeEdge) widthPixels else 0f
+        }
       }
     }
-*/
+
+    when (mLayoutType) {
+      GRID_VERTICAL, GRID_HORIZONTAL, STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> {
+        val spanCount = when (mLayoutType) {
+          GRID_VERTICAL, GRID_HORIZONTAL -> (parent.layoutManager as GridLayoutManager).spanCount
+          STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> (parent.layoutManager as StaggeredGridLayoutManager).spanCount
+          else -> 0
+        }
+        if (isTop(itemPosition, spanCount, childCount, view)) {
+          // 如果是第一行，则不需要绘制上边
+          out_top = if (includeEdge) widthPixels else 0f
+        }
+        if (isLeft(itemPosition, spanCount, childCount, view)) {
+          // 如果是第一列，则不需要绘制左边
+          out_left = if (includeEdge) widthPixels else 0f
+        }
+        if (isRight(itemPosition, spanCount, childCount, view)) {
+          // 如果是最后一列，则不需要绘制右边
+          out_right = if (includeEdge) widthPixels else 0f
+        }
+        if (isBottom(itemPosition, spanCount, childCount, view)) {
+          // 如果是最后一行，则不需要绘制底部
+          out_bottom = if (includeEdge) widthPixels else 0f
+        }
+      }
+    }
 
 
-    if (isTop(itemPosition, spanCount, childCount, view)) {
-      // 如果是第一行，则不需要绘制上边
-      out_top = 0f
-    }
-    if (isLeft(itemPosition, spanCount, childCount, view)) {
-      // 如果是第一列，则不需要绘制左边
-      out_left = 0f
-    }
-    if (isRight(itemPosition, spanCount, childCount, view)) {
-      // 如果是最后一列，则不需要绘制右边
-      out_right = 0f
-    }
-    if (isBottom(itemPosition, spanCount, childCount, view)) {
-      // 如果是最后一行，则不需要绘制底部
-      out_bottom = 0f
-    }
     outRect.set(out_left.toInt(), out_top.toInt(), out_right.toInt(), out_bottom.toInt())
   }
 
@@ -121,6 +139,8 @@ class Divider(
 
   private fun isTop(pos: Int, spanCount: Int, childCount: Int, itemView: View): Boolean {
     when (mLayoutType) {
+      LINEAR_VERTICAL -> return pos == 0
+      LINEAR_HORIZONTAL -> return true
       GRID_VERTICAL -> {
         val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
         val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
@@ -139,7 +159,8 @@ class Divider(
       STAGGERED_GRID_HORIZONTAL -> {
         val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
         val spanIndex = layoutParams.spanIndex
-        return spanIndex == 0
+        return if (layoutParams.isFullSpan) true else spanIndex == 0
+//        return spanIndex == 0
       }
     }
     return false
@@ -148,6 +169,8 @@ class Divider(
 
   private fun isLeft(pos: Int, spanCount: Int, childCount: Int, itemView: View): Boolean {
     when (mLayoutType) {
+      LINEAR_VERTICAL -> return true
+      LINEAR_HORIZONTAL -> return pos == 0
       GRID_VERTICAL -> {
         val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
 //        val spanGroupIndex = sizeLookup.getSpanGroupIndex(pos, spanCount)
@@ -165,7 +188,8 @@ class Divider(
       STAGGERED_GRID_VERTICAL -> {
         val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
         val spanIndex = layoutParams.spanIndex
-        return spanIndex == 0
+        return if (layoutParams.isFullSpan) true else spanIndex == 0
+//        return spanIndex == 0
       }
       STAGGERED_GRID_HORIZONTAL -> return pos < spanCount
     }
@@ -174,6 +198,8 @@ class Divider(
 
   private fun isRight(pos: Int, spanCount: Int, childCount: Int, itemView: View): Boolean {
     when (mLayoutType) {
+      LINEAR_VERTICAL -> return true
+      LINEAR_HORIZONTAL -> return pos == childCount - 1
       // 如果是最后一列，则不需要绘制右边
       GRID_VERTICAL -> {
         val sizeLookup = (mRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup
@@ -189,7 +215,8 @@ class Divider(
       STAGGERED_GRID_VERTICAL -> {
         val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
         val spanIndex = layoutParams.spanIndex
-        return spanIndex == spanCount - 1
+        return if (layoutParams.isFullSpan) true else spanIndex == spanCount - 1
+//        return spanIndex == spanCount - 1
       }
       // 如果是最后一列，则不需要绘制右边
       STAGGERED_GRID_HORIZONTAL -> {
@@ -201,6 +228,8 @@ class Divider(
 
   private fun isBottom(pos: Int, spanCount: Int, childCount: Int, itemView: View): Boolean {
     when (mLayoutType) {
+      LINEAR_VERTICAL -> return pos == childCount - 1
+      LINEAR_HORIZONTAL -> return true
       // 如果是最后一行，则不需要绘制底部
       GRID_VERTICAL -> {
         // todo 暂未实现
@@ -224,7 +253,8 @@ class Divider(
       STAGGERED_GRID_HORIZONTAL -> {
         val layoutParams = itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams
         val spanIndex = layoutParams.spanIndex
-        return spanIndex == spanCount - 1
+        return if (layoutParams.isFullSpan) true else spanIndex == spanCount - 1
+//        return spanIndex == spanCount - 1
       }
     }
     return false
@@ -268,15 +298,15 @@ class Divider(
       val left_inner = bounds.right - widthPixels
       val top_inner = bounds.bottom - widthPixels
       when (mLayoutType) {
-        LINEAR_VERTICAL -> {
-          // draw bottom
-          canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint)
-        }
-        LINEAR_HORIZONTAL -> {
-          // draw right
-          canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint)
-        }
-        GRID_VERTICAL, STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> {
+//        LINEAR_VERTICAL -> {
+//          // draw bottom
+//          canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint)
+//        }
+//        LINEAR_HORIZONTAL -> {
+//          // draw right
+//          canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint)
+//        }
+        LINEAR_VERTICAL, LINEAR_HORIZONTAL, GRID_VERTICAL, STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> {
           // draw left
           canvas.drawRect(left_f, top_f, right_inner, bottom_f, paint)
           // draw top
