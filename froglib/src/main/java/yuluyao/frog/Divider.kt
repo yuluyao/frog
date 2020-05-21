@@ -26,22 +26,16 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
     const val STAGGERED_GRID_HORIZONTAL = 6
   }
 
-  private var colorRes: Int = android.R.color.transparent
+  private var colorInt: Int = 0x00000000
   private var includeEdge: Boolean = false
 
-  constructor(width: Float = 2F, colorRes: Int = android.R.color.transparent, includeEdge: Boolean = false) : this(width) {
-    this.colorRes = colorRes
+  constructor(width: Float = 2F, colorInt: Int, includeEdge: Boolean) : this(width) {
+    this.colorInt = colorInt
     this.includeEdge = includeEdge
   }
 
   private var mLayoutType = UNSPECIFIED
   private lateinit var mRecyclerView: RecyclerView
-
-
-//  private val includePadding: Boolean = false
-//  private val includeLastItem: Boolean = true
-//  private val includeFirstItem: Boolean = false
-
 
   private var widthPixels: Float = 0f
   private var paint: Paint = Paint()
@@ -54,7 +48,7 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
     if (mLayoutType == UNSPECIFIED) {
       mRecyclerView = parent
       widthPixels = parent.context.resources.displayMetrics.density * width
-      paint.color = parent.context.resources.getColor(colorRes)
+      paint.color = colorInt
       initLayoutManagerType(parent)
     }
 
@@ -263,6 +257,10 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
 
   override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
     super.onDraw(c, parent, state)
+    if (colorInt == 0) {
+      // if transparent, need not to draw
+      return
+    }
     drawDecoration(c, parent)
   }
 
@@ -298,14 +296,6 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
       val left_inner = bounds.right - widthPixels
       val top_inner = bounds.bottom - widthPixels
       when (mLayoutType) {
-//        LINEAR_VERTICAL -> {
-//          // draw bottom
-//          canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint)
-//        }
-//        LINEAR_HORIZONTAL -> {
-//          // draw right
-//          canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint)
-//        }
         LINEAR_VERTICAL, LINEAR_HORIZONTAL, GRID_VERTICAL, STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> {
           // draw left
           canvas.drawRect(left_f, top_f, right_inner, bottom_f, paint)

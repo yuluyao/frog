@@ -39,7 +39,7 @@ class DividerStaggeredHorizontalFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     recycler.layoutManager = StaggeredGridLayoutManager(4,
       StaggeredGridLayoutManager.HORIZONTAL)
-    recycler.addItemDecoration(Divider(8f, R.color.item_decoration))
+    recycler.addItemDecoration(Divider(8f, context!!.resources.getColor(R.color.item_decoration),false))
     setDrag(recycler)
 
     recycler.adapter = adapter

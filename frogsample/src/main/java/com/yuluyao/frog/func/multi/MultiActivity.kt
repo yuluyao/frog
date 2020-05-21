@@ -63,7 +63,7 @@ class MultiActivity : BaseActivity() {
     title = "Multi Type Item"
 
     recyclerView.layoutManager = LinearLayoutManager(this)
-    recyclerView.addItemDecoration(Divider(8f, R.color.item_decoration))
+    recyclerView.addItemDecoration(Divider(8f))
 //    recyclerView.addItemDecoration(DividerItemDecoration(this, 1))
     recyclerView.adapter = adapter
     mockArticles().subscribe { it ->

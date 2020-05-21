@@ -41,7 +41,7 @@ class DividerStaggeredVerticalFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     val layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
     recycler.layoutManager = layoutManager
-    recycler.addItemDecoration(Divider(8f, R.color.item_decoration))
+    recycler.addItemDecoration(Divider(8f, context!!.resources.getColor(R.color.item_decoration),false))
     setDrag(recycler)
 
     recycler.adapter = adapter
