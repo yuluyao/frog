@@ -48,7 +48,7 @@ class DividerGridFragment : Fragment() {
     }
 
     recycler.layoutManager = gridLayoutManager
-    recycler.addItemDecoration(Divider(8f, context!!.resources.getColor(R.color.item_decoration),false))
+    recycler.addItemDecoration(Divider(40f, context!!.resources.getColor(R.color.item_decoration),false))
     setDrag(recycler)
 
     recycler.adapter = adapter

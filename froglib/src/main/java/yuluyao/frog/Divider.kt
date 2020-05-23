@@ -91,13 +91,36 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
       }
     }
 
+    val spanCount = when (mLayoutType) {
+      GRID_VERTICAL, GRID_HORIZONTAL -> (parent.layoutManager as GridLayoutManager).spanCount
+      STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> (parent.layoutManager as StaggeredGridLayoutManager).spanCount
+      else -> 0
+    }
     when (mLayoutType) {
-      GRID_VERTICAL, GRID_HORIZONTAL, STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> {
-        val spanCount = when (mLayoutType) {
-          GRID_VERTICAL, GRID_HORIZONTAL -> (parent.layoutManager as GridLayoutManager).spanCount
-          STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> (parent.layoutManager as StaggeredGridLayoutManager).spanCount
-          else -> 0
+      GRID_VERTICAL -> {
+        if (isTop(itemPosition, spanCount, childCount, view)) {
+          // 如果是第一行，则不需要绘制上边
+          out_top = if (includeEdge) widthPixels else 0f
         }
+      }
+      GRID_HORIZONTAL -> {
+        if (isLeft(itemPosition, spanCount, childCount, view)) {
+          // 如果是第一列，则不需要绘制左边
+          out_left = if (includeEdge) widthPixels else 0f
+        }
+      }
+      STAGGERED_GRID_VERTICAL -> {
+        if (isTop(itemPosition, spanCount, childCount, view)) {
+          // 如果是第一行，则不需要绘制上边
+          out_top = if (includeEdge) widthPixels else 0f
+        }
+      }
+      STAGGERED_GRID_HORIZONTAL -> {
+        if (isLeft(itemPosition, spanCount, childCount, view)) {
+          // 如果是第一列，则不需要绘制左边
+          out_left = if (includeEdge) widthPixels else 0f
+        }
+/*
         if (isTop(itemPosition, spanCount, childCount, view)) {
           // 如果是第一行，则不需要绘制上边
           out_top = if (includeEdge) widthPixels else 0f
@@ -114,6 +137,7 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
           // 如果是最后一行，则不需要绘制底部
           out_bottom = if (includeEdge) widthPixels else 0f
         }
+*/
       }
     }
 
@@ -295,18 +319,11 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
       val bottom_inner = bounds.top + widthPixels
       val left_inner = bounds.right - widthPixels
       val top_inner = bounds.bottom - widthPixels
-      when (mLayoutType) {
-        LINEAR_VERTICAL, LINEAR_HORIZONTAL, GRID_VERTICAL, STAGGERED_GRID_VERTICAL, STAGGERED_GRID_HORIZONTAL -> {
-          // draw left
-          canvas.drawRect(left_f, top_f, right_inner, bottom_f, paint)
-          // draw top
-          canvas.drawRect(left_f, top_f, right_f, bottom_inner, paint)
-          // draw right
-          canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint)
-          // draw bottom
-          canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint)
-        }
-      }
+
+      canvas.drawRect(left_f, top_f, right_inner, bottom_f, paint)
+      canvas.drawRect(left_f, top_f, right_f, bottom_inner, paint)
+      canvas.drawRect(left_inner, top_f, right_f, bottom_f, paint)
+      canvas.drawRect(left_f, top_inner, right_f, bottom_f, paint)
     }
 
     canvas.restore()
