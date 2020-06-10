@@ -66,33 +66,6 @@ abstract class OnItemChildSingleClickListener(val timeGap: Long = 500L) : BaseTo
       return true
     }
 
-//    var target: View? = null
-//    private fun findTarget(parent: ViewGroup, rawX: Int, rawY: Int): View? {
-//      if (listenedChildrenIds.contains(parent.id)) {
-//        if (isClickInside(parent, rawX, rawY)) {
-//          target = parent
-//        }
-//      }
-//      for (i in 0 until parent.childCount) {
-//        val childAti = parent.getChildAt(i)
-//        if (childAti is ViewGroup) {
-//          target = findTarget(childAti, rawX, rawY)
-//        } else {
-//          if (!listenedChildrenIds.contains(childAti.id)) continue
-//          if (isClickInside(childAti, rawX, rawY)) {
-//            target = childAti
-//          }
-//        }
-//      }
-//      return target
-//    }
-//
-//    private fun isClickInside(view: View, rawX: Int, rawY: Int): Boolean {
-//      val r = Rect()
-//      view.getGlobalVisibleRect(r)
-//      val region = Region(r)
-//      return region.contains(rawX, rawY)
-//    }
   }
 
 
