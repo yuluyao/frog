@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 apply from: "$rootDir/mavenscript/gradle-mavenizer.gradle"
 
 ext {
-    mavProjectName = "frog"
+    mavProjectName = "frog-touch"
     mavLibraryDescription = "use RecyclerView easily"
     mavDevelopers = ['yu': 'luyao']
 //  mavLibraryLicenses = ""

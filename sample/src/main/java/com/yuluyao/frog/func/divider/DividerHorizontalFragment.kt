@@ -8,13 +8,13 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import yuluyao.frog.Divider
 import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.fragment_divider_horizontal.*
 import kotlinx.android.synthetic.main.item_data_horizontal.view.*
 import yuluyao.frog.CleanAdapter
+import yuluyao.frog.Divider
 import yuluyao.frog.drag.DragCallback
 
 /**

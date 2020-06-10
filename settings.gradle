@@ -1,1 +1,1 @@
-include ':froglib', ':frogsample'
+include ':lib_adapter',':lib_divider',':lib_touch', ':sample'

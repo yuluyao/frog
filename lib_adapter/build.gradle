@@ -1,0 +1,44 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+apply from: "$rootDir/mavenscript/gradle-mavenizer.gradle"
+
+ext {
+    mavProjectName = "frog-adapter"
+    mavLibraryDescription = "use RecyclerView easily"
+    mavDevelopers = ['yu': 'luyao']
+//  mavLibraryLicenses = ""
+//  mavSiteUrl = ""
+//  mavGitUrl = ""
+}
+
+android {
+    compileSdkVersion 27
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+//    dataBinding {
+//        enabled = true
+//    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "com.android.support:recyclerview-v7:27.1.1"
+}
