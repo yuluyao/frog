@@ -95,3 +95,9 @@ object Repo {
 
 
 }
+
+data class Data(
+  var id: Int,
+  var title: String,
+  var content: String,
+  var iconRes: Int)
