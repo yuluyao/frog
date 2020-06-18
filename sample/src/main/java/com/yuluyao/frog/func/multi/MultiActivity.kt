@@ -18,16 +18,9 @@ import kotlinx.android.synthetic.main.item_article_single_jpg.view.iv as iv_sing
 import kotlinx.android.synthetic.main.item_article_single_jpg.view.title as title_single
 
 class MultiActivity : BaseActivity() {
-  private val adapter = object : CleanAdapter<ArticleBean>() {
-    init {
-      initItemViewType(
-        intArrayOf(ArticleBean.TYPE_NORMAL,
-          ArticleBean.TYPE_SINGLE_JPG,
-          ArticleBean.TYPE_MULTI_JPG),
-        intArrayOf(R.layout.item_article_normal,
-          R.layout.item_article_single_jpg,
-          R.layout.item_article_multi_jpg))
-    }
+  private val adapter = object : CleanAdapter<ArticleBean>(R.layout.item_article_normal,
+    R.layout.item_article_single_jpg,
+    R.layout.item_article_multi_jpg) {
 
     override fun getItemViewType(position: Int): Int {
       return data[position].type

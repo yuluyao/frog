@@ -13,8 +13,8 @@ data class ArticleBean(
                        var imgs: IntArray= intArrayOf() ) {
 
   companion object {
-    const val TYPE_NORMAL = 1
-    const val TYPE_SINGLE_JPG = 2
-    const val TYPE_MULTI_JPG = 3
+    const val TYPE_NORMAL = 0
+    const val TYPE_SINGLE_JPG = 1
+    const val TYPE_MULTI_JPG = 2
   }
 }
