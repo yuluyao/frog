@@ -20,8 +20,7 @@ class DragCallback : ItemTouchHelper.Callback() {
     return makeMovementFlags(dragFlags, swipeFlags)
   }
 
-  override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder,
-                      target: RecyclerView.ViewHolder): Boolean {
+  override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
     //得到拖动ViewHolder的position
     val fromPosition = viewHolder.adapterPosition
     //得到目标ViewHolder的position

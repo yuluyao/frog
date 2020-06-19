@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import kotlinx.android.extensions.LayoutContainer
 
 open class CleanAdapter<T>(private vararg val layouts: Int) : RecyclerView.Adapter<CleanAdapter.Holder>() {
-  //<editor-fold desc="DSL support">
   private var callback: (CleanAdapter<T>.(Holder, Int) -> Unit)? = null
   operator fun invoke(block: CleanAdapter<T>.(Holder, Int) -> Unit) {
     callback = block
   }
-  //</editor-fold>
 
   var data: ArrayList<T> = arrayListOf()
   override fun getItemCount(): Int = data.size
