@@ -15,7 +15,6 @@ import com.yuluyao.frog.func.divider.DividerActivity
 import com.yuluyao.frog.func.ff.FFAdapterActivity
 import com.yuluyao.frog.func.multi.MultiActivity
 import com.yuluyao.frog.func.touch.ItemTouchActivity
-import com.yuluyao.frog.repo.Repo
 import kotlinx.android.synthetic.main.activity_main.*
 import yuluyao.frog.touch.OnItemClickListener
 import java.util.*
@@ -25,8 +24,6 @@ class MainActivity : BaseActivity() {
   override fun onGetLayoutId(): Int = R.layout.activity_main
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
-    Repo.init(this )
 
     title = "主页"
     initView()
@@ -38,61 +35,40 @@ class MainActivity : BaseActivity() {
     recyclerView.addOnItemTouchListener(object : OnItemClickListener() {
       override fun onItemClicked(position: Int) {
         startByPosition(position)
-
       }
     })
-//    recyclerView.addItemDecoration(HeadDecor(R.layout.layout_head, true))
 
-    val adapter = MenuAdapter()
     recyclerView.adapter = adapter
 
     adapter.data = mockData()
     adapter.notifyDataSetChanged()
   }
 
+  val adapter = MenuAdapter()
+
   private fun mockData(): ArrayList<MenuItem> {
     val list = ArrayList<MenuItem>()
-    list.add(MenuItem("Adapter",0))
-    list.add(MenuItem("MultiItemType",0))
-    list.add(MenuItem("DataBinding",0))
-    list.add(MenuItem("ItemTouch",0))
-    list.add(MenuItem("Divider",0))
-    list.add(MenuItem("FFAdapter",0))
+    list.add(MenuItem("adapter", 0))
+    list.add(MenuItem("multi-item support", 0))
+    list.add(MenuItem("item touch", 0))
+    list.add(MenuItem("divider", 0))
+    list.add(MenuItem("adapter2", 0))
 
-//    list.add(MenuItem("Expand",0))
-//    list.add(MenuItem("Footer",0))
-//    list.add(MenuItem("Header",0))
-//    list.add(MenuItem("Level",0))
-//    list.add(MenuItem("LoadMore",0))
-//    list.add(MenuItem("MultipleItemType",0))
-//    list.add(MenuItem("...",0))
-//    list.add(MenuItem("...",0))
-//    list.add(MenuItem("...",0))
-//    list.add(MenuItem("...",0))
-//    list.add(MenuItem("...",0))
     return list
   }
 
   private fun startByPosition(position: Int) {
-    var intent: Intent? = null
-    when (position) {
-      0 -> intent = Intent(this, AdapterActivity::class.java)
-      1 -> intent = Intent(this, MultiActivity::class.java)
-//      2 -> intent = Intent(this, DataBindingActivity::class.java)
-      3 -> intent = Intent(this, ItemTouchActivity::class.java)
-      4 -> intent = Intent(this, DividerActivity::class.java)
-      5 -> intent = Intent(this, FFAdapterActivity::class.java)
-//      4 -> intent = Intent(this, ExpandActivity::class.java)
-//      5 -> intent = Intent(this, FootActivity::class.java)
-//      6 -> intent = Intent(this, HeadActivity::class.java)
-//      7 -> {
-//      }
-//      8 -> intent = Intent(this, LoadActivity::class.java)
-//      9 -> intent = Intent(this, MultipleActivity::class.java)
-
-      else -> return
-    }//intent = new Intent(this, LevelActivity.class);
-    startActivity(intent)
+    val intent: Intent? = when (adapter.data[position].title) {
+      "adapter" -> Intent(this, AdapterActivity::class.java)
+      "multi-item support" -> Intent(this, MultiActivity::class.java)
+      "item touch" -> Intent(this, ItemTouchActivity::class.java)
+      "divider" -> Intent(this, DividerActivity::class.java)
+      "adapter2" -> Intent(this, FFAdapterActivity::class.java)
+      else -> null
+    }
+    intent?.let {
+      startActivity(it)
+    }
   }
 
   class MenuItem(val title: String, val id: Int)

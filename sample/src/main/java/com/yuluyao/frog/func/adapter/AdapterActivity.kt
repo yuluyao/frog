@@ -11,29 +11,13 @@ import kotlinx.android.synthetic.main.item_data_adapter.view.*
 import yuluyao.frog.CleanAdapter
 
 class AdapterActivity : BaseActivity() {
-//  private val adapter = object : CleanAdapter<Data>(R.layout.item_data_adapter) {
-////    override fun onBindViewHolder(holder: Holder, position: Int) {
-////      val item = data[position]
-////      holder.itemView.icon.setImageResource(item.iconRes)
-////      holder.itemView.title.text = item.title
-////      holder.itemView.content.text = item.content
-////    }
-//
-//    override fun getItemViewType(position: Int): Int {
-//      return super.getItemViewType(position)
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-//      return super.onCreateViewHolder(parent, viewType)
-//
-//    }
-//  }
 
   override fun onGetLayoutId(): Int = R.layout.activity_fun_adapter
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     title = "Adapter"
 
+    // init adapter
     val adapter = CleanAdapter<Character>(R.layout.item_data_adapter)
     adapter { holder, position ->
       val item = data[position]
@@ -42,8 +26,11 @@ class AdapterActivity : BaseActivity() {
       holder.itemView.content.text = item.content
     }
 
+    // setup recyclerview
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.adapter = adapter
+
+    // refresh data
     DataStore.refresh().subscribe { it ->
       adapter.data.clear()
       adapter.data.addAll(it)
