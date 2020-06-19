@@ -17,10 +17,13 @@ data class Character(
   var id: String,
   var iconRes: Int,
   var picRes: Int,
-  var name: String,
-  var description: String,
+  var title: String,
+  var content: String,
   var description2: String)
-
+//id
+//iconRes
+//title
+//content
 
 object DataStore {
 

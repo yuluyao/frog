@@ -38,8 +38,8 @@ class AdapterActivity : BaseActivity() {
     adapter { holder, position ->
       val item = data[position]
       holder.itemView.icon.setImageResource(item.iconRes)
-      holder.itemView.title.text = item.name
-      holder.itemView.content.text = item.description
+      holder.itemView.title.text = item.title
+      holder.itemView.content.text = item.content
     }
 
     recyclerView.layoutManager = LinearLayoutManager(this)
