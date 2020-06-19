@@ -28,8 +28,15 @@ data class Character(
 object DataStore {
 
   fun refreshHead(): Observable<List<Character>> {
-    return Observable.just<List<Character>>(source.subList(0, 10))
-      .delay(300, TimeUnit.MILLISECONDS)
+    return Observable.just<List<Character>>(source.slice(0 until 10))
+      .delay(100, TimeUnit.MILLISECONDS)
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
+  }
+
+  fun refreshHead(count : Int): Observable<List<Character>>{
+    return Observable.just<List<Character>>(source.slice(0 until count))
+      .delay(100, TimeUnit.MILLISECONDS)
       .subscribeOn(Schedulers.io())
       .observeOn(AndroidSchedulers.mainThread())
   }
