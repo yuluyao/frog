@@ -1,4 +1,4 @@
-package com.yuluyao.frog.func.ff
+package com.yuluyao.frog.func.adapter
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager

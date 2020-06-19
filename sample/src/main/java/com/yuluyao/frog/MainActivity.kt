@@ -12,7 +12,7 @@ import com.facebook.stetho.Stetho
 import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.func.adapter.AdapterActivity
 import com.yuluyao.frog.func.divider.DividerActivity
-import com.yuluyao.frog.func.ff.FFAdapterActivity
+import com.yuluyao.frog.func.adapter.FFAdapterActivity
 import com.yuluyao.frog.func.multi.MultiActivity
 import com.yuluyao.frog.func.touch.ItemTouchActivity
 import kotlinx.android.synthetic.main.activity_main.*
