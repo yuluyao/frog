@@ -12,8 +12,8 @@ import android.view.ViewGroup
 import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
-import kotlinx.android.synthetic.main.fragment_divider_grid.*
-import kotlinx.android.synthetic.main.item_data_grid.view.*
+import kotlinx.android.synthetic.main.fragment_divider_grid_vertical.*
+import kotlinx.android.synthetic.main.item_divider_data_grid_vertical.view.*
 import yuluyao.frog.CleanAdapter
 import yuluyao.frog.Divider
 import yuluyao.frog.drag.DragCallback
@@ -24,7 +24,7 @@ import yuluyao.frog.drag.DragCallback
  * 时 间：2017/9/5 16:52
  */
 class DividerGridFragment : Fragment() {
-  val adapter = object : CleanAdapter<Data>(R.layout.item_data_grid) {
+  val adapter = object : CleanAdapter<Data>(R.layout.item_divider_data_grid_vertical) {
     override fun onBindViewHolder(holder: Holder, position: Int) {
       holder.itemView.icon.setImageResource(data[position].iconRes)
     }
@@ -32,7 +32,7 @@ class DividerGridFragment : Fragment() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.fragment_divider_grid, container, false)
+    return inflater.inflate(R.layout.fragment_divider_grid_vertical, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

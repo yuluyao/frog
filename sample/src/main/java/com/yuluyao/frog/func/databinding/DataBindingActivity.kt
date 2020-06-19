@@ -6,13 +6,13 @@ package com.yuluyao.frog.func.databinding
 //import com.yuluyao.frog.base.BaseActivity
 //import com.yuluyao.frog.repo.Data
 //import com.yuluyao.frog.repo.Repo
-//import kotlinx.android.synthetic.main.base_activity_data.*
+//import kotlinx.android.synthetic.main.activity_fun_adapter.*
 //import yuluyao.frog.FrogAdapter
 //
 //class DataBindingActivity : BaseActivity() {
 //  private val adapter =  FrogAdapter<Data>(R.layout.item_data_binding)
 //
-//  override fun onGetLayoutId(): Int = R.layout.base_activity_data
+//  override fun onGetLayoutId(): Int = R.layout.activity_fun_adapter
 //  override fun onCreate(savedInstanceState: Bundle?) {
 //    super.onCreate(savedInstanceState)
 //    title = "DataBinding Adapter"

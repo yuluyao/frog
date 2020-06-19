@@ -6,12 +6,12 @@ import com.yuluyao.frog.R
 import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
-import kotlinx.android.synthetic.main.base_activity_data.*
-import kotlinx.android.synthetic.main.base_item_data.view.*
+import kotlinx.android.synthetic.main.activity_fun_adapter.*
+import kotlinx.android.synthetic.main.item_data_adapter.view.*
 import yuluyao.frog.CleanAdapter
 
 class FFAdapterActivity : BaseActivity() {
-  private val adapter = object : CleanAdapter<Data>(R.layout.base_item_data) {
+  private val adapter = object : CleanAdapter<Data>(R.layout.item_data_adapter) {
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
       val item = data[position]
@@ -25,7 +25,7 @@ class FFAdapterActivity : BaseActivity() {
   }
 
 
-  override fun onGetLayoutId(): Int = R.layout.base_activity_data
+  override fun onGetLayoutId(): Int = R.layout.activity_fun_adapter
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     title = "Adapter"

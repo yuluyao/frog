@@ -10,8 +10,8 @@ import com.yuluyao.frog.R
 import com.yuluyao.frog.base.BaseActivity
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
-import kotlinx.android.synthetic.main.activity_touch.*
-import kotlinx.android.synthetic.main.item_touch.view.*
+import kotlinx.android.synthetic.main.activity_fun_touch.*
+import kotlinx.android.synthetic.main.item_data_touch.view.*
 import yuluyao.frog.CleanAdapter
 import yuluyao.frog.touch.*
 
@@ -21,7 +21,7 @@ import yuluyao.frog.touch.*
 
 class ItemTouchActivity : BaseActivity() {
 
-  private var adapter = object : CleanAdapter<Data>(R.layout.item_touch) {
+  private var adapter = object : CleanAdapter<Data>(R.layout.item_data_touch) {
     override fun onBindViewHolder(holder: Holder, position: Int) {
       val item = data[position]
       holder.itemView.title.text = item.title
@@ -30,7 +30,7 @@ class ItemTouchActivity : BaseActivity() {
     }
   }
 
-  override fun onGetLayoutId(): Int = R.layout.activity_touch
+  override fun onGetLayoutId(): Int = R.layout.activity_fun_touch
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     title = "Item Touch"

@@ -7,7 +7,7 @@ import com.yuluyao.frog.base.BaseActivity
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_multi.*
+import kotlinx.android.synthetic.main.activity_fun_multi.*
 import kotlinx.android.synthetic.main.item_article_multi_jpg.view.*
 import kotlinx.android.synthetic.main.item_article_normal.view.*
 import yuluyao.frog.CleanAdapter
@@ -50,7 +50,7 @@ class MultiActivity : BaseActivity() {
 
   }
 
-  override fun onGetLayoutId(): Int = R.layout.activity_multi
+  override fun onGetLayoutId(): Int = R.layout.activity_fun_multi
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     title = "Multi Type Item"

@@ -13,7 +13,7 @@ import com.yuluyao.frog.base.BaseActivity
 
 class DividerActivity : BaseActivity() {
 
-  override fun onGetLayoutId(): Int = R.layout.activity_divider
+  override fun onGetLayoutId(): Int = R.layout.activity_fun_divider
   override fun onCreate(@Nullable savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 

@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import com.yuluyao.frog.R
 import com.yuluyao.frog.repo.Data
 import com.yuluyao.frog.repo.Repo
-import kotlinx.android.synthetic.main.fragment_divider_horizontal.*
-import kotlinx.android.synthetic.main.item_data_horizontal.view.*
+import kotlinx.android.synthetic.main.fragment_divider_linear_horizontal.*
+import kotlinx.android.synthetic.main.item_divider_data_linear_horizontal.view.*
 import yuluyao.frog.CleanAdapter
 import yuluyao.frog.Divider
 import yuluyao.frog.drag.DragCallback
@@ -23,7 +23,7 @@ import yuluyao.frog.drag.DragCallback
  * 时 间：2017/9/5 16:33
  */
 class DividerHorizontalFragment : Fragment() {
-  val adapter = object : CleanAdapter<Data>(R.layout.item_data_horizontal){
+  val adapter = object : CleanAdapter<Data>(R.layout.item_divider_data_linear_horizontal){
     override fun onBindViewHolder(holder: Holder, position: Int) {
       holder.itemView.icon.setImageResource(data[position].iconRes)
       holder.itemView.title.text = data[position].title
@@ -33,13 +33,13 @@ class DividerHorizontalFragment : Fragment() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.fragment_divider_horizontal, container, false)
+    return inflater.inflate(R.layout.fragment_divider_linear_horizontal, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-    recycler.addItemDecoration(Divider(8f, context!!.resources.getColor(R.color.item_decoration),true))
+    recycler.addItemDecoration(Divider(60f, context!!.resources.getColor(R.color.item_decoration),true))
     setDrag(recycler)
 
     recycler.adapter = adapter
