@@ -60,7 +60,7 @@ class MultiActivity : BaseActivity() {
 //    recyclerView.addItemDecoration(DividerItemDecoration(this, 1))
     recyclerView.adapter = adapter
     mockArticles().subscribe { it ->
-      adapter.data = it
+      adapter.data.addAll(it)
       adapter.notifyDataSetChanged()
     }
 

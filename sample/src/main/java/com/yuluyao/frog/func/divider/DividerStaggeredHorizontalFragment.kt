@@ -9,8 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yuluyao.frog.R
-import com.yuluyao.frog.repo.Data
-import com.yuluyao.frog.repo.Repo
+import com.yuluyao.frog.repo.Character
+import com.yuluyao.frog.repo.DataStore
 import kotlinx.android.synthetic.main.fragment_divider_staggered_horizontal.*
 import kotlinx.android.synthetic.main.item_divider_data_stagger_horizontal.view.*
 import yuluyao.frog.CleanAdapter
@@ -23,7 +23,7 @@ import yuluyao.frog.drag.DragCallback
  * 时 间：2017/9/5 20:06
  */
 class DividerStaggeredHorizontalFragment : Fragment() {
-  val adapter = object : CleanAdapter<Data>(R.layout.item_divider_data_stagger_horizontal){
+  val adapter = object : CleanAdapter<Character>(R.layout.item_divider_data_stagger_horizontal){
     override fun onBindViewHolder(holder: Holder, position: Int) {
       holder.itemView.title.text= data[position].title
 
@@ -43,10 +43,11 @@ class DividerStaggeredHorizontalFragment : Fragment() {
     setDrag(recycler)
 
     recycler.adapter = adapter
-    Repo.refresh(50).subscribe { it ->
-        adapter.data = it
-        adapter.notifyDataSetChanged()
-      }
+    DataStore.refresh(50).subscribe {
+      adapter.data.clear()
+      adapter.data.addAll(it)
+      adapter.notifyDataSetChanged()
+    }
   }
 
   private fun setDrag(recyclerView: RecyclerView) {

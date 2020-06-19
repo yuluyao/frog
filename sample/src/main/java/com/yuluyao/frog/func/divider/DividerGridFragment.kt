@@ -10,8 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.yuluyao.frog.R
-import com.yuluyao.frog.repo.Data
-import com.yuluyao.frog.repo.Repo
+import com.yuluyao.frog.repo.Character
+import com.yuluyao.frog.repo.DataStore
 import kotlinx.android.synthetic.main.fragment_divider_grid_vertical.*
 import kotlinx.android.synthetic.main.item_divider_data_grid_vertical.view.*
 import yuluyao.frog.CleanAdapter
@@ -24,7 +24,7 @@ import yuluyao.frog.drag.DragCallback
  * 时 间：2017/9/5 16:52
  */
 class DividerGridFragment : Fragment() {
-  val adapter = object : CleanAdapter<Data>(R.layout.item_divider_data_grid_vertical) {
+  val adapter = object : CleanAdapter<Character>(R.layout.item_divider_data_grid_vertical) {
     override fun onBindViewHolder(holder: Holder, position: Int) {
       holder.itemView.icon.setImageResource(data[position].iconRes)
     }
@@ -48,12 +48,13 @@ class DividerGridFragment : Fragment() {
     }
 
     recycler.layoutManager = gridLayoutManager
-    recycler.addItemDecoration(Divider(40f, context!!.resources.getColor(R.color.item_decoration),false))
+    recycler.addItemDecoration(Divider(40f, context!!.resources.getColor(R.color.item_decoration), false))
     setDrag(recycler)
 
     recycler.adapter = adapter
-    Repo.refresh(40).subscribe { it ->
-      adapter.data = it
+    DataStore.refresh(40).subscribe {
+      adapter.data.clear()
+      adapter.data.addAll(it)
       adapter.notifyDataSetChanged()
     }
 

@@ -12,7 +12,7 @@ open class CleanAdapter<T>(private vararg val layouts: Int) : RecyclerView.Adapt
     callback = block
   }
 
-  var data: ArrayList<T> = arrayListOf()
+  val data: ArrayList<T> = arrayListOf()
   override fun getItemCount(): Int = data.size
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder = Holder(LayoutInflater.from(parent.context).inflate(layouts[viewType], parent, false))
   override fun onBindViewHolder(holder: Holder, position: Int) = callback?.invoke(this, holder, position) ?: Unit

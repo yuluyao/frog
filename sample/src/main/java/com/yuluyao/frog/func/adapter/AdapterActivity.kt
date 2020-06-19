@@ -44,7 +44,7 @@ class AdapterActivity : BaseActivity() {
 
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.adapter = adapter
-    DataStore.refreshHead().subscribe { it ->
+    DataStore.refresh().subscribe { it ->
       adapter.data.clear()
       adapter.data.addAll(it)
       adapter.notifyDataSetChanged()
