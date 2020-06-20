@@ -1,1 +1,1 @@
-include ':lib_adapter',':lib_divider',':lib_touch', ':sample'
+include ':adapter',':divider',':touch', ':sample'
