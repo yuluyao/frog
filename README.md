@@ -7,8 +7,6 @@
 2. `RecyclerView`**分割线**；
 3. `RecyclerView`**点击监听**。
 
-FrogAdapter是一个简洁的适配器，源码只有50几行代码。使用FrogAdapter，只需要**1行代码**（见下文）。
-
 ## 一、install
 在 project 的 build.gradle 中添加：
 ```Groovy
