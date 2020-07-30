@@ -21,15 +21,17 @@ FrogAdapter是一个简洁的适配器，源码只有50几行代码。使用Frog
 ```
 在 module 的 build.gradle 中添加：
 ```Groovy
-  implementation 'com.github.yuluyao:frog:0.2.9'
+  implementation 'com.github.yuluyao.frog:adapter:0.6.0'
+  implementation 'com.github.yuluyao.frog:divider:0.6.0'
+  implementation 'com.github.yuluyao.frog:touch:0.6.0'
 
 ```
 
 ## 二、使用
 
-### 1. `RecyclerView`适配器
+### 1. `RecyclerView`适配器：`CleanAdapter`
 
-这里是几个使用 CleanAdapter 的例子：
+这里是几个使用 `CleanAdapter` 的例子：
 
 ```Kotlin
   // 创建 adapter，需要3种数据：
@@ -82,29 +84,23 @@ FrogAdapter是一个简洁的适配器，源码只有50几行代码。使用Frog
   adapter.onBind { holder, position ->  }
 ```
 
-### 2. `RecyclerView`分割线
+### 2. `RecyclerView`分割线：`Divider`
 
-FrogDivider可以处理5种布局的分割线：
-
-- LinearLayoutManager（vertical）
-- LinearLayoutManager（horizontal）
-- GridLayoutManager
-- StaggeredGridLayoutManager（vertical）
-- StaggeredGridLayoutManager（horizontal）
+Divider可以处理多种布局的分割线：
 
 ```Kotlin
-    recycler_view?.addItemDecoration(FrogDivider())
+    recycler_view?.addItemDecoration(Divider())
     // or
-    recycler_view?.addItemDecoration(FrogDivider(4f))
+    recycler_view?.addItemDecoration(Divider(4f))
     // or
-    recycler_view?.addItemDecoration(FrogDivider(6f, R.color.transparent))
+    recycler_view?.addItemDecoration(Divider(6f, R.color.transparent))
 ```
 
-### 3. `RecyclerView`点击监听
+### 3. `RecyclerView`点击监听：`OnItemClickListener`
 
 点击事件：
 ```Kotlin
-    recycler_view?.addOnItemTouchListener(object : FrogClickListener() {
+    recycler_view?.addOnItemTouchListener(object : OnItemClickListener() {
       override fun onItemClicked(position: Int) {
         // ...
       }
@@ -113,7 +109,7 @@ FrogDivider可以处理5种布局的分割线：
 
 另外，还有：
 
-1. `FrogSingleClickListener`：严格单次点击监听。
-2. `FrogLongClickListener`：长按监听。
-3. `FrogChildClickListener`：item内部View点击监听。
+1. `OnItemSingleClickListener`：严格单次点击监听。
+2. `OnItemLongClickListener`：长按监听。
+3. `OnItemChildClickListener`：item内部View点击监听。
 4. 等等...
