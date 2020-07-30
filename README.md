@@ -29,38 +29,57 @@ FrogAdapter是一个简洁的适配器，源码只有50几行代码。使用Frog
 
 ### 1. `RecyclerView`适配器
 
-如果使用DataBinding：
+这里是几个使用 CleanAdapter 的例子：
+
 ```Kotlin
-    // 1行代码adapter，不必使用继承
-    val adapter = FrogAdapter<FooBean>(R.layout.item_foo_list)
-
-    // 设置adapter
-    recycler_view?.adapter = adapter
-
-    // ...
-
-    // 更新数据
-    adapter.notifyDataSetChanged()
-```
-
-```xml
-    <data>
-        <!--  这里的name只能是item -->
-        <variable
-          name="item"
-          type="com.a.b.c.FooBean"
-          />
-    </data>
-```
-
-如果不使用DataBinding，则要在代码中处理数据绑定：
-```Kotlin
-    val adapter = object : FrogAdapter<FooBean>(R.layout.item_foo_list){
-      override fun onBindViewHolder(holder: FrogHolder, position: Int) {
-        super.onBindViewHolder(holder, position)
-        // ...
-      }
+  // 创建 adapter，需要3种数据：
+  // 1，泛型参数 String；
+  // 2，布局 R.layout.layout_item1；
+  // 3，数据绑定 onBind。
+  val adapter = adapter<String>(R.layout.layout_item1) {
+    onBind { holder, position ->
     }
+  }
+  mRecyclerView?.adapter = adapter
+```
+
+```Kotlin
+  // 显式地声明 adapter 的类型与泛型
+  val adapter: CleanAdapter<String>
+  adapter = adapter(R.layout.layout_item1) {
+    onBind { holder, position ->
+    }
+  }
+  mRecyclerView?.adapter = adapter
+```
+
+```Kotlin
+  val adapter = adapter<String>(R.layout.layout_item1) {
+    // 这里设置的布局，会覆盖 adapter() 函数中的布局参数，即，R.layout.layout_item1无效，最终布局是 R.layout.layout_item2
+    // 所以，只在一处设置布局就可以了
+    layouts { intArrayOf(R.layout.layout_item2) }
+
+    onBind { holder, position ->
+    }
+  }
+  mRecyclerView?.adapter = adapter
+```
+
+```Kotlin
+  // 创建 adapter 的另一种写法：
+  val adapter = adapter<String>()
+  adapter.layouts { intArrayOf(R.layout.layout_item1) }
+  adapter.onBind { holder, position -> }
+  mRecyclerView?.adapter = adapter
+```
+
+```Kotlin
+  val adapter = adapter<String>()
+  // 多种类型，传入多个 layout
+  adapter.layouts { intArrayOf(R.layout.layout_item1, R.layout.layout_item2) }
+  // 设置类型，这里的类型数字对应了 layouts 数组的下标。即，从0开始。
+  adapter.onItemType { position -> 1 }
+  adapter.onBind { holder, position ->  }
 ```
 
 ### 2. `RecyclerView`分割线
