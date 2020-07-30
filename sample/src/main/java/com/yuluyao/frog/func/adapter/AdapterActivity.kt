@@ -19,7 +19,7 @@ class AdapterActivity : BaseActivity() {
 
     // init adapter
     val adapter = CleanAdapter<Character>(R.layout.item_data_adapter)
-    adapter { holder, position ->
+    adapter.onBind { holder, position ->
       val item = data[position]
       holder.itemView.icon.setImageResource(item.iconRes)
       holder.itemView.title.text = item.title
