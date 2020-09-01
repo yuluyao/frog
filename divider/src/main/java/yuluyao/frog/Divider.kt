@@ -54,6 +54,9 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
 
     val childCount = parent.adapter!!.itemCount
     val itemPosition = parent.getChildAdapterPosition(view)
+    if (itemPosition == -1) {
+      return
+    }
 
     var out_left = widthPixels / 2
     var out_top = widthPixels / 2
