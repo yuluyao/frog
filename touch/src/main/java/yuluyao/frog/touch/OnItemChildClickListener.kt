@@ -48,7 +48,7 @@ abstract class OnItemChildClickListener : BaseTouchListener() {
         return false
       }
 
-      itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
+      itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, clickView))
       onChildClicked(position, clickView.id)
       return true
     }

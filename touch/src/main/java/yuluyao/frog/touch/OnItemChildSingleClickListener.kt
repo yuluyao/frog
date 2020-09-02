@@ -57,7 +57,7 @@ abstract class OnItemChildSingleClickListener(val timeGap: Long = 500L) : BaseTo
       }
       lastClickTimeMills = clickTimeMills
 
-      itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, itemView!!))
+      itemView!!.dispatchTouchEvent(getTransformedMotionEvent(e, clickView))
       onChildClicked(position, clickView.id)
       return true
     }

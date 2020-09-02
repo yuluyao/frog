@@ -138,6 +138,7 @@ class ItemTouchActivity : BaseActivity() {
           Log.i("vegeta", "single click title")
         }
         R.id.root -> {
+          Toast.makeText(this@ItemTouchActivity, "single click root view", Toast.LENGTH_SHORT).show()
           Log.i("vegeta", "single click root view")
         }
       }
