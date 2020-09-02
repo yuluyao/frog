@@ -14,12 +14,12 @@ abstract class OnItemChildClickListener : BaseTouchListener() {
     get() = Listener()
 
   inner class Listener : GestureDetector.SimpleOnGestureListener() {
-    private var itemView: ViewGroup? = null
+    private var itemView: View? = null
 
     override fun onDown(e: MotionEvent?): Boolean {
       e ?: return false
       try {
-        itemView = recyclerView?.findChildViewUnder(e.x, e.y) as ViewGroup?
+        itemView = recyclerView?.findChildViewUnder(e.x, e.y) as View?
       } catch (e: Exception) {
         throw Exception("item view is not a ViewGroup!")
       }
@@ -44,7 +44,7 @@ abstract class OnItemChildClickListener : BaseTouchListener() {
 
       // 查找被点击的 View
       target = null
-      val clickView = findTarget(itemView!!, e.rawX.toInt(), e.rawY.toInt())
+      val clickView = findTarget(itemView!! as ViewGroup, e.rawX.toInt(), e.rawY.toInt())
       clickView ?: return false
 
       val position = recyclerView!!.getChildAdapterPosition(itemView!!)
