@@ -18,11 +18,7 @@ abstract class OnItemChildClickListener : BaseTouchListener() {
 
     override fun onDown(e: MotionEvent?): Boolean {
       e ?: return false
-      try {
-        itemView = recyclerView?.findChildViewUnder(e.x, e.y) as View?
-      } catch (e: Exception) {
-        throw Exception("item view is not a ViewGroup!")
-      }
+      itemView = recyclerView?.findChildViewUnder(e.x, e.y) as View?
       itemView ?: return false
 
       // 监听的 View 设为 可点击
@@ -44,7 +40,7 @@ abstract class OnItemChildClickListener : BaseTouchListener() {
 
       // 查找被点击的 View
       target = null
-      val clickView = findTarget(itemView!! as ViewGroup, e.rawX.toInt(), e.rawY.toInt())
+      val clickView = findTarget(itemView!!, e.rawX.toInt(), e.rawY.toInt())
       clickView ?: return false
 
       val position = recyclerView!!.getChildAdapterPosition(itemView!!)

@@ -45,21 +45,23 @@ abstract class BaseTouchListener : RecyclerView.SimpleOnItemTouchListener() {
   //<editor-fold desc="子View手势处理">
   abstract val listenedChildrenIds: IntArray
   internal var target: View? = null
-  internal fun findTarget(parent: ViewGroup, rawX: Int, rawY: Int): View? {
+  internal fun findTarget(parent: View, rawX: Int, rawY: Int): View? {
     listenedChildrenIds ?: return target
     if (listenedChildrenIds!!.contains(parent.id)) {
       if (isClickInside(parent, rawX, rawY)) {
         target = parent
       }
     }
-    for (i in 0 until parent.childCount) {
-      val childAti = parent.getChildAt(i)
-      if (childAti is ViewGroup) {
-        target = findTarget(childAti, rawX, rawY)
-      } else {
-        if (!listenedChildrenIds!!.contains(childAti.id)) continue
-        if (isClickInside(childAti, rawX, rawY)) {
-          target = childAti
+    if (parent is ViewGroup) {
+      for (i in 0 until parent.childCount) {
+        val childAti = parent.getChildAt(i)
+        if (childAti is ViewGroup) {
+          target = findTarget(childAti, rawX, rawY)
+        } else {
+          if (!listenedChildrenIds!!.contains(childAti.id)) continue
+          if (isClickInside(childAti, rawX, rawY)) {
+            target = childAti
+          }
         }
       }
     }
