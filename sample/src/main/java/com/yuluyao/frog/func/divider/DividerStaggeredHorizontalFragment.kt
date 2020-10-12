@@ -43,7 +43,7 @@ class DividerStaggeredHorizontalFragment : Fragment() {
     setDrag(recycler)
 
     recycler.adapter = adapter
-    DataStore.refresh(50).subscribe {
+    DataStore.refresh(45).subscribe {
       adapter.data.clear()
       adapter.data.addAll(it)
       adapter.notifyDataSetChanged()

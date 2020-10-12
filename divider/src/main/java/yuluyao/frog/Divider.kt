@@ -53,10 +53,7 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
     }
 
     val childCount = parent.adapter!!.itemCount
-    val itemPosition = parent.getChildAdapterPosition(view)
-    if (itemPosition == -1) {
-      return
-    }
+    val layoutPosition = parent.getChildLayoutPosition(view)
 
     var out_left = widthPixels / 2
     var out_top = widthPixels / 2
@@ -65,30 +62,30 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
 
     when (mLayoutType) {
       LINEAR_VERTICAL -> {
-        if (isTop(itemPosition, 1, childCount, view)) {
+        if (isTop(layoutPosition, 1, childCount, view)) {
           out_top = if (includeEdge) widthPixels else 0f
         }
-        if (isLeft(itemPosition, 1, childCount, view)) {
+        if (isLeft(layoutPosition, 1, childCount, view)) {
           out_left = if (includeEdge) widthPixels else 0f
         }
-        if (isRight(itemPosition, 1, childCount, view)) {
+        if (isRight(layoutPosition, 1, childCount, view)) {
           out_right = if (includeEdge) widthPixels else 0f
         }
-        if (isBottom(itemPosition, 1, childCount, view)) {
+        if (isBottom(layoutPosition, 1, childCount, view)) {
           out_bottom = if (includeEdge) widthPixels else 0f
         }
       }
       LINEAR_HORIZONTAL -> {
-        if (isTop(itemPosition, 1, childCount, view)) {
+        if (isTop(layoutPosition, 1, childCount, view)) {
           out_top = if (includeEdge) widthPixels else 0f
         }
-        if (isLeft(itemPosition, 1, childCount, view)) {
+        if (isLeft(layoutPosition, 1, childCount, view)) {
           out_left = if (includeEdge) widthPixels else 0f
         }
-        if (isRight(itemPosition, 1, childCount, view)) {
+        if (isRight(layoutPosition, 1, childCount, view)) {
           out_right = if (includeEdge) widthPixels else 0f
         }
-        if (isBottom(itemPosition, 1, childCount, view)) {
+        if (isBottom(layoutPosition, 1, childCount, view)) {
           out_bottom = if (includeEdge) widthPixels else 0f
         }
       }
@@ -101,25 +98,25 @@ class Divider(private val width: Float = 2F) : RecyclerView.ItemDecoration() {
     }
     when (mLayoutType) {
       GRID_VERTICAL -> {
-        if (isTop(itemPosition, spanCount, childCount, view)) {
+        if (isTop(layoutPosition, spanCount, childCount, view)) {
           // 如果是第一行，则不需要绘制上边
           out_top = if (includeEdge) widthPixels else 0f
         }
       }
       GRID_HORIZONTAL -> {
-        if (isLeft(itemPosition, spanCount, childCount, view)) {
+        if (isLeft(layoutPosition, spanCount, childCount, view)) {
           // 如果是第一列，则不需要绘制左边
           out_left = if (includeEdge) widthPixels else 0f
         }
       }
       STAGGERED_GRID_VERTICAL -> {
-        if (isTop(itemPosition, spanCount, childCount, view)) {
+        if (isTop(layoutPosition, spanCount, childCount, view)) {
           // 如果是第一行，则不需要绘制上边
           out_top = if (includeEdge) widthPixels else 0f
         }
       }
       STAGGERED_GRID_HORIZONTAL -> {
-        if (isLeft(itemPosition, spanCount, childCount, view)) {
+        if (isLeft(layoutPosition, spanCount, childCount, view)) {
           // 如果是第一列，则不需要绘制左边
           out_left = if (includeEdge) widthPixels else 0f
         }
